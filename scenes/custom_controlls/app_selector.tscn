@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://1m4opeh0nxo1"]
+
+[ext_resource type="Texture2D" uid="uid://c385w3al0qbtp" path="res://assets/icons/fire-flame.svg" id="1_jhmka"]
+[ext_resource type="Script" uid="uid://c8pwjporhbij8" path="res://scripts/app_selector_script.gd" id="1_qxl34"]
+[ext_resource type="Texture2D" uid="uid://c4besegrkdauw" path="res://assets/icons/bank.svg" id="2_qxl34"]
+[ext_resource type="Texture2D" uid="uid://tdv8abpu0yuj" path="res://assets/icons/message-text.svg" id="3_modrm"]
+[ext_resource type="Texture2D" uid="uid://bhafsyyrnrf6p" path="res://assets/icons/user-scan.svg" id="4_3wr1x"]
+
+[node name="app_selector" type="ColorRect"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+color = Color(0.0329756, 0.150039, 0.181497, 1)
+script = ExtResource("1_qxl34")
+
+[node name="app_container" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 65
+alignment = 1
+
+[node name="socials" type="TextureButton" parent="app_container"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("1_jhmka")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="bank" type="TextureButton" parent="app_container"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_qxl34")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="messages" type="TextureButton" parent="app_container"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("3_modrm")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="my_id" type="TextureButton" parent="app_container"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_3wr1x")
+ignore_texture_size = true
+stretch_mode = 4
+
+[connection signal="pressed" from="app_container/socials" to="." method="_on_socials_pressed"]
+[connection signal="pressed" from="app_container/bank" to="." method="_on_bank_pressed"]
+[connection signal="pressed" from="app_container/messages" to="." method="_on_messages_pressed"]
+[connection signal="pressed" from="app_container/my_id" to="." method="_on_my_id_pressed"]

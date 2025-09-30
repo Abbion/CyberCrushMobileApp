@@ -1,0 +1,30 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="cyber_crush_mobile_app"
+run/main_scene="res://scenes/pages/login_page.tscn"
+config/features=PackedStringArray("4.4", "Mobile")
+config/icon="res://icon.svg"
+
+[autoload]
+
+AppSessionState="*res://scripts/app_session_state.gd"
+GlobalConstants="*res://scripts/global_constants.gd"
+
+[display]
+
+window/size/viewport_width=405
+window/size/viewport_height=720
+
+[rendering]
+
+renderer/rendering_method="mobile"
