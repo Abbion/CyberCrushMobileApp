@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cag4bqdhpycwf"]
+
+[ext_resource type="Script" uid="uid://r013vakbifl7" path="res://scripts/id_page_entry_script.gd" id="1_rnfe6"]
+
+[node name="Id_page_entry" type="HBoxContainer"]
+offset_right = 405.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rnfe6")
+
+[node name="key_panel" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="key" type="Label" parent="key_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Default key"
+
+[node name="value_panel" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="value" type="Label" parent="value_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Default value"

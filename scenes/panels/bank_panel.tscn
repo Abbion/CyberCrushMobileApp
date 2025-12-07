@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://0506af3w1mki"]
+
+[ext_resource type="Script" uid="uid://b0asa8oyf4u47" path="res://scripts/bank_panel_script.gd" id="1_0pdnh"]
+[ext_resource type="PackedScene" uid="uid://6vc5femhj1f6" path="res://scenes/custom_controlls/new_transaction.tscn" id="2_8ud3o"]
+
+[node name="bank_panel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0pdnh")
+
+[node name="main_panel" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 405.0
+offset_bottom = 720.0
+
+[node name="card" type="ColorRect" parent="main_panel"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+color = Color(1, 0, 1, 0.117647)
+
+[node name="funds_label" type="Label" parent="main_panel/card"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Funds: "
+
+[node name="bank_actions" type="HBoxContainer" parent="main_panel"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="refresh" type="Button" parent="main_panel/bank_actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Refresh"
+
+[node name="new_transaction" type="Button" parent="main_panel/bank_actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New transaction"
+
+[node name="transactions_scroll_window" type="ScrollContainer" parent="main_panel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="transactions_list" type="VBoxContainer" parent="main_panel/transactions_scroll_window"]
+layout_mode = 2
+
+[node name="main_panel_overlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 405.0
+offset_bottom = 720.0
+color = Color(0.205117, 0.205117, 0.205117, 0.490196)
+
+[node name="new_transaction" parent="." instance=ExtResource("2_8ud3o")]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+offset_left = 50.0
+offset_top = 152.0
+offset_right = 358.0
+offset_bottom = 567.0
+
+[connection signal="button_down" from="main_panel/bank_actions/refresh" to="." method="_on_refresh_button_down"]
+[connection signal="pressed" from="main_panel/bank_actions/new_transaction" to="." method="_on_new_transaction_pressed"]
+[connection signal="transaction_completed" from="new_transaction" to="." method="_on_new_transaction_transaction_completed"]

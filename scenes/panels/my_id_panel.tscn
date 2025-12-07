@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnpm7vyhf2ftt"]
+
+[ext_resource type="Script" uid="uid://drrs6k6mnga27" path="res://scripts/my_id_panel_script.gd" id="1_yk5dp"]
+
+[node name="my_id_panel" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yk5dp")
+
+[node name="id_entires" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="logout_button" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+text = "Logout"
+
+[connection signal="button_down" from="logout_button" to="." method="_on_logout_button_button_down"]
