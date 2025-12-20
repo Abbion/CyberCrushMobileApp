@@ -9,6 +9,8 @@ class ChatSortData:
 	var time_stamp: Dictionary
 
 @onready var chat_list = $ScrollContainer/chat_list
+@onready var overlay = $overlay
+
 var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.tscn")
 
 var get_user_chats_request : HTTPRequest
@@ -124,3 +126,10 @@ func get_user_chats():
 				
 	if result != OK:
 		print("An error occured in the user chats HTTP request.")
+
+
+func _on_add_chat_pressed() -> void:
+	overlay.show()
+
+func _on_new_chat_panel_closed() -> void:
+	overlay.hide()

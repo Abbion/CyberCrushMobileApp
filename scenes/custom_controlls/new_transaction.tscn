@@ -40,7 +40,7 @@ text = "Odbiorca przelewu"
 
 [node name="recepiant_input_placeholder" type="Panel" parent="transaction_elements"]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 32.985)
+custom_minimum_size = Vector2(0, 33)
 layout_mode = 2
 
 [node name="title_label" type="Label" parent="transaction_elements"]

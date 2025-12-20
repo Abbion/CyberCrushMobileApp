@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cshv3dqh1nyxj"]
+[gd_scene load_steps=3 format=3 uid="uid://cshv3dqh1nyxj"]
 
 [ext_resource type="Script" uid="uid://cp5rmln1itjl1" path="res://scripts/chat_list_panel_script.gd" id="1_w8xra"]
+[ext_resource type="PackedScene" uid="uid://d32k05xyh4brq" path="res://scenes/custom_controlls/new_chat.tscn" id="2_6j0wu"]
 
 [node name="chat_list_panel" type="Control"]
 layout_mode = 3
@@ -37,3 +38,24 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 32
 text = "  +  "
 metadata/_edit_use_anchors_ = true
+
+[node name="overlay" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="overlay"]
+custom_minimum_size = Vector2(400, 720)
+layout_mode = 2
+color = Color(0, 0, 0, 0.152941)
+
+[node name="new_chat" parent="overlay" instance=ExtResource("2_6j0wu")]
+custom_minimum_size = Vector2(400, 166)
+layout_mode = 2
+
+[connection signal="pressed" from="add_chat" to="." method="_on_add_chat_pressed"]
+[connection signal="panel_closed" from="overlay/new_chat" to="." method="_on_new_chat_panel_closed"]
