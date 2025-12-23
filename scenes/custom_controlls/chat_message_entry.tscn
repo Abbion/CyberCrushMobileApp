@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://5damwlt2tv6e"]
+[gd_scene load_steps=2 format=3 uid="uid://5damwlt2tv6e"]
+
+[ext_resource type="Script" uid="uid://brnrfuo3a4xlg" path="res://scripts/chat_message_entry_script.gd" id="1_7xolx"]
 
 [node name="chat_message_entry" type="Control"]
 layout_mode = 3
@@ -7,21 +9,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_7xolx")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 414.0
-grow_horizontal = 2
+offset_right = 250.0
+offset_bottom = 720.0
 
 [node name="message_label" type="Label" parent="VBoxContainer"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
-text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus accumsan ipsum, ac sollicitudin ligula varius sit amet. Cras id porta libero. Aenean in ligula accumsan, fringilla nibh et, scelerisque justo. Donec eleifend mi dapibus ante gravida tincidunt. Nullam efficitur et magna placerat blandit. Morbi tristique scelerisque nisi, rutrum luctus dolor. Donec ornare augue in orci porttitor, quis fringilla augue elementum. Vivamus laoreet at quam in placerat. Duis dapibus enim quis libero tempor molestie. Nam eu ipsum vitae magna semper finibus. Ut molestie faucibus urna, at ultricies massa convallis a. Nullam placerat porttitor libero, in consequat ligula rutrum quis. Aliquam erat volutpat."
+text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 autowrap_mode = 3
 
 [node name="timestamp_label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "25.02.2056 12:30"
+text = "BBB"
