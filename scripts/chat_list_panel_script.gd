@@ -9,7 +9,9 @@ class ChatSortData:
 	var time_stamp: Dictionary
 
 @onready var chat_list = $ScrollContainer/chat_list
-@onready var overlay = $overlay
+@onready var create_chat_overlay = $create_chat_overlay
+
+signal open_chat(chat_id: int)
 
 var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.tscn")
 
@@ -91,9 +93,11 @@ func get_user_chats_request_completed(ult: int, response_code: int, headers: Pac
 			
 			var direct_chat = direct_chats[direct_chat_index]
 			var chat_entry_instance = chat_entry.instantiate()
+			chat_entry_instance.chat_id = direct_chat["chat_id"]
 			chat_entry_instance.chat_title = direct_chat["chat_partner"]
 			chat_entry_instance.last_message = direct_chat["last_message"]
 			chat_entry_instance.last_timestamp = direct_chat["last_message_time_stamp"]
+			chat_entry_instance.chat_opened.connect(on_chat_opened)
 			chat_list.add_child(chat_entry_instance)
 		else:
 			var group_chat_index = group_chats.find_custom(func(ch):
@@ -108,9 +112,11 @@ func get_user_chats_request_completed(ult: int, response_code: int, headers: Pac
 			
 			var group_chat = group_chats[group_chat_index]
 			var chat_entry_instance = chat_entry.instantiate()
+			chat_entry_instance.chat_id = group_chat["chat_id"]
 			chat_entry_instance.chat_title = group_chat["title"]
 			chat_entry_instance.last_message = group_chat["last_message"]
 			chat_entry_instance.last_timestamp = group_chat["last_message_time_stamp"]
+			chat_entry_instance.chat_opened.connect(on_chat_opened)
 			chat_list.add_child(chat_entry_instance)
 
 func get_user_chats():
@@ -129,7 +135,10 @@ func get_user_chats():
 
 
 func _on_add_chat_pressed() -> void:
-	overlay.show()
+	create_chat_overlay.show()
 
 func _on_new_chat_panel_closed() -> void:
-	overlay.hide()
+	create_chat_overlay.hide()
+
+func on_chat_opened(chat_id: int) -> void:
+	print("open chat: ", chat_id)

@@ -1,0 +1,3 @@
+extends Node
+
+enum CHAT_MESSAGE_ALIGNMENT { LEFT, RIGHT }

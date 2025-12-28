@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b33lb6oqou8we"]
+[gd_scene load_steps=2 format=3 uid="uid://b33lb6oqou8we"]
 
 [ext_resource type="Script" uid="uid://eq00ajhbkh3u" path="res://scripts/chat_panel_script.gd" id="1_2d7el"]
-[ext_resource type="PackedScene" uid="uid://5damwlt2tv6e" path="res://scenes/custom_controlls/chat_message_entry.tscn" id="2_nvn48"]
 
 [node name="chat_panel" type="Control"]
 layout_mode = 3
@@ -16,9 +15,12 @@ script = ExtResource("1_2d7el")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_bottom = 720.0
+offset_bottom = 689.0
 grow_horizontal = 2
+theme_override_constants/separation = 20
 
-[node name="chat_message_entry" parent="messages" instance=ExtResource("2_nvn48")]
-layout_mode = 2
-size_flags_horizontal = 8
+[node name="message_input" type="LineEdit" parent="."]
+layout_mode = 0
+offset_top = 689.0
+offset_right = 405.0
+offset_bottom = 720.0

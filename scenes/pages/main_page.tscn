@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bt5wtau8jm4ev"]
+[gd_scene load_steps=7 format=3 uid="uid://bt5wtau8jm4ev"]
 
 [ext_resource type="Script" uid="uid://b45tryrl3k5w4" path="res://scripts/main_page_script.gd" id="1_x7tum"]
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
 [ext_resource type="PackedScene" uid="uid://cc7if8n618gcj" path="res://scenes/custom_controlls/top_bar.tscn" id="2_ued0y"]
 [ext_resource type="PackedScene" uid="uid://0506af3w1mki" path="res://scenes/panels/bank_panel.tscn" id="3_6lmqk"]
 [ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
+[ext_resource type="PackedScene" uid="uid://cshv3dqh1nyxj" path="res://scenes/panels/chat_list_panel.tscn" id="5_esk2p"]
 
 [node name="MainPage" type="Control"]
 layout_mode = 3
@@ -37,6 +38,10 @@ visible = false
 layout_mode = 2
 
 [node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
+layout_mode = 2
+
+[node name="chat_list_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
+visible = false
 layout_mode = 2
 
 [node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]
