@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cc7if8n618gcj" path="res://scenes/custom_controlls/top_bar.tscn" id="2_ued0y"]
 [ext_resource type="PackedScene" uid="uid://0506af3w1mki" path="res://scenes/panels/bank_panel.tscn" id="3_6lmqk"]
 [ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
-[ext_resource type="PackedScene" uid="uid://cshv3dqh1nyxj" path="res://scenes/panels/chat_list_panel.tscn" id="5_esk2p"]
+[ext_resource type="PackedScene" uid="uid://dfie8i6cij8t7" path="res://scenes/panels/chat_panel.tscn" id="5_esk2p"]
 
 [node name="MainPage" type="Control"]
 layout_mode = 3
@@ -40,7 +40,7 @@ layout_mode = 2
 [node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
 layout_mode = 2
 
-[node name="chat_list_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
+[node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
 visible = false
 layout_mode = 2
 
@@ -51,4 +51,5 @@ size_flags_horizontal = 1
 color = Color(0, 0, 0, 1)
 
 [connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
+[connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]
 [connection signal="my_id_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_my_id_selected"]

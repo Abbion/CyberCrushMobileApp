@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=3 uid="uid://b33lb6oqou8we"]
+
+[ext_resource type="Script" uid="uid://eq00ajhbkh3u" path="res://scripts/chat_message_board_script.gd" id="1_c16fi"]
+
+[node name="chat_message_board" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c16fi")
+
+[node name="top_panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="back_button" type="Button" parent="top_panel"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 40.0
+text = "<"
+
+[node name="title" type="Label" parent="top_panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.109
+anchor_right = 0.109
+offset_left = -0.145
+offset_right = 360.855
+offset_bottom = 40.0
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="message_log" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.056
+anchor_right = 1.0
+anchor_bottom = 0.056
+offset_top = -0.32
+offset_bottom = 644.68
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="message_panel" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.951
+anchor_bottom = 0.951
+offset_top = 0.279968
+offset_right = 406.0
+offset_bottom = 35.28
+
+[node name="message_input" type="TextEdit" parent="message_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Wiadomość"
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="message_send_button" type="Button" parent="message_panel"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = ">"
+
+[connection signal="pressed" from="top_panel/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="message_panel/message_send_button" to="." method="_on_message_send_button_pressed"]

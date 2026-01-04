@@ -141,4 +141,4 @@ func _on_new_chat_panel_closed() -> void:
 	create_chat_overlay.hide()
 
 func on_chat_opened(chat_id: int) -> void:
-	print("open chat: ", chat_id)
+	open_chat.emit(chat_id);

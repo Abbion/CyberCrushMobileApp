@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://cshv3dqh1nyxj"]
 
-[ext_resource type="Script" uid="uid://cp5rmln1itjl1" path="res://scripts/chat_list_panel_script.gd" id="1_w8xra"]
+[ext_resource type="Script" uid="uid://cp5rmln1itjl1" path="res://scripts/chat_list_script.gd" id="1_rjbdb"]
 [ext_resource type="PackedScene" uid="uid://d32k05xyh4brq" path="res://scenes/custom_controlls/new_chat.tscn" id="2_6j0wu"]
 
-[node name="chat_list_panel" type="Control"]
+[node name="chat_list" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_w8xra")
+script = ExtResource("1_rjbdb")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
