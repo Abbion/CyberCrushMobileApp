@@ -133,12 +133,24 @@ func get_user_chats():
 	if result != OK:
 		print("An error occured in the user chats HTTP request.")
 
+func clear_chat_list() -> void:
+	for entry in chat_list.get_children():
+		chat_list.remove_child(entry)
+		entry.queue_free()
+
+func refresh_chat_list() -> void:
+	clear_chat_list()
+	get_user_chats()
+	pass
+
+func reset_layout() -> void:
+	create_chat_overlay.hide()
 
 func _on_add_chat_pressed() -> void:
 	create_chat_overlay.show()
 
 func _on_new_chat_panel_closed() -> void:
-	create_chat_overlay.hide()
+	reset_layout()
 
 func on_chat_opened(chat_id: int) -> void:
 	open_chat.emit(chat_id);

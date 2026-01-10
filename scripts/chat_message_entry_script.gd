@@ -3,10 +3,13 @@ extends Control
 @export var message_alignment: GlobalTypes.CHAT_MESSAGE_ALIGNMENT
 @export var message_text: String
 @export var timestamp_text: String
+@export var sender_username: String
 
 @onready var message_container: VBoxContainer = $message_container
 @onready var message_label: Label = $message_container/message_label
-@onready var timestamp_label: Label = $message_container/timestamp_label
+@onready var timestamp_label: Label = $message_container/message_metadata/timestamp_label
+@onready var sender_username_label: Label = $message_container/message_metadata/sender_username_label
+@onready var message_metadata: HBoxContainer = $message_container/message_metadata
 @onready var message_background: ColorRect = $message_background
 
 const message_container_separator = 5
@@ -14,6 +17,7 @@ const message_container_separator = 5
 func _ready() -> void:
 	message_label.text = message_text
 	timestamp_label.text = timestamp_text
+	sender_username_label.text = sender_username
 	
 	var lines = message_text.split("\n")
 	var max_line_width: float = 0.0
@@ -34,6 +38,7 @@ func _ready() -> void:
 		message_container.set_anchors_preset(Control.PRESET_TOP_LEFT)
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		message_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		message_metadata.alignment = BoxContainer.ALIGNMENT_BEGIN
 	else:
 		var page_width = size.x
 		var message_container_position = page_width - message_container.size.x
@@ -43,6 +48,7 @@ func _ready() -> void:
 		message_container.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		message_label.size_flags_horizontal = Control.SIZE_SHRINK_END
+		message_metadata.alignment = BoxContainer.ALIGNMENT_END
 
 	var message_label_height = 0.0
 	for i in range(message_label.get_line_count()):

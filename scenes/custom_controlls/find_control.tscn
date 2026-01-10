@@ -27,6 +27,5 @@ grow_horizontal = 2
 allow_search = false
 auto_height = true
 
-[connection signal="editing_toggled" from="input_field" to="." method="_on_editing_toggled"]
 [connection signal="text_changed" from="input_field" to="." method="_on_text_changed"]
 [connection signal="item_selected" from="suggestion_list" to="." method="_on_suggestion_list_item_selected"]

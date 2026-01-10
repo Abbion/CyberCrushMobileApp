@@ -25,9 +25,10 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
-text = "Last_message "
+text = "Last_message"
 clip_text = true
 text_overrun_behavior = 3
+max_lines_visible = 1
 
 [node name="last_timestamp_label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2

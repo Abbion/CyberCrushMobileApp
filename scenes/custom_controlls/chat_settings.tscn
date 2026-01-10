@@ -1,0 +1,159 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhthbs3apue7x"]
+
+[ext_resource type="Script" uid="uid://brm5junmsma2t" path="res://scripts/chat_settings_script.gd" id="1_1my76"]
+[ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_d7itt"]
+
+[node name="chat_settings" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1my76")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="selector_view" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -122.5
+offset_top = -109.5
+offset_right = 122.5
+offset_bottom = 109.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="view_title" type="Label" parent="ColorRect/selector_view"]
+layout_mode = 2
+text = "Zarządzanie uczestnikami czatu"
+horizontal_alignment = 1
+
+[node name="free_slots_label" type="Label" parent="ColorRect/selector_view"]
+layout_mode = 2
+text = "Wolne miejsca: ?"
+horizontal_alignment = 1
+
+[node name="add_user_button" type="Button" parent="ColorRect/selector_view"]
+layout_mode = 2
+text = "Dodaj"
+
+[node name="remove_user_button" type="Button" parent="ColorRect/selector_view"]
+layout_mode = 2
+text = "Usuń"
+
+[node name="back_button" type="Button" parent="ColorRect/selector_view"]
+layout_mode = 2
+text = "wróć"
+
+[node name="add_user_view" type="Control" parent="ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="view" type="VBoxContainer" parent="ColorRect/add_user_view"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.5
+offset_top = -117.5
+offset_right = 100.5
+offset_bottom = 117.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="view_title" type="Label" parent="ColorRect/add_user_view/view"]
+layout_mode = 2
+text = "Dodaj użytkownika"
+horizontal_alignment = 1
+
+[node name="username_label" type="Label" parent="ColorRect/add_user_view/view"]
+layout_mode = 2
+text = "Nazwa użytkownika:"
+
+[node name="find_control_placeholder" type="Panel" parent="ColorRect/add_user_view/view"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 26.58)
+layout_mode = 2
+
+[node name="add_button" type="Button" parent="ColorRect/add_user_view/view"]
+layout_mode = 2
+text = "Dodaj"
+
+[node name="back_button" type="Button" parent="ColorRect/add_user_view/view"]
+layout_mode = 2
+text = "wróć"
+
+[node name="find_control" parent="ColorRect/add_user_view" instance=ExtResource("1_d7itt")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -80.0
+offset_top = -23.0
+offset_right = 119.0
+offset_bottom = 7.0
+
+[node name="remove_user_view" type="VBoxContainer" parent="ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -125.0
+offset_right = 109.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="view_title" type="Label" parent="ColorRect/remove_user_view"]
+layout_mode = 2
+text = "Usuń użytkownika"
+
+[node name="users_list_container" type="ScrollContainer" parent="ColorRect/remove_user_view"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="user_list" type="VBoxContainer" parent="ColorRect/remove_user_view/users_list_container"]
+layout_mode = 2
+
+[node name="remove_button" type="Button" parent="ColorRect/remove_user_view"]
+layout_mode = 2
+text = "Usuń"
+
+[node name="back_button" type="Button" parent="ColorRect/remove_user_view"]
+layout_mode = 2
+text = "wróć"
+
+[connection signal="pressed" from="ColorRect/selector_view/add_user_button" to="." method="go_to_add_user_view"]
+[connection signal="pressed" from="ColorRect/selector_view/remove_user_button" to="." method="go_to_remove_user_view"]
+[connection signal="pressed" from="ColorRect/selector_view/back_button" to="." method="close_chat_settings"]
+[connection signal="pressed" from="ColorRect/add_user_view/view/add_button" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="ColorRect/add_user_view/view/back_button" to="." method="go_to_selector_view"]
+[connection signal="pressed" from="ColorRect/remove_user_view/remove_button" to="." method="_on_remove_button_pressed"]
+[connection signal="pressed" from="ColorRect/remove_user_view/back_button" to="." method="go_to_selector_view"]

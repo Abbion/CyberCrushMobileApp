@@ -12,25 +12,32 @@ class DateTime:
 	var minute: int = 0
 	
 	static func from_string(naive_timestamp: String) -> DateTime:
+		# When the serwer sends the timestamp through serialization there is a T -
+		# character that separates the date from time
+		# But when the timestamp is converted into a string the T character is missing
+		# This replace unifies the format
+		naive_timestamp = naive_timestamp.replace("T", " ");
+		
+		# The format is [yyyy-mm-dd hh:mm:ss.ms]
 		var dateTime: DateTime = DateTime.new()
 		var dash_split = naive_timestamp.split("-")
 		
 		if dash_split.size() < 3:
 			return dateTime
 		
-		var t_split = dash_split.get(2).split("T")
+		var dt_split = dash_split.get(2).split(" ")
 		
-		if t_split.size() < 2:
+		if dt_split.size() < 2:
 			return dateTime
 		
-		var time_components = t_split.get(1).split(":")
+		var time_components = dt_split.get(1).split(":")
 		
 		if time_components.size() < 3:
 			return dateTime
 		
 		dateTime.year = int(dash_split.get(0))
 		dateTime.month = int(dash_split.get(1))
-		dateTime.day = int(t_split.get(0))
+		dateTime.day = int(dt_split.get(0))
 		dateTime.hour = int(time_components.get(0))
 		dateTime.minute = int(time_components.get(1))
 		

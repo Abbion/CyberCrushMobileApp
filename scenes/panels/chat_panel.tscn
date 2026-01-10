@@ -9,15 +9,31 @@ script/source = "extends Control
 @onready var chat_list: Control = $chat_list
 @onready var chat_message_board: Control = $chat_message_board
 
-func _on_chat_list_open_chat(chat_id: int) -> void:
+func _ready() -> void:
+	GlobalSignals.new_chat_created.connect(on_chat_created)
+
+func open_chat(chat_id: int) -> void:
 	chat_message_board.load_chat_at_id(chat_id);
 	chat_message_board.visible = true
 	chat_list.visible = false
 
+func _on_chat_list_open_chat(chat_id: int) -> void:
+	open_chat(chat_id)
 
 func _on_chat_message_board_exit_chat() -> void:
-	chat_list.visible = true
-	chat_message_board.visible = false
+	chat_list.refresh_chat_list()
+	chat_list.show()
+	chat_message_board.hide()
+
+func _on_hidden() -> void:
+	chat_list.refresh_chat_list()
+	chat_list.show()
+	chat_message_board.hide()
+
+func on_chat_created(chat_id: int) -> void:
+	open_chat(chat_id)
+	chat_list.refresh_chat_list()
+	chat_list.reset_layout()
 "
 
 [node name="chat_panel" type="Control"]
@@ -36,5 +52,6 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="open_chat" from="chat_list" to="." method="_on_chat_list_open_chat"]
 [connection signal="exit_chat" from="chat_message_board" to="." method="_on_chat_message_board_exit_chat"]

@@ -34,7 +34,15 @@ theme_override_constants/line_spacing = 0
 text = "default"
 autowrap_mode = 3
 
-[node name="timestamp_label" type="Label" parent="message_container"]
+[node name="message_metadata" type="HBoxContainer" parent="message_container"]
+layout_mode = 2
+
+[node name="sender_username_label" type="Label" parent="message_container/message_metadata"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "null"
+
+[node name="timestamp_label" type="Label" parent="message_container/message_metadata"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "null"

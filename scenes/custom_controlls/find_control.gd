@@ -1,29 +1,13 @@
 extends Control
 
-@export var all_suggestions: Array = ["Victor", "Karma", "Amadeus"]
+@export var all_suggestions: PackedStringArray
 @export var max_suggestions: int = 5
 @onready var suggestion_list: ItemList = $suggestion_list
 @onready var find_input: LineEdit = $input_field
 
-var should_hide_suggestion_list = false
-
 func _on_suggestion_list_item_selected(index: int) -> void:
 	find_input.text = suggestion_list.get_item_text(index)
 	suggestion_list.visible = false
-
-func _on_editing_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		should_hide_suggestion_list = false
-		return
-	
-	var valid_input = ""
-	
-	for suggestion in all_suggestions:
-		if suggestion.to_lower() == find_input.text.to_lower():
-			valid_input = suggestion
-	
-	find_input.text = valid_input
-	should_hide_suggestion_list = true;
 
 func _on_text_changed(new_text: String) -> void:
 	suggestion_list.clear()
@@ -40,7 +24,7 @@ func _on_text_changed(new_text: String) -> void:
 	
 	var highest_fit: Dictionary = {}
 	
-	for suggestion in fit_dir.keys():		
+	for suggestion in fit_dir.keys():
 		if len(highest_fit) < max_suggestions:
 			highest_fit[suggestion] = fit_dir[suggestion]
 		else:
@@ -97,7 +81,3 @@ func get_value() -> String:
 
 func clear() -> void:
 	find_input.text = ""
-
-func _process(delta: float) -> void:
-	if should_hide_suggestion_list:
-		suggestion_list.visible = false
