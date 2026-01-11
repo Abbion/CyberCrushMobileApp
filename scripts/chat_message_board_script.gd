@@ -2,12 +2,6 @@ extends Control
 
 var message_entry: PackedScene = preload("res://scenes/custom_controlls/chat_message_entry.tscn")
 
-var get_chat_history_request : HTTPRequest
-const get_chat_history_url = "http://127.0.0.1:3003/get_chat_history"
-
-var get_chat_metadata_request : HTTPRequest
-var get_chat_metadata_url = "http://127.0.0.1:3003/get_chat_metadata"
-
 var chat_socket: WebSocketPeer
 var socket_state: GlobalTypes.REALTIME_CHAT_SOCKET_STATE = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.NULL
 var chat_id: int = -1
@@ -25,19 +19,14 @@ var message_queue: Array
 
 signal exit_chat
 
-func _ready() -> void:
-	get_chat_history_request = HTTPRequest.new()
-	get_chat_history_request.request_completed.connect(get_chat_history_request_completed)
-	add_child(get_chat_history_request)
-	
-	get_chat_metadata_request = HTTPRequest.new()
-	get_chat_metadata_request.request_completed.connect(get_chat_metadata_request_completed)
-	add_child(get_chat_metadata_request)
-
 func load_chat_at_id(id: int) -> void:
 	#TODO After every call check if the id is VALID!!!!
-	get_chat_metadata_at_id(id)
-	get_chat_history_at_id(id)
+	var metadata = await ServerRequest.chat_metadata(id)
+	update_meta_data(metadata)
+	
+	var chat_history = await ServerRequest.chat_history(id)
+	build_message_log(chat_history)
+
 	chat_id = id
 	chat_socket = WebSocketPeer.new()
 	#TODO check the connection_state
@@ -111,7 +100,7 @@ func _process(delta: float) -> void:
 				print("send status: ", send_status)
 	
 
-func build_message_log(messages):
+func build_message_log(messages: Array):
 	for message in messages:
 		var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(message["time_stamp"])
 		create_message_entry(message["message"], message["sender"], dateTime)
@@ -142,75 +131,6 @@ func update_meta_data(metadata: Dictionary) -> void:
 			
 		title.text = partner
 	pass
-
-func get_chat_history_at_id(id: int):
-	var payload = {
-		"token" : AppSessionState.get_server_token(),
-		"chat_id" : id,
-		"history_time_stamp" : null
-	}
-
-	var result = get_chat_history_request.request(
-				get_chat_history_url,
-				GlobalConstants.JSON_HTTP_HEADER,
-				HTTPClient.METHOD_POST,
-				JSON.stringify(payload))
-				
-	if result != OK:
-		print("An error occured in the user chat history HTTP request.")
-
-func get_chat_history_request_completed(ult: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	print("Get user chat history response code: ", response_code)
-	
-	var response_text = body.get_string_from_utf8()
-	var json_response = JSON.new()
-	
-	if json_response.parse(response_text) != OK:
-		print("Get user chat history response was not a valid Json")
-		return
-	
-	var response_data = json_response.data
-	var response_status = response_data["response_status"]
-	
-	if response_status["success"] == false:
-		print(response_status["status_message"])
-		return
-		
-	build_message_log(response_data["messages"])
-
-func get_chat_metadata_at_id(id: int):
-	var payload = {
-		"token" : AppSessionState.get_server_token(),
-		"chat_id" : id,
-	}
-
-	var result = get_chat_metadata_request.request(
-				get_chat_metadata_url,
-				GlobalConstants.JSON_HTTP_HEADER,
-				HTTPClient.METHOD_POST,
-				JSON.stringify(payload))
-				
-	if result != OK:
-		print("An error occured in the chat metadata HTTP request.")
-
-func get_chat_metadata_request_completed(ult: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	print("Get chat metadata response code: ", response_code)
-	
-	var response_text = body.get_string_from_utf8()
-	var json_response = JSON.new()
-	
-	if json_response.parse(response_text) != OK:
-		print("Get chat metadata response was not a valid Json")
-		return
-	
-	var response_data = json_response.data
-	var response_status = response_data["response_status"]
-	
-	if response_status["success"] == false:
-		print(response_status["status_message"])
-		return
-	
-	update_meta_data(response_data["metadata"])
 
 func clear_chat() -> void:
 	for entry in message_log.get_children():

@@ -12,11 +12,6 @@ var transition_in_progress: bool = false
 var selector_visible: bool = true
 var initial_background_bottom_offset: int = 0
 
-var create_new_direct_chat_request : HTTPRequest
-const create_new_direct_chat_url = "http://127.0.0.1:3003/create_new_direct_chat"
-var create_new_group_chat_request : HTTPRequest
-const create_new_group_chat_url = "http://127.0.0.1:3003/create_new_group_chat"
-
 @onready var background = $background
 @onready var new_chat_selector_layout: VBoxContainer = $background/new_chat_selector_layout
 @onready var new_direct_chat_layout: Control = $background/new_direct_chat_layout
@@ -26,14 +21,6 @@ const create_new_group_chat_url = "http://127.0.0.1:3003/create_new_group_chat"
 
 func _ready() -> void:
 	initial_background_bottom_offset = background.offset_bottom
-	
-	create_new_direct_chat_request = HTTPRequest.new()
-	create_new_direct_chat_request.request_completed.connect(create_new_direct_chat_request_completed)
-	add_child(create_new_direct_chat_request)
-	
-	create_new_group_chat_request = HTTPRequest.new()
-	create_new_group_chat_request.request_completed.connect(create_new_group_chat_request_completed)
-	add_child(create_new_group_chat_request)
 
 #func _process(delta: float) -> void:
 	#if transition_in_progress == false:
@@ -98,87 +85,15 @@ func _on_new_group_chat_button_pressed() -> void:
 	current_state = GROUP_CHAT
 	new_chat_selector_layout.hide()
 	new_group_chat_layout.show()
-	#new_group_chat_layout.modulate.a = 0.0
-
-func create_new_direct_chat(partner_username: String):
-	var payload = {
-		"token" : AppSessionState.get_server_token(),
-		"partner_username" : partner_username,
-		"creation_message" : AppSessionState.get_username() + " rozpoczął czat"
-	}
-
-	var result = create_new_direct_chat_request.request(
-				create_new_direct_chat_url,
-				GlobalConstants.JSON_HTTP_HEADER,
-				HTTPClient.METHOD_POST,
-				JSON.stringify(payload))
-				
-	if result != OK:
-		print("An error occured in the direct chat creation HTTP request.")
-
-func create_new_direct_chat_request_completed(ult: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	print("Create direct chat response code: ", response_code)
-	
-	var response_text = body.get_string_from_utf8()
-	var json_response = JSON.new()
-	
-	if json_response.parse(response_text) != OK:
-		print("Create direct chat response was not a valid Json")
-		return
-	
-	var response_data = json_response.data
-	var response_status = response_data["response_status"]
-	
-	#TODO Add a code for already existing chat
-	#TODO ITS exists not exsists
-	if response_status["success"] == false:
-		if response_status["status_message"] != "Direct chat already exsits!":
-			print(response_status["status_message"])
-			return
-	
-	GlobalSignals.new_chat_created.emit(response_data["chat_id"])
-	reset_state()
-
-func create_new_group_chat(title: String):
-	var payload = {
-		"token" : AppSessionState.get_server_token(),
-		"title" : title,
-		"creation_message" : AppSessionState.get_username() + " stworzył czat"
-	}
-
-	var result = create_new_group_chat_request.request(
-				create_new_group_chat_url,
-				GlobalConstants.JSON_HTTP_HEADER,
-				HTTPClient.METHOD_POST,
-				JSON.stringify(payload))
-				
-	if result != OK:
-		print("An error occured in the group chat creation HTTP request.")
-
-func create_new_group_chat_request_completed(ult: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	print("Create group chat response code: ", response_code)
-	
-	var response_text = body.get_string_from_utf8()
-	var json_response = JSON.new()
-	
-	if json_response.parse(response_text) != OK:
-		print("Create group chat response was not a valid Json")
-		return
-	
-	#Implement on success false
-	var response_data = json_response.data
-	var response_status =  response_data["response_status"]
-	
-	if response_status["success"] == false:
-		print(response_status["status_message"])
-		return
-	
-	GlobalSignals.new_chat_created.emit(response_data["chat_id"])
-	reset_state()
+	#new_group_chat_layout.modulate.a = 0.0	
 
 func _on_begin_direct_chat_button_pressed() -> void:
 	var partner_username = direct_chat_username_input.get_value()
-	create_new_direct_chat(partner_username)
+	var chat_id = await ServerRequest.create_direct_chat(partner_username)
+	if chat_id < 0:
+		return
+	GlobalSignals.new_chat_created.emit(chat_id)
+	reset_state()
 
 func _on_begin_group_chat_button_pressed() -> void:
 	var title: String = group_chat_title_input.text;
@@ -188,5 +103,9 @@ func _on_begin_group_chat_button_pressed() -> void:
 		return #INFORM USER
 	if title.length() < MIN_GROUP_CHAT_TITLE_LENGTH:
 		return
-		
-	create_new_group_chat(title)
+	
+	var chat_id = await ServerRequest.create_group_chat(title)
+	if chat_id < 0:
+		return
+	GlobalSignals.new_chat_created.emit(chat_id)
+	reset_state()

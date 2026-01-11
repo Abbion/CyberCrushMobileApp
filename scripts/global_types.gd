@@ -4,6 +4,11 @@ enum CHAT_MESSAGE_ALIGNMENT { LEFT, RIGHT }
 enum CHAT_TYPE{ DIRECT, GROUP }
 enum REALTIME_CHAT_SOCKET_STATE{ NULL, CREATED, INITIALIZED, CONNECTED, CLOSED }
 
+class UserData:
+	var username: String = ""
+	var personal_number: int = 0
+	var extra_data: Dictionary = {}
+
 class DateTime:
 	var year: int = 0
 	var month: int = 0

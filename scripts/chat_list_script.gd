@@ -15,35 +15,15 @@ signal open_chat(chat_id: int)
 
 var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.tscn")
 
-var get_user_chats_request : HTTPRequest
-const get_user_chats_url = "http://127.0.0.1:3003/get_user_chats"
-
 func _ready() -> void:
-	get_user_chats_request = HTTPRequest.new()
-	get_user_chats_request.request_completed.connect(get_user_chats_request_completed)
-	add_child(get_user_chats_request)
-	get_user_chats()
+	update_chats_list()
 
-func get_user_chats_request_completed(ult: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	print("Get user chats response code: ", response_code)
+func update_chats_list():
+	var user_chats = await ServerRequest.user_chats()
+	var direct_chats = user_chats["direct"]
+	var group_chats = user_chats["group"]
 	
-	var response_text = body.get_string_from_utf8()
-	var json_response = JSON.new()
-	
-	if json_response.parse(response_text) != OK:
-		print("Get user chats response was not a valid Json")
-		return
-	
-	var response_data = json_response.data
-	var response_status = response_data["response_status"]
-	
-	if response_status["success"] == false:
-		print(response_status["message"])
-		return
-	
-	var direct_chats = response_data["direct_chats"]
-	var group_chats = response_data["group_chats"]
-	
+	clear_chats_list()
 	var sorted_chats: Array
 	
 	for chat in direct_chats:
@@ -74,8 +54,6 @@ func get_user_chats_request_completed(ult: int, response_code: int, headers: Pac
 		var time_b = [b_timestamp["year"], b_timestamp["month"], b_timestamp["day"], b_timestamp["hour"], b_timestamp["minute"], b_timestamp["second"]]
 		return time_a > time_b
 	)
-	
-	print(direct_chats)
 	
 	for chat in sorted_chats:
 		var chat_type = chat.chat_type
@@ -119,29 +97,13 @@ func get_user_chats_request_completed(ult: int, response_code: int, headers: Pac
 			chat_entry_instance.chat_opened.connect(on_chat_opened)
 			chat_list.add_child(chat_entry_instance)
 
-func get_user_chats():
-	var payload = {
-		"token" : AppSessionState.get_server_token()
-	}
-
-	var result = get_user_chats_request.request(
-				get_user_chats_url,
-				GlobalConstants.JSON_HTTP_HEADER,
-				HTTPClient.METHOD_POST,
-				JSON.stringify(payload))
-				
-	if result != OK:
-		print("An error occured in the user chats HTTP request.")
-
-func clear_chat_list() -> void:
+func clear_chats_list() -> void:
 	for entry in chat_list.get_children():
 		chat_list.remove_child(entry)
 		entry.queue_free()
 
 func refresh_chat_list() -> void:
-	clear_chat_list()
-	get_user_chats()
-	pass
+	update_chats_list()
 
 func reset_layout() -> void:
 	create_chat_overlay.hide()
