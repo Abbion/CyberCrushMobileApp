@@ -9,7 +9,7 @@ void fragment() {
     float dist_to_edge = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
     if (dist_to_edge < outline_thickness) {
         COLOR = outline_color;
-    } 
+    }
 	else {
         COLOR = fill_color;
     }

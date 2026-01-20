@@ -28,7 +28,9 @@ ServerRequest="*res://scripts/server_request.gd"
 
 window/size/viewport_width=405
 window/size/viewport_height=720
+window/handheld/orientation=1
 
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

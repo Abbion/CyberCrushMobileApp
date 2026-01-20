@@ -1,48 +1,60 @@
 extends Node
 
+#TODO Add time outs to requests
+
 enum GroupChatUpdateAction {
 	ADD_MEMBER,
 	REMOVE_MEMBER
 }
 
-const login_url = "http://127.0.0.1:3000/login"
+const dev_ip = "127.0.0.1"
+const local_ip = "192.168.50.162"
+const current_ip = dev_ip
+
+const login_url = "http://%s:3000/login" % current_ip
 var login_request:  HTTPRequest
 
-const token_validation_url = "http://127.0.0.1:3000/validate_token"
+const token_validation_url = "http://%s:3000/validate_token" % current_ip
 var validation_request: HTTPRequest
 
-const get_user_data_url = "http://127.0.0.1:3001/get_user_data"
+const get_user_data_url = "http://%s:3001/get_user_data" % current_ip
 var user_data_request: HTTPRequest
 
-const get_all_usernames_url = "http://127.0.0.1:3001/get_all_usernames"
+const get_all_usernames_url = "http://%s:3001/get_all_usernames" % current_ip
 var get_all_usernames_request : HTTPRequest
 
-const get_user_chats_url = "http://127.0.0.1:3003/get_user_chats"
+const get_user_chats_url = "http://%s:3003/get_user_chats" % current_ip
 var get_user_chats_request : HTTPRequest
 
-const get_chat_history_url = "http://127.0.0.1:3003/get_chat_history"
+const get_chat_history_url = "http://%s:3003/get_chat_history" % current_ip
 var get_chat_history_request : HTTPRequest
 
-const get_chat_metadata_url = "http://127.0.0.1:3003/get_chat_metadata"
+const get_chat_metadata_url = "http://%s:3003/get_chat_metadata" % current_ip
 var get_chat_metadata_request : HTTPRequest
 
-const update_group_chat_member_url = "http://127.0.0.1:3003/update_group_chat_member"
+const update_group_chat_member_url = "http://%s:3003/update_group_chat_member" % current_ip
 var update_group_chat_member_request : HTTPRequest
 
-const create_direct_chat_url = "http://127.0.0.1:3003/create_new_direct_chat"
+const create_direct_chat_url = "http://%s:3003/create_new_direct_chat" % current_ip
 var create_direct_chat_request : HTTPRequest
 
-const create_group_chat_url = "http://127.0.0.1:3003/create_new_group_chat"
+const create_group_chat_url = "http://%s:3003/create_new_group_chat" % current_ip
 var create_group_chat_request : HTTPRequest
 
-const get_user_funds_url = "http://127.0.0.1:3002/get_user_funds"
+const get_user_funds_url = "http://%s:3002/get_user_funds" % current_ip
 var get_user_funds_request : HTTPRequest
 
-const transfer_funds_url = "http://127.0.0.1:3002/transfer_funds"
+const transfer_funds_url = "http://%s:3002/transfer_funds" % current_ip
 var transfer_funds_request : HTTPRequest
 
-const get_user_transaction_history_url = "http://127.0.0.1:3002/get_user_transaction_history"
+const get_user_transaction_history_url = "http://%s:3002/get_user_transaction_history" % current_ip
 var get_user_transaction_history_request : HTTPRequest
+
+const get_news_feed_url = "http://%s:3004/get_news_feed" % current_ip
+var get_news_feed_request: HTTPRequest
+
+const post_news_article_url = "http://%s:3004/post_news_article" % current_ip
+var post_news_article_request: HTTPRequest
 
 func _ready() -> void:
 	login_request = HTTPRequest.new()
@@ -83,6 +95,12 @@ func _ready() -> void:
 	
 	get_user_transaction_history_request = HTTPRequest.new()
 	add_child(get_user_transaction_history_request)
+	
+	get_news_feed_request = HTTPRequest.new()
+	add_child(get_news_feed_request)
+	
+	post_news_article_request = HTTPRequest.new()
+	add_child(post_news_article_request)
 
 func login(username: String, password: String) -> String:
 	#=Request=============================================================
@@ -122,7 +140,7 @@ func login(username: String, password: String) -> String:
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_data["status_message"])
+		print(response_status["status_message"])
 		return ""
 	
 	var token = response_data["token"]
@@ -667,3 +685,83 @@ func bank_transaction_history() -> Array:
 		return Array()
 	
 	return response_data["transactions"]
+
+func news_feed() -> Array:
+	#=Request=============================================================
+	var request_state = get_news_feed_request.request(get_news_feed_url)
+	
+	if request_state != OK:
+		print("Getting news feed failed. HTTP request state: %s" % request_state)
+		return PackedStringArray()
+		
+	var response = await get_news_feed_request.request_completed
+	#=Response============================================================
+	var response_state: int = response[0]
+	var response_code: int = response[1]
+	var headers: PackedStringArray = response[2]
+	var body: PackedByteArray = response[3]
+	
+	if response_state != HTTPRequest.RESULT_SUCCESS:
+		print("Getting news feed failed. HTTP response state: %s code: %s" % 
+			[response_state, response_code])
+		return PackedStringArray()
+	#=Parse===============================================================
+	var response_text = body.get_string_from_utf8()
+	var json_response = JSON.new()
+	
+	if json_response.parse(response_text) != OK:
+		print("Getting news feed failed. Json cannot parse response")
+		return PackedStringArray()
+	
+	var response_data = json_response.data
+	var response_status = response_data["response_status"]
+	
+	if response_status["success"] == false:
+		print(response_status["status_message"])
+		return PackedStringArray()
+	
+	return response_data["articles"]
+
+func post_news_article(title: String, content: String) -> bool:
+	#=Request=============================================================
+	var payload = {
+		"token" : AppSessionState.get_server_token(),
+		"title" : title,
+		"content" : content
+	}
+	
+	var request_state = post_news_article_request.request(post_news_article_url,
+				GlobalConstants.JSON_HTTP_HEADER,
+				HTTPClient.METHOD_POST,
+				JSON.stringify(payload))
+	
+	if request_state != OK:
+		print("Posting news article failed. HTTP request state: %s" % request_state)
+		return false
+	
+	var response = await post_news_article_request.request_completed
+	#=Response============================================================
+	var response_state: int = response[0]
+	var response_code: int = response[1]
+	var headers: PackedStringArray = response[2]
+	var body: PackedByteArray = response[3]
+	
+	if response_state != HTTPRequest.RESULT_SUCCESS:
+		print("Posting news article failed. HTTP response state: %s code: %s" %
+				[response_state, response_code])
+		return false
+	#=Parse===============================================================
+	var response_text = body.get_string_from_utf8()
+	var json_response = JSON.new()
+	
+	if json_response.parse(response_text) != OK:
+		print("Posting news article failed. Json cannot parse response")
+		return false
+	
+	var response_data = json_response.data
+	
+	if response_data["success"] == false:
+		print(response_data["status_message"])
+		return false
+	
+	return true

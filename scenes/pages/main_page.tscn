@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bt5wtau8jm4ev"]
+[gd_scene load_steps=8 format=3 uid="uid://bt5wtau8jm4ev"]
 
 [ext_resource type="Script" uid="uid://b45tryrl3k5w4" path="res://scripts/main_page_script.gd" id="1_x7tum"]
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://0506af3w1mki" path="res://scenes/panels/bank_panel.tscn" id="3_6lmqk"]
 [ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
 [ext_resource type="PackedScene" uid="uid://dfie8i6cij8t7" path="res://scenes/panels/chat_panel.tscn" id="5_esk2p"]
+[ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
 
 [node name="MainPage" type="Control"]
 layout_mode = 3
@@ -38,10 +39,14 @@ visible = false
 layout_mode = 2
 
 [node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
+visible = false
 layout_mode = 2
 
 [node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
 visible = false
+layout_mode = 2
+
+[node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
 layout_mode = 2
 
 [node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]
@@ -53,3 +58,4 @@ color = Color(0, 0, 0, 1)
 [connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
 [connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]
 [connection signal="my_id_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_my_id_selected"]
+[connection signal="socials_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_socials_selected"]

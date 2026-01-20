@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciim22jn3qi4d"]
+
+[ext_resource type="Script" uid="uid://6myg17qx0kd2" path="res://scripts/news_article_entry_script.gd" id="1_m7ei6"]
+
+[node name="news_article_entry" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m7ei6")
+
+[node name="article" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="publish_data" type="HBoxContainer" parent="article"]
+layout_mode = 2
+
+[node name="author_label" type="Label" parent="article/publish_data"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 12
+text = "Author null"
+
+[node name="date_label" type="Label" parent="article/publish_data"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 12
+text = "Date null"
+
+[node name="title_label" type="Label" parent="article"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Title null"
+
+[node name="content_label" type="Label" parent="article"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Content null"
+autowrap_mode = 3
