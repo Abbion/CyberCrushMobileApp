@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bt5wtau8jm4ev"]
+[gd_scene load_steps=8 format=3 uid="uid://bt5wtau8jm4ev"]
 
 [ext_resource type="Script" uid="uid://b45tryrl3k5w4" path="res://scripts/main_page_script.gd" id="1_x7tum"]
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
+[ext_resource type="PackedScene" uid="uid://cc7if8n618gcj" path="res://scenes/custom_controlls/top_bar.tscn" id="2_ued0y"]
+[ext_resource type="PackedScene" uid="uid://0506af3w1mki" path="res://scenes/panels/bank_panel.tscn" id="3_6lmqk"]
+[ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
+[ext_resource type="PackedScene" uid="uid://dfie8i6cij8t7" path="res://scenes/panels/chat_panel.tscn" id="5_esk2p"]
+[ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
 
 [node name="MainPage" type="Control"]
 layout_mode = 3
@@ -19,32 +24,38 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
+[node name="top_bar" parent="VBoxContainer" instance=ExtResource("2_ued0y")]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
-color = Color(1, 0.501961, 1, 1)
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 627)
+custom_minimum_size = Vector2(0, 632)
 layout_mode = 2
 
-[node name="my_id_page" type="VBoxContainer" parent="VBoxContainer/PanelContainer"]
+[node name="bank_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_6lmqk")]
+visible = false
 layout_mode = 2
 
-[node name="username" type="Label" parent="VBoxContainer/PanelContainer/my_id_page"]
-custom_minimum_size = Vector2(30, 30)
+[node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
+visible = false
 layout_mode = 2
-text = "username:"
-autowrap_mode = 3
 
-[node name="user_data" type="Label" parent="VBoxContainer/PanelContainer/my_id_page"]
-custom_minimum_size = Vector2(30, 30)
+[node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
+visible = false
 layout_mode = 2
-text = "user data:"
-autowrap_mode = 3
+
+[node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
+layout_mode = 2
 
 [node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 1
+color = Color(0, 0, 0, 1)
+
+[connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
+[connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]
+[connection signal="my_id_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_my_id_selected"]
+[connection signal="socials_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_socials_selected"]

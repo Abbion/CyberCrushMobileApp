@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfie8i6cij8t7"]
+
+[ext_resource type="PackedScene" uid="uid://b33lb6oqou8we" path="res://scenes/custom_controlls/chat_message_board.tscn" id="1_nvn48"]
+[ext_resource type="PackedScene" uid="uid://cshv3dqh1nyxj" path="res://scenes/custom_controlls/chat_list.tscn" id="2_ke17o"]
+
+[sub_resource type="GDScript" id="GDScript_nvn48"]
+script/source = "extends Control
+
+@onready var chat_list: Control = $chat_list
+@onready var chat_message_board: Control = $chat_message_board
+
+func _ready() -> void:
+	GlobalSignals.new_chat_created.connect(on_chat_created)
+
+func open_chat(chat_id: int) -> void:
+	chat_message_board.load_chat_at_id(chat_id);
+	chat_message_board.visible = true
+	chat_list.visible = false
+
+func _on_chat_list_open_chat(chat_id: int) -> void:
+	open_chat(chat_id)
+
+func _on_chat_message_board_exit_chat() -> void:
+	chat_list.refresh_chat_list()
+	chat_list.show()
+	chat_message_board.hide()
+
+func _on_hidden() -> void:
+	chat_list.refresh_chat_list()
+	chat_list.show()
+	chat_message_board.hide()
+
+func on_chat_created(chat_id: int) -> void:
+	open_chat(chat_id)
+	chat_list.refresh_chat_list()
+	chat_list.reset_layout()
+"
+
+[node name="chat_panel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_nvn48")
+
+[node name="chat_list" parent="." instance=ExtResource("2_ke17o")]
+layout_mode = 1
+
+[node name="chat_message_board" parent="." instance=ExtResource("1_nvn48")]
+visible = false
+layout_mode = 1
+
+[connection signal="hidden" from="." to="." method="_on_hidden"]
+[connection signal="open_chat" from="chat_list" to="." method="_on_chat_list_open_chat"]
+[connection signal="exit_chat" from="chat_message_board" to="." method="_on_chat_message_board_exit_chat"]

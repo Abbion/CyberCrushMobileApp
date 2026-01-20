@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://5damwlt2tv6e"]
+
+[ext_resource type="Script" uid="uid://brnrfuo3a4xlg" path="res://scripts/chat_message_entry_script.gd" id="1_7xolx"]
+
+[node name="chat_message_entry" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7xolx")
+message_alignment = 1
+message_text = "default"
+timestamp_text = "null"
+
+[node name="message_background" type="ColorRect" parent="."]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.487756, 1.02879e-06, 3.36915e-07, 1)
+
+[node name="message_container" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 250.0
+offset_bottom = 720.0
+theme_override_constants/separation = 5
+
+[node name="message_label" type="Label" parent="message_container"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = 0
+text = "default"
+autowrap_mode = 3
+
+[node name="message_metadata" type="HBoxContainer" parent="message_container"]
+layout_mode = 2
+
+[node name="sender_username_label" type="Label" parent="message_container/message_metadata"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "null"
+
+[node name="timestamp_label" type="Label" parent="message_container/message_metadata"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "null"

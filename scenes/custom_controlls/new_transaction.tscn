@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://6vc5femhj1f6"]
+
+[ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_6cxfc"]
+[ext_resource type="Script" uid="uid://dnhrersqcwcso" path="res://scripts/new_transaction_script.gd" id="1_svxld"]
+
+[node name="new_transaction" type="ColorRect"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 52.0
+offset_top = 163.0
+offset_right = -53.0
+offset_bottom = 563.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.511122, 0.674613, 0.713909, 1)
+script = ExtResource("1_svxld")
+
+[node name="transaction_elements" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.9
+offset_top = 27.0
+offset_bottom = 379.0
+theme_override_constants/separation = 10
+
+[node name="info_label" type="Label" parent="transaction_elements"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Nowy przelew"
+horizontal_alignment = 1
+
+[node name="funds_label" type="Label" parent="transaction_elements"]
+layout_mode = 2
+text = "Dostępne środki:"
+
+[node name="recipient_label" type="Label" parent="transaction_elements"]
+layout_mode = 2
+text = "Odbiorca przelewu"
+
+[node name="recepiant_input_placeholder" type="Panel" parent="transaction_elements"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+
+[node name="title_label" type="Label" parent="transaction_elements"]
+layout_mode = 2
+text = "Tytuł przelewu"
+
+[node name="title_input" type="LineEdit" parent="transaction_elements"]
+layout_mode = 2
+max_length = 18
+
+[node name="amount_label" type="Label" parent="transaction_elements"]
+layout_mode = 2
+text = "Kwota przelewu"
+
+[node name="amount_input" type="LineEdit" parent="transaction_elements"]
+layout_mode = 2
+max_length = 16
+virtual_keyboard_type = 2
+
+[node name="transaction_actions" type="HBoxContainer" parent="transaction_elements"]
+layout_mode = 2
+
+[node name="cancel_action" type="Button" parent="transaction_elements/transaction_actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Anuluj"
+
+[node name="transer_action" type="Button" parent="transaction_elements/transaction_actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Wyślij"
+
+[node name="recepiant_input" parent="." instance=ExtResource("1_6cxfc")]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.1
+anchor_top = 0.355
+anchor_right = 0.9
+anchor_bottom = 0.44
+offset_bottom = -1.52588e-05
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="transaction_elements/transaction_actions/transer_action" to="." method="_on_transer_action_pressed"]

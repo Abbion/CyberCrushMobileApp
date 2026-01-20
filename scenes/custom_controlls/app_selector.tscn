@@ -1,10 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://1m4opeh0nxo1"]
+[gd_scene load_steps=11 format=3 uid="uid://1m4opeh0nxo1"]
 
 [ext_resource type="Texture2D" uid="uid://c385w3al0qbtp" path="res://assets/icons/fire-flame.svg" id="1_jhmka"]
 [ext_resource type="Script" uid="uid://c8pwjporhbij8" path="res://scripts/app_selector_script.gd" id="1_qxl34"]
+[ext_resource type="Shader" uid="uid://ojxxnrjnya5p" path="res://shaders/color_2d.gdshader" id="2_modrm"]
 [ext_resource type="Texture2D" uid="uid://c4besegrkdauw" path="res://assets/icons/bank.svg" id="2_qxl34"]
 [ext_resource type="Texture2D" uid="uid://tdv8abpu0yuj" path="res://assets/icons/message-text.svg" id="3_modrm"]
 [ext_resource type="Texture2D" uid="uid://bhafsyyrnrf6p" path="res://assets/icons/user-scan.svg" id="4_3wr1x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wr1x"]
+shader = ExtResource("2_modrm")
+shader_parameter/color = Vector3(1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_modrm"]
+shader = ExtResource("2_modrm")
+shader_parameter/color = Vector3(1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kamf"]
+shader = ExtResource("2_modrm")
+shader_parameter/color = Vector3(1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wh21d"]
+shader = ExtResource("2_modrm")
+shader_parameter/color = Vector3(1, 1, 1)
 
 [node name="app_selector" type="ColorRect"]
 anchors_preset = 12
@@ -15,7 +32,7 @@ offset_top = -66.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
-color = Color(0.0329756, 0.150039, 0.181497, 1)
+color = Color(0.28, 0.28, 0.28, 1)
 script = ExtResource("1_qxl34")
 
 [node name="app_container" type="HBoxContainer" parent="."]
@@ -29,6 +46,7 @@ theme_override_constants/separation = 65
 alignment = 1
 
 [node name="socials" type="TextureButton" parent="app_container"]
+material = SubResource("ShaderMaterial_3wr1x")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -38,6 +56,7 @@ ignore_texture_size = true
 stretch_mode = 4
 
 [node name="bank" type="TextureButton" parent="app_container"]
+material = SubResource("ShaderMaterial_modrm")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -47,6 +66,7 @@ ignore_texture_size = true
 stretch_mode = 4
 
 [node name="messages" type="TextureButton" parent="app_container"]
+material = SubResource("ShaderMaterial_2kamf")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -56,6 +76,7 @@ ignore_texture_size = true
 stretch_mode = 4
 
 [node name="my_id" type="TextureButton" parent="app_container"]
+material = SubResource("ShaderMaterial_wh21d")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
