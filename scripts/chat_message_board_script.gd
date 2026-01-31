@@ -32,6 +32,10 @@ func load_chat_at_id(id: int) -> void:
 	var connection_state = chat_socket.connect_to_url("ws://127.0.0.1:3003/realtime_chat")
 	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED
 
+func _ready() -> void:
+	message_scroll_log.get_v_scroll_bar().connect("value_changed", on_scroll_value_changed)
+	message_scroll_log.get_v_scroll_bar().connect("changed", on_scroll_changed)
+
 func _process(delta: float) -> void:
 	message_board.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
 	
@@ -206,16 +210,13 @@ func close_chat() -> void:
 func _on_tree_exiting() -> void:
 	close_chat()
 
-func _on_scroll_message_log_scroll_started() -> void:
-	anchor_message_log = false
-
-func _on_scroll_message_log_scroll_ended() -> void:
+func on_scroll_value_changed(value: float) -> void:
 	var scroll_message_log_height = message_scroll_log.size.y
 	var max_value = message_scroll_log.get_v_scroll_bar().max_value
-	var scroll_value = message_scroll_log.scroll_vertical
-	if scroll_value == (max_value - scroll_message_log_height):
+	if value == (max_value - scroll_message_log_height):
 		anchor_message_log = true
+	else:
+		anchor_message_log = false
 
-func _on_message_log_resized() -> void:
-	if message_scroll_log != null:
-		scroll_to_bottom()
+func on_scroll_changed() -> void:
+	scroll_to_bottom()

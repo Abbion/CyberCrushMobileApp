@@ -93,7 +93,4 @@ color = Color(0, 0, 0, 0.396078)
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="pressed" from="board/top_panel/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="board/top_panel/HBoxContainer/chat_settings_button" to="." method="_on_chat_settings_button_pressed"]
-[connection signal="scroll_ended" from="board/scroll_message_log" to="." method="_on_scroll_message_log_scroll_ended"]
-[connection signal="scroll_started" from="board/scroll_message_log" to="." method="_on_scroll_message_log_scroll_started"]
-[connection signal="resized" from="board/scroll_message_log/message_log" to="." method="_on_message_log_resized"]
 [connection signal="pressed" from="board/message_panel/message_send_button" to="." method="_on_message_send_button_pressed"]
