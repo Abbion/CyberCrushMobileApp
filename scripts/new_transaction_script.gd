@@ -1,9 +1,9 @@
-extends ColorRect
+extends Control
 
-@onready var funds_label = $transaction_elements/funds_label
-@onready var title_input = $transaction_elements/title_input
-@onready var amount_input = $transaction_elements/amount_input
-@onready var recepiant_input = $recepiant_input
+@onready var funds_label = $background/transaction_elements/funds_label
+@onready var title_input = $background/transaction_elements/title_input
+@onready var amount_input = $background/transaction_elements/amount_input
+@onready var recepiant_input = $background/recepiant_input
 
 signal transaction_completed(bool)
 var user_funds : int = 0;

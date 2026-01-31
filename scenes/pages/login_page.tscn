@@ -10,26 +10,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0oykn")
+metadata/_edit_use_anchors_ = true
 
-[node name="login_panel" type="VBoxContainer" parent="."]
+[node name="center_container" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -163.5
-offset_top = -99.5
-offset_right = 163.5
-offset_bottom = 99.5
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="username_label" type="Label" parent="login_panel"]
+[node name="aspect_ratio_container" type="AspectRatioContainer" parent="center_container"]
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="login_panel" type="VBoxContainer" parent="center_container/aspect_ratio_container"]
+layout_mode = 2
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="username_label" type="Label" parent="center_container/aspect_ratio_container/login_panel"]
 layout_mode = 2
 text = "username"
 
-[node name="username_input" type="LineEdit" parent="login_panel"]
+[node name="username_input" type="LineEdit" parent="center_container/aspect_ratio_container/login_panel"]
 layout_mode = 2
 placeholder_text = "username"
 context_menu_enabled = false
@@ -37,11 +43,11 @@ emoji_menu_enabled = false
 middle_mouse_paste_enabled = false
 caret_blink = true
 
-[node name="password_label" type="Label" parent="login_panel"]
+[node name="password_label" type="Label" parent="center_container/aspect_ratio_container/login_panel"]
 layout_mode = 2
 text = "password"
 
-[node name="password_input" type="LineEdit" parent="login_panel"]
+[node name="password_input" type="LineEdit" parent="center_container/aspect_ratio_container/login_panel"]
 layout_mode = 2
 placeholder_text = "password"
 context_menu_enabled = false
@@ -51,8 +57,9 @@ caret_blink = true
 secret = true
 secret_character = "*"
 
-[node name="login_button" type="Button" parent="login_panel"]
+[node name="login_button" type="Button" parent="center_container/aspect_ratio_container/login_panel"]
 layout_mode = 2
 text = "Login"
 
-[connection signal="pressed" from="login_panel/login_button" to="." method="_on_login_button_pressed"]
+[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="pressed" from="center_container/aspect_ratio_container/login_panel/login_button" to="." method="_on_login_button_pressed"]

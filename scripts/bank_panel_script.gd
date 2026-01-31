@@ -1,10 +1,11 @@
 extends Control
 
-var transaction_entry : PackedScene = load("res://scenes/custom_controlls/transaction_entry.tscn")
-@onready var transaction_entries : VBoxContainer = $main_panel/transactions_scroll_window/transactions_list
-@onready var funds_label : Label = $main_panel/card/funds_label
-@onready var main_panel_overlay : ColorRect = $main_panel_overlay
-@onready var new_transaction_window : ColorRect = $new_transaction
+var transaction_entry: PackedScene = load("res://scenes/custom_controlls/transaction_entry.tscn")
+@onready var transaction_entries: VBoxContainer = $main_panel/transactions_scroll_window/transactions_list
+@onready var funds_label: Label = $main_panel/card/funds_label
+@onready var main_panel_overlay: ColorRect = $main_panel_overlay
+@onready var main_panel_overlay_center_container: CenterContainer = $main_panel_overlay/center_container
+@onready var new_transaction_window: Control = $main_panel_overlay/center_container/new_transaction
 
 var user_funds : int = 0
 
@@ -13,6 +14,9 @@ func _ready() -> void:
 	
 	var cancel_button : Button = new_transaction_window.find_child("cancel_action");
 	cancel_button.pressed.connect(cancel_new_transaction)
+
+func _process(delta: float) -> void:
+	main_panel_overlay_center_container.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
 
 func update_transaction_history():
 	var transactions = await ServerRequest.bank_transaction_history()

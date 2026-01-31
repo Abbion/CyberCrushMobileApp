@@ -1,8 +1,10 @@
 extends Control
+#get_display_cutouts
 
-@onready var username_input = $login_panel/username_input
-@onready var password_input = $login_panel/password_input
-@onready var login_button = $login_panel/login_button
+@onready var username_input = $center_container/aspect_ratio_container/login_panel/username_input
+@onready var password_input = $center_container/aspect_ratio_container/login_panel/password_input
+@onready var login_button = $center_container/aspect_ratio_container/login_panel/login_button
+@onready var center_container = $center_container
 
 func _ready() -> void:
 	lock_input();
@@ -47,3 +49,6 @@ func unlock_input():
 	username_input.editable = true
 	password_input.editable = true
 	login_button.disabled = false
+
+func _process(delta: float) -> void:
+	center_container.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom()

@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://drrs6k6mnga27" path="res://scripts/my_id_panel_script.gd" id="1_yk5dp"]
 
-[node name="my_id_panel" type="VBoxContainer"]
+[node name="my_id_panel" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,13 +12,28 @@ grow_vertical = 2
 script = ExtResource("1_yk5dp")
 
 [node name="id_entires" type="VBoxContainer" parent="."]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="logout_button" type="Button" parent="."]
 custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.95
+anchor_right = 0.75
+anchor_bottom = 1.0
+offset_left = -0.0600052
+offset_top = -0.0400391
+offset_right = -0.130035
 size_flags_horizontal = 4
 size_flags_vertical = 10
 text = "Logout"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="button_down" from="logout_button" to="." method="_on_logout_button_button_down"]

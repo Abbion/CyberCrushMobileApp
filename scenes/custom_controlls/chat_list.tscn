@@ -19,6 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="chat_list" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -39,23 +40,27 @@ theme_override_font_sizes/font_size = 32
 text = "  +  "
 metadata/_edit_use_anchors_ = true
 
-[node name="create_chat_overlay" type="CenterContainer" parent="."]
+[node name="overlay" type="ColorRect" parent="."]
 visible = false
+custom_minimum_size = Vector2(400, 720)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.188344, 0.151032, 0.043477, 0.762)
 
-[node name="ColorRect" type="ColorRect" parent="create_chat_overlay"]
-custom_minimum_size = Vector2(400, 720)
-layout_mode = 2
-color = Color(0, 0, 0, 0.152941)
+[node name="center_container" type="CenterContainer" parent="overlay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="new_chat" parent="create_chat_overlay" instance=ExtResource("2_6j0wu")]
-custom_minimum_size = Vector2(400, 166)
+[node name="new_chat" parent="overlay/center_container" instance=ExtResource("2_6j0wu")]
 layout_mode = 2
 
 [connection signal="pressed" from="add_chat" to="." method="_on_add_chat_pressed"]
-[connection signal="panel_closed" from="create_chat_overlay/new_chat" to="." method="_on_new_chat_panel_closed"]
+[connection signal="panel_closed" from="overlay/center_container/new_chat" to="." method="_on_new_chat_panel_closed"]

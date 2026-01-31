@@ -1,7 +1,5 @@
 extends Control
 
-var message_entry: PackedScene = preload("res://scenes/custom_controlls/chat_message_entry.tscn")
-
 var chat_socket: WebSocketPeer
 var socket_state: GlobalTypes.REALTIME_CHAT_SOCKET_STATE = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.NULL
 var chat_id: int = -1
@@ -14,8 +12,10 @@ var message_queue: Array
 @onready var message_input: TextEdit = $board/message_panel/message_input
 @onready var chat_settings_button: Button = $board/top_panel/HBoxContainer/chat_settings_button
 @onready var overlay: ColorRect = $overlay
+@onready var message_board = $board
 
 @export var chat_settings: PackedScene;
+@export var message_entry: PackedScene
 
 signal exit_chat
 
@@ -34,6 +34,8 @@ func load_chat_at_id(id: int) -> void:
 	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED
 
 func _process(delta: float) -> void:
+	message_board.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
+	
 	if chat_socket == null:
 		return
 	
@@ -66,9 +68,9 @@ func _process(delta: float) -> void:
 					#TODO close connection and exit
 					return
 				
-				if packet_data["response_code"] != "ConnectionSuccess":
+				#if packet_data["response_code"] != "ConnectionSuccess":
 					#TODO close connection and exit
-					return
+					#return
 				
 				socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED
 		if socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED:
@@ -119,7 +121,7 @@ func update_meta_data(metadata: Dictionary) -> void:
 		if username == chat_admin:
 			chat_settings_button.show()
 		
-		title.text = group_chat_metadata["chat_title"]
+		title.text = group_chat_metadata["title"]
 	else:
 		var direct_chat_metadata = metadata["Direct"]
 		var username_a = direct_chat_metadata["username_a"]
@@ -170,14 +172,18 @@ func _on_message_send_button_pressed() -> void:
 func create_message_entry(message: String, sender: String, dateTime: GlobalTypes.DateTime):
 	var username = AppSessionState.get_username()
 	var message_alignment = GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT
+	var size_flag = Control.SIZE_SHRINK_BEGIN
+	
 	if sender == username:
 		message_alignment = GlobalTypes.CHAT_MESSAGE_ALIGNMENT.RIGHT
+		size_flag = Control.SIZE_SHRINK_END
 		
 	var message_entry = message_entry.instantiate()
 	message_entry.message_alignment = message_alignment
 	message_entry.message_text = message
 	message_entry.timestamp_text = dateTime.get_string()
 	message_entry.sender_username = sender
+	message_entry.size_flags_horizontal = size_flag
 	message_log.add_child(message_entry)
 
 func scroll_to_bottom() -> void:

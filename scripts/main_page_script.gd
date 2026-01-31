@@ -4,6 +4,10 @@ extends Control
 @onready var bank_panel = $VBoxContainer/PanelContainer/bank_panel
 @onready var my_id_panel = $VBoxContainer/PanelContainer/my_id_panel
 @onready var chat_panel = $VBoxContainer/PanelContainer/chat_panel
+@onready var app_selector = $VBoxContainer/app_selector
+
+func _ready() -> void:
+	AppSessionState.app_selector_height = app_selector.size.y
 
 func _on_app_selector_socials_selected() -> void:
 	news_panel.show()

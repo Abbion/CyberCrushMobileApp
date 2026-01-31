@@ -5,21 +5,26 @@
 
 [node name="new_chat" type="Control"]
 layout_mode = 3
-anchor_right = 1.0
-anchor_bottom = 0.231
-offset_bottom = -0.320007
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4ql5n")
 
 [node name="background" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_right = 0.9
-offset_left = 0.5
-offset_right = 0.5
-offset_bottom = 248.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -125.0
+offset_right = 150.0
+offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
@@ -101,10 +106,9 @@ layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = -0.400002
-offset_top = 74.8
-offset_right = 258.6
-offset_bottom = 74.8
+offset_top = 75.0
+offset_right = 238.0
+offset_bottom = 106.0
 
 [node name="new_group_chat_layout" type="Control" parent="background"]
 visible = false

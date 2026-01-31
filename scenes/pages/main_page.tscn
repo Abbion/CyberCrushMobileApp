@@ -16,6 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x7tum")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -25,6 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="top_bar" parent="VBoxContainer" instance=ExtResource("2_ued0y")]
 custom_minimum_size = Vector2(0, 28)
@@ -33,20 +35,21 @@ layout_mode = 2
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 632)
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
+visible = false
+layout_mode = 2
 
 [node name="bank_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_6lmqk")]
 visible = false
 layout_mode = 2
 
+[node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
+layout_mode = 2
+
 [node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
 visible = false
-layout_mode = 2
-
-[node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
-visible = false
-layout_mode = 2
-
-[node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
 layout_mode = 2
 
 [node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]

@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends Control
 
 var id_page_entry = load("res://scenes/custom_controlls/id_page_entry.tscn")
 @onready var id_entries = $id_entires

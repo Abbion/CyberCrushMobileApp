@@ -35,3 +35,14 @@ func fuzzy_string(str_1: String, str_2: String) -> float:
 	var max_len := float(max(len_1, len_2))
 
 	return 1.0 - (distance / max_len)
+
+func virtual_keyboard_normalized_size_from_bottom(bottom_offset: float = 0) -> float:
+	var vk_height: int = DisplayServer.virtual_keyboard_get_height()
+	
+	if vk_height < 1:
+		return 1.0
+		
+	var window_height: int = DisplayServer.window_get_size().y
+	var ratio: float = float(window_height) / float(GlobalConstants.DEFAULT_VIEWPORT_HEIGHT)
+	
+	return 1.0 - (float(vk_height) / float(window_height + (bottom_offset * ratio)))

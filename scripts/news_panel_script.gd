@@ -12,7 +12,7 @@ func _ready() -> void:
 func refresh_news_feed():
 	var articles = await ServerRequest.news_feed()
 	for article in articles:
-		var author = article["username"]
+		var author = article["author"]
 		var date = article["timestamp"]
 		var title = article["title"]
 		var content = article["content"]
@@ -31,7 +31,7 @@ func send_article():
 		return
 	
 	var content: String = content_input.text
-	if len(content) < 10 or len(content) > 255:
+	if len(content) < 1 or len(content) > 256:
 		return
 	
 	ServerRequest.post_news_article(title, content)

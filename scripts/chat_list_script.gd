@@ -9,7 +9,8 @@ class ChatSortData:
 	var time_stamp: Dictionary
 
 @onready var chat_list = $ScrollContainer/chat_list
-@onready var create_chat_overlay = $create_chat_overlay
+@onready var overlay = $overlay
+@onready var overlay_center_container = $overlay/center_container
 
 signal open_chat(chat_id: int)
 
@@ -17,6 +18,9 @@ var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.ts
 
 func _ready() -> void:
 	update_chats_list()
+
+func _process(delta: float) -> void:
+	overlay_center_container.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
 
 func update_chats_list():
 	var user_chats = await ServerRequest.user_chats()
@@ -32,7 +36,7 @@ func update_chats_list():
 		
 		var chat_to_sort: ChatSortData = ChatSortData.new()
 		chat_to_sort.chat_type = DIRECT_CHAT
-		chat_to_sort.chat_id = int(chat["chat_id"])		
+		chat_to_sort.chat_id = int(chat["chat_id"])
 		chat_to_sort.time_stamp = Time.get_datetime_dict_from_datetime_string(chat["last_message_time_stamp"], false)
 		sorted_chats.push_back(chat_to_sort)
 	
@@ -106,10 +110,10 @@ func refresh_chat_list() -> void:
 	update_chats_list()
 
 func reset_layout() -> void:
-	create_chat_overlay.hide()
+	overlay.hide()
 
 func _on_add_chat_pressed() -> void:
-	create_chat_overlay.show()
+	overlay.show()
 
 func _on_new_chat_panel_closed() -> void:
 	reset_layout()

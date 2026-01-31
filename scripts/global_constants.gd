@@ -9,3 +9,4 @@ const MAIN_PAGE_SCENE = "res://scenes/pages/main_page.tscn"
 const LOGIN_PAGE_SCENE = "res://scenes/pages/login_page.tscn"
 
 const MAX_MEMBERS_IN_GROUP_CHAT = 16
+const DEFAULT_VIEWPORT_HEIGHT = 720
