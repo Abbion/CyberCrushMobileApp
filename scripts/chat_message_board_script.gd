@@ -5,6 +5,9 @@ var socket_state: GlobalTypes.REALTIME_CHAT_SOCKET_STATE = GlobalTypes.REALTIME_
 var chat_id: int = -1
 var chat_admin: String
 var message_queue: Array
+var anchor_message_log: bool = true
+var lock_message_input_height: bool = false
+var locketd_message_input_height: int = 0
 
 @onready var message_scroll_log: ScrollContainer = $board/scroll_message_log
 @onready var message_log: VBoxContainer  = $board/scroll_message_log/message_log
@@ -16,7 +19,8 @@ var message_queue: Array
 
 @export var chat_settings: PackedScene;
 @export var message_entry: PackedScene
-var anchor_message_log = true
+
+const max_message_input_ration = 0.3
 
 func load_chat_at_id(id: int) -> void:
 	#TODO After every call check if the id is VALID!!!!
@@ -166,6 +170,7 @@ func _on_message_send_button_pressed() -> void:
 	message_input.text = ""
 	
 	anchor_message_log = true
+	reset_message_input()
 
 func create_message_entry(message: String, sender: String, dateTime: GlobalTypes.DateTime):
 	var username = AppSessionState.get_username()
@@ -231,3 +236,47 @@ func on_scroll_changed() -> void:
 
 func _on_scroll_message_log_resized() -> void:
 	scroll_to_bottom()
+
+#variable seciton
+var last_scroll_vertical: float = 0
+#================
+
+func _on_message_input_text_changed() -> void:
+	var message_board_height = message_board.size.y
+	var message_input_height = message_input.size.y
+	var message_input_ratio = float(message_input_height) / float(message_board_height)
+	
+	# if the message input is bigger than the max
+	# disable fit and set a custom minimum size to enable scrolling
+	# this locks the message input height
+	# if the message input is locked and the scroll is not visible reset fit sstate
+	if message_input_ratio > max_message_input_ration:
+		message_input.scroll_fit_content_height = false
+		if lock_message_input_height == false:
+			locketd_message_input_height = message_input_height
+			lock_message_input_height = true
+		else:
+			var v_scroll = message_input.get_v_scroll_bar()
+			if v_scroll.visible == false:
+				reset_message_input()
+				return
+		
+		message_input.custom_minimum_size.y = locketd_message_input_height
+		
+		var vertical_scroll_direction = message_input.scroll_vertical - last_scroll_vertical
+		if vertical_scroll_direction < 0:
+			# This updates the scroll so that the message input
+			# alligns with the last line
+			var v_scroll = message_input.get_v_scroll_bar()
+			var current_value = v_scroll.value
+			v_scroll.value = current_value - 1
+			v_scroll.value = current_value
+	else:
+		reset_message_input()
+	
+	last_scroll_vertical = message_input.scroll_vertical
+
+func reset_message_input() -> void:
+	message_input.scroll_fit_content_height = true
+	lock_message_input_height = false
+	message_input.custom_minimum_size.y = 0
