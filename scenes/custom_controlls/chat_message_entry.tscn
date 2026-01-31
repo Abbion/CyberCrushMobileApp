@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://brnrfuo3a4xlg" path="res://scripts/chat_message_entry_script.gd" id="1_7xolx"]
 
 [node name="chat_message_entry" type="PanelContainer"]
-anchors_preset = 10
+anchors_preset = -1
 anchor_right = 1.0
 offset_bottom = 61.0
 grow_horizontal = 2
@@ -12,6 +12,7 @@ script = ExtResource("1_7xolx")
 message_text = "Null"
 timestamp_text = "null"
 sender_username = "null"
+metadata/_edit_use_anchors_ = true
 
 [node name="message_background" type="ColorRect" parent="."]
 clip_contents = true
@@ -20,6 +21,7 @@ color = Color(0.487756, 1.02879e-06, 3.36915e-07, 1)
 
 [node name="message_container" type="VBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 9
 theme_override_constants/separation = 5
 
 [node name="sender_username_label" type="Label" parent="message_container"]

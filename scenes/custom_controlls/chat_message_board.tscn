@@ -61,10 +61,9 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
 [node name="message_log" type="VBoxContainer" parent="board/scroll_message_log"]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="message_panel" type="HBoxContainer" parent="board"]
 custom_minimum_size = Vector2(0, 40)

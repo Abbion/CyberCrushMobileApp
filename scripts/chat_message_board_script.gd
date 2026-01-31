@@ -6,8 +6,8 @@ var chat_id: int = -1
 var chat_admin: String
 var message_queue: Array
 
-@onready var message_scroll_log = $board/scroll_message_log
-@onready var message_log: VBoxContainer = $board/scroll_message_log/message_log
+@onready var message_scroll_log: ScrollContainer = $board/scroll_message_log
+@onready var message_log: VBoxContainer  = $board/scroll_message_log/message_log
 @onready var title: Label = $board/top_panel/HBoxContainer/title
 @onready var message_input: TextEdit = $board/message_panel/message_input
 @onready var chat_settings_button: Button = $board/top_panel/HBoxContainer/chat_settings_button
@@ -164,11 +164,14 @@ func _on_message_send_button_pressed() -> void:
 	create_message_entry(message_to_send, username, date_time)
 	message_queue.push_back(message_to_send)
 	message_input.text = ""
+	
+	anchor_message_log = true
 
 func create_message_entry(message: String, sender: String, dateTime: GlobalTypes.DateTime):
 	var username = AppSessionState.get_username()
 	var message_alignment = GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT
 	var size_flag = Control.SIZE_SHRINK_BEGIN
+	var container_width = size.x
 	
 	if sender == username:
 		message_alignment = GlobalTypes.CHAT_MESSAGE_ALIGNMENT.RIGHT
@@ -180,6 +183,7 @@ func create_message_entry(message: String, sender: String, dateTime: GlobalTypes
 	message_entry.timestamp_text = dateTime.get_string()
 	message_entry.sender_username = sender
 	message_entry.size_flags_horizontal = size_flag
+	message_entry.container_width = container_width
 	message_log.add_child(message_entry)
 
 func scroll_to_bottom() -> void:
@@ -213,10 +217,17 @@ func _on_tree_exiting() -> void:
 func on_scroll_value_changed(value: float) -> void:
 	var scroll_message_log_height = message_scroll_log.size.y
 	var max_value = message_scroll_log.get_v_scroll_bar().max_value
+	
+	if scroll_message_log_height > max_value:
+		return
+	
 	if value == (max_value - scroll_message_log_height):
 		anchor_message_log = true
 	else:
 		anchor_message_log = false
 
 func on_scroll_changed() -> void:
+	scroll_to_bottom()
+
+func _on_scroll_message_log_resized() -> void:
 	scroll_to_bottom()

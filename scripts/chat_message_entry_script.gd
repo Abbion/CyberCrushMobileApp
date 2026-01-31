@@ -4,7 +4,7 @@ extends PanelContainer
 @export var message_text: String
 @export var timestamp_text: String
 @export var sender_username: String
-
+@export var container_width: int
 
 @onready var message_container: VBoxContainer = $message_container
 @onready var message_label: Label = $message_container/message_label
@@ -42,7 +42,7 @@ func _on_message_label_resized() -> void:
 	var max_message_width = viewport_width * max_message_width_ratio
 	
 	if message_width > max_message_width:
-		anchor_right = max_message_width_ratio
+		message_label.custom_minimum_size.x = container_width * max_message_width_ratio
 		message_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	else:
 		var last_sender_character = sender_username_label.text.length()
