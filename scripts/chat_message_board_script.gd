@@ -16,8 +16,7 @@ var message_queue: Array
 
 @export var chat_settings: PackedScene;
 @export var message_entry: PackedScene
-
-signal exit_chat
+var anchor_message_log = true
 
 func load_chat_at_id(id: int) -> void:
 	#TODO After every call check if the id is VALID!!!!
@@ -38,6 +37,8 @@ func _process(delta: float) -> void:
 	
 	if chat_socket == null:
 		return
+		
+	message_log.modulate.a = 1.0
 	
 	chat_socket.poll()
 	var state = chat_socket.get_ready_state()
@@ -90,7 +91,6 @@ func _process(delta: float) -> void:
 				print("Packet: ", packet_data)
 				var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
 				create_message_entry(packet_data["message"], packet_data["sender"], dateTime)
-				scroll_to_bottom()
 			
 			while not message_queue.is_empty():
 				var message_to_send = message_queue.pop_front()
@@ -106,7 +106,6 @@ func build_message_log(messages: Array):
 	for message in messages:
 		var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(message["time_stamp"])
 		create_message_entry(message["message"], message["sender"], dateTime)
-	scroll_to_bottom()
 
 func update_meta_data(metadata: Dictionary) -> void:
 	var username = AppSessionState.get_username()
@@ -138,10 +137,6 @@ func clear_chat() -> void:
 	for entry in message_log.get_children():
 		message_log.remove_child(entry)
 		entry.queue_free()
-	
-	title.text = ""
-	message_input.text = ""
-	chat_settings_button.hide()
 
 func disconnect_from_chat() -> void:
 	chat_socket.close()
@@ -150,9 +145,7 @@ func disconnect_from_chat() -> void:
 	message_queue.clear()
 
 func _on_back_button_pressed() -> void:
-	disconnect_from_chat();
-	clear_chat();
-	exit_chat.emit()
+	GlobalSignals.close_chat_board.emit()
 
 func _on_message_send_button_pressed() -> void:
 	var message_to_send = message_input.text
@@ -167,7 +160,6 @@ func _on_message_send_button_pressed() -> void:
 	create_message_entry(message_to_send, username, date_time)
 	message_queue.push_back(message_to_send)
 	message_input.text = ""
-	scroll_to_bottom()
 
 func create_message_entry(message: String, sender: String, dateTime: GlobalTypes.DateTime):
 	var username = AppSessionState.get_username()
@@ -187,12 +179,9 @@ func create_message_entry(message: String, sender: String, dateTime: GlobalTypes
 	message_log.add_child(message_entry)
 
 func scroll_to_bottom() -> void:
-	await get_tree().process_frame
-	message_scroll_log.scroll_vertical = int(message_scroll_log.get_v_scroll_bar().max_value)
-
-func _on_hidden() -> void:
-	disconnect_from_chat();
-	clear_chat();
+	if anchor_message_log == true:
+		var max_value = message_scroll_log.get_v_scroll_bar().max_value
+		message_scroll_log.scroll_vertical = int(max_value)
 
 func _on_chat_settings_button_pressed() -> void:
 	overlay.show()
@@ -209,3 +198,24 @@ func settings_panel_closed() -> void:
 	for child in overlay.get_children():
 		overlay.remove_child(child)
 		child.queue_free()
+
+func close_chat() -> void:
+	disconnect_from_chat();
+	clear_chat();
+
+func _on_tree_exiting() -> void:
+	close_chat()
+
+func _on_scroll_message_log_scroll_started() -> void:
+	anchor_message_log = false
+
+func _on_scroll_message_log_scroll_ended() -> void:
+	var scroll_message_log_height = message_scroll_log.size.y
+	var max_value = message_scroll_log.get_v_scroll_bar().max_value
+	var scroll_value = message_scroll_log.scroll_vertical
+	if scroll_value == (max_value - scroll_message_log_height):
+		anchor_message_log = true
+
+func _on_message_log_resized() -> void:
+	if message_scroll_log != null:
+		scroll_to_bottom()
