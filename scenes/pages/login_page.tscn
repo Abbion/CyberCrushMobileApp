@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://do7a0we212jsp"]
+[gd_scene load_steps=3 format=3 uid="uid://do7a0we212jsp"]
 
 [ext_resource type="Script" uid="uid://bll3ts1huagh6" path="res://scripts/login_page_script.gd" id="1_0oykn"]
+[ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="2_xccwl"]
 
 [node name="login_page" type="Control"]
 layout_mode = 3
@@ -60,6 +61,15 @@ secret_character = "*"
 [node name="login_button" type="Button" parent="center_container/aspect_ratio_container/login_panel"]
 layout_mode = 2
 text = "Login"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 405.0
+offset_bottom = 53.0
+
+[node name="information_popup" parent="MarginContainer" instance=ExtResource("2_xccwl")]
+visible = false
+layout_mode = 2
 
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="center_container/aspect_ratio_container/login_panel/login_button" to="." method="_on_login_button_pressed"]

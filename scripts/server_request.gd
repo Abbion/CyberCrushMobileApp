@@ -11,6 +11,10 @@ const dev_ip = "127.0.0.1"
 const local_ip = "192.168.50.162"
 const current_ip = dev_ip
 
+const REQUEST_STATE_ERROR: String = "Nie znaleziono serwera"
+const RESPONSE_STATE_ERROR: String = "Błąd opowiedzi"
+const JSON_PARSE_ERROR: String = "Niepoprawny format danych"
+
 const login_url = "http://%s:3000/login" % current_ip
 var login_request:  HTTPRequest
 
@@ -103,6 +107,7 @@ func _ready() -> void:
 	add_child(post_news_article_request)
 
 func login(username: String, password: String) -> String:
+	const LOGIN_ERROR = "Błąd logowania"
 	#=Request=============================================================
 	var payload = {
 		"username" : username,
@@ -115,7 +120,9 @@ func login(username: String, password: String) -> String:
 				JSON.stringify(payload))
 				
 	if request_state != OK:
-		print("Login failed. HTTP request state: %s" % [request_state])
+		var error_message = "%s. %s" % [LOGIN_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Login failed. HTTP request state: %s" % [request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return ""
 	var response = await login_request.request_completed
 	#=Response============================================================
@@ -125,28 +132,33 @@ func login(username: String, password: String) -> String:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Login failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [LOGIN_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Login failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return ""
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Login failed. Json cannot parse response")
+		var error_message = "%s. %s" % [LOGIN_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return ""
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. Nie rozpoznano nazwy użytkownika lub hasła" % LOGIN_ERROR
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return ""
 	
 	var token = response_data["token"]
 	return token
 
 func validate_token(token: String) -> bool:
+	const TOKEN_VALIDATION_ERROR = "Błąd uwierzytelniania"
 	#=Request=============================================================
 	var payload = {
 		"token" : token,
@@ -158,7 +170,9 @@ func validate_token(token: String) -> bool:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Validateing user token failed. HTTP request state: %s" % [request_state])
+		var error_message = "%s. %s" % [TOKEN_VALIDATION_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Validateing user token failed. HTTP request state: %s" % [request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	var response = await validation_request.request_completed
@@ -169,25 +183,30 @@ func validate_token(token: String) -> bool:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Validateing user token failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [TOKEN_VALIDATION_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Validateing user token failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Validateing user token failed. Json cannot parse response")
+		var error_message = "%s. %s" % [TOKEN_VALIDATION_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return false
 	
 	var response_data = json_response.data
 	if response_data["success"] == false:
-		print(response_data["status_message"])
+		var error_message = "%s. Nie rozpoznano użytkownika" % TOKEN_VALIDATION_ERROR
+		var verbose = response_data["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 		
 	return true
 
 func user_data() -> GlobalTypes.UserData:
+	const USER_DATA_ERROR = "Bład dostępu do danych użytkownika"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -199,7 +218,9 @@ func user_data() -> GlobalTypes.UserData:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Getting user data failed. HTTP request state: %s" % [request_state])
+		var error_message = "%s. %s" % [USER_DATA_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting user data failed. HTTP request state: %s" % [request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return null
 	
 	var response = await user_data_request.request_completed
@@ -209,23 +230,27 @@ func user_data() -> GlobalTypes.UserData:
 	var headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
-	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting user data failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+	if response_state != HTTPRequest.RESULT_SUCCESS:				
+		var error_message = "%s. %s" % [USER_DATA_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting user data failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return null
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting user data failed. Json cannot parse response")
+		var error_message = "%s. %s" % [USER_DATA_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return null
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [USER_DATA_ERROR, "Nie odnaleziono danych"]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return null
 	
 	var user_data = GlobalTypes.UserData.new()
@@ -234,17 +259,22 @@ func user_data() -> GlobalTypes.UserData:
 	
 	var json_extra_data = JSON.new()
 	if json_extra_data.parse(response_data["extra_data"]) != OK:
-		print("Getting user data failed. Json cannot parse extra data")
+		var error_message = "%s. %s" % [USER_DATA_ERROR, JSON_PARSE_ERROR]
+		var verbose = "Getting user data failed. Json cannot parse extra data"
+		PopupDisplayServer.push_error(error_message, verbose)
 	
 	user_data.extra_data = json_extra_data.data
 	return user_data
 
 func all_usernames() -> PackedStringArray:
+	const ALL_USERNAMES_ERROR = "Bład dostępu do użytkowników"
 	#=Request=============================================================
 	var request_state = get_all_usernames_request.request(get_all_usernames_url)
 	
 	if request_state != OK:
-		print("Getting all usernames failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [ALL_USERNAMES_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting all usernames failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 	
 	var response = await get_all_usernames_request.request_completed
@@ -255,27 +285,32 @@ func all_usernames() -> PackedStringArray:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting all usernames failed. HTTP response state: %s code: %s" % 
-			[response_state, response_code])
+		var error_message = "%s. %s" % [ALL_USERNAMES_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting all usernames failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting all usernames failed. Json cannot parse response")
+		var error_message = "%s. %s" % [ALL_USERNAMES_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return PackedStringArray()
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [ALL_USERNAMES_ERROR, "Nie odnaleziono innych użytkowników"]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 	
 	return response_data["usernames"]
 
 func user_chats() -> Dictionary:
+	const USER_CHATS_ERROR = "Bład dostępu do czatów użytkownika"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token()
@@ -288,7 +323,9 @@ func user_chats() -> Dictionary:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Getting user chats failed. HTTP request state: %s" % [request_state])
+		var error_message = "%s. %s" % [USER_CHATS_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting user chats failed. HTTP request state: %s" % [request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	
 	var response = await get_user_chats_request.request_completed
@@ -299,22 +336,26 @@ func user_chats() -> Dictionary:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting user chats failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [USER_CHATS_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting user chats failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting user chats failed. Json cannot parse response")
+		var error_message = "%s. %s" % [USER_CHATS_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return Dictionary()
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [USER_CHATS_ERROR, "Nie odnaleziono czatów"]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	
 	var user_chats: Dictionary = Dictionary()

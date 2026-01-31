@@ -1,5 +1,4 @@
 extends Control
-#get_display_cutouts
 
 @onready var username_input = $center_container/aspect_ratio_container/login_panel/username_input
 @onready var password_input = $center_container/aspect_ratio_container/login_panel/password_input

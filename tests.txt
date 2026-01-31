@@ -1,0 +1,35 @@
+- Login screen
+ - Login with a disabled server
+ - Login with non existing username and password
+ - Login with non existing username and existing password
+ - Login with non existing password and existing username
+ - Login with existing username and password
+ - Login with empty username
+ - Login with empty password
+
+- News panel
+ - Post empty title article
+ - Post empty content article
+ - Post article with a too short title
+ - Post article with a too long title
+ - Clear input after panel switch
+
+- Bank panel
+ - Create a transaction with no receiver
+ - Create a transaction with no title
+ - Create a transaction with no amount
+ - Create a transaction with negative amount
+ - Create a transaction with amout over the user funds
+ - Clear transaction panel
+ 
+- Chat panel
+ - Send empty message
+ - Send message with only white spaces
+ - Create a direct chat with non existing user
+ - Add non existing user to group chat
+ - Remove non existing user to group chat
+ - Open a group chat for user that has been removed
+ - Message board closes when the users switches panels
+
+- ID panel
+ - logout clears the current user token

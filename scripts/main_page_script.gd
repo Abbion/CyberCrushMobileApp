@@ -5,9 +5,14 @@ extends Control
 @onready var my_id_panel = $VBoxContainer/PanelContainer/my_id_panel
 @onready var chat_panel = $VBoxContainer/PanelContainer/chat_panel
 @onready var app_selector = $VBoxContainer/app_selector
+@onready var popup_container = $popup_container/information_popup
 
 func _ready() -> void:
 	AppSessionState.app_selector_height = app_selector.size.y
+	PopupDisplayServer.push_error("Test error")
+	PopupDisplayServer.push_warning("Test warning")
+	PopupDisplayServer.push_info("Test info")
+	PopupDisplayServer.push_happy_info("Test happy error")
 
 func _on_app_selector_socials_selected() -> void:
 	news_panel.show()

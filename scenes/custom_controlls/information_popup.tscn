@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvmqfcmkhcbkt"]
+
+[ext_resource type="Script" uid="uid://cejc7mgqxx0uc" path="res://scripts/information_popup_script.gd" id="1_7dqi6"]
+
+[node name="information_popup" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_7dqi6")
+
+[node name="panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="data" type="VBoxContainer" parent="panel"]
+layout_mode = 2
+
+[node name="popup_type_label" type="Label" parent="panel/data"]
+layout_mode = 2
+text = "Info"
+
+[node name="content" type="Label" parent="panel/data"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+text = "Null"
+autowrap_mode = 3
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

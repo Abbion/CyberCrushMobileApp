@@ -43,7 +43,7 @@ func _on_message_label_resized() -> void:
 	
 	if message_width > max_message_width:
 		message_label.custom_minimum_size.x = container_width * max_message_width_ratio
-		message_label.autowrap_mode = TextServer.AUTOWRAP_WORD
+		message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	else:
 		var last_sender_character = sender_username_label.text.length()
 		var last_timestamp_character = timestamp_label.text.length()

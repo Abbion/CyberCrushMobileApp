@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bt5wtau8jm4ev"]
+[gd_scene load_steps=9 format=3 uid="uid://bt5wtau8jm4ev"]
 
 [ext_resource type="Script" uid="uid://b45tryrl3k5w4" path="res://scripts/main_page_script.gd" id="1_x7tum"]
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
 [ext_resource type="PackedScene" uid="uid://dfie8i6cij8t7" path="res://scenes/panels/chat_panel.tscn" id="5_esk2p"]
 [ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
+[ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="8_b6xi4"]
 
 [node name="MainPage" type="Control"]
 layout_mode = 3
@@ -57,6 +58,21 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 1
 color = Color(0, 0, 0, 1)
+
+[node name="popup_container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 28.0
+offset_bottom = 28.0
+grow_horizontal = 2
+mouse_filter = 0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="information_popup" parent="popup_container" instance=ExtResource("8_b6xi4")]
+visible = false
+layout_mode = 2
 
 [connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
 [connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]

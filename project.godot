@@ -21,8 +21,9 @@ AppSessionState="*res://scripts/app_session_state.gd"
 GlobalConstants="*res://scripts/global_constants.gd"
 HelperFunctions="*res://scripts/helper_functions.gd"
 GlobalTypes="*res://scripts/global_types.gd"
-GlobalSignals="*res://scripts/global_signals.gd"
+PopupDisplayServer="*res://scripts/popup_display_server.gd"
 ServerRequest="*res://scripts/server_request.gd"
+GlobalSignals="*res://scripts/global_signals.gd"
 
 [display]
 

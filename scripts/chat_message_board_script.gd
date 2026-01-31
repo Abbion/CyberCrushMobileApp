@@ -95,8 +95,6 @@ func _process(delta: float) -> void:
 					return
 				
 				var packet_data = json_packet.data
-				
-				print("Packet: ", packet_data)
 				var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
 				create_message_entry(packet_data["message"], packet_data["sender"], dateTime)
 			
