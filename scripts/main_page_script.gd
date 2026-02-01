@@ -9,10 +9,6 @@ extends Control
 
 func _ready() -> void:
 	AppSessionState.app_selector_height = app_selector.size.y
-	PopupDisplayServer.push_error("Test error")
-	PopupDisplayServer.push_warning("Test warning")
-	PopupDisplayServer.push_info("Test info")
-	PopupDisplayServer.push_happy_info("Test happy error")
 
 func _on_app_selector_socials_selected() -> void:
 	news_panel.show()

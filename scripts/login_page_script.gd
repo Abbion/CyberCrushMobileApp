@@ -8,12 +8,12 @@ extends Control
 func _ready() -> void:
 	lock_input();
 	var token = AppSessionState.get_server_token();
-	var is_token_validated = await ServerRequest.validate_token(token);
+	if token.is_empty() == false:
+		var is_token_validated = await ServerRequest.validate_token(token);
+		if is_token_validated == true:
+			load_main_page();
 	
-	if is_token_validated:
-		load_main_page();
-	else:
-		unlock_input()
+	unlock_input()
 
 func load_main_page():
 	get_tree().change_scene_to_file(GlobalConstants.MAIN_PAGE_SCENE)

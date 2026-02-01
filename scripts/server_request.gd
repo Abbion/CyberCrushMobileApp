@@ -14,6 +14,7 @@ const current_ip = dev_ip
 const REQUEST_STATE_ERROR: String = "Nie znaleziono serwera"
 const RESPONSE_STATE_ERROR: String = "Błąd opowiedzi"
 const JSON_PARSE_ERROR: String = "Niepoprawny format danych"
+const RESPONSE_STATUS_ERROR: String = "Błąd dostępu do danych"
 
 const login_url = "http://%s:3000/login" % current_ip
 var login_request:  HTTPRequest
@@ -248,7 +249,7 @@ func user_data() -> GlobalTypes.UserData:
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		var error_message = "%s. %s" % [USER_DATA_ERROR, "Nie odnaleziono danych"]
+		var error_message = "%s. %s" % [USER_DATA_ERROR, RESPONSE_STATUS_ERROR]
 		var verbose = response_status["status_message"]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return null
@@ -302,7 +303,7 @@ func all_usernames() -> PackedStringArray:
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		var error_message = "%s. %s" % [ALL_USERNAMES_ERROR, "Nie odnaleziono innych użytkowników"]
+		var error_message = "%s. %s" % [ALL_USERNAMES_ERROR, RESPONSE_STATUS_ERROR]
 		var verbose = response_status["status_message"]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
@@ -353,7 +354,7 @@ func user_chats() -> Dictionary:
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		var error_message = "%s. %s" % [USER_CHATS_ERROR, "Nie odnaleziono czatów"]
+		var error_message = "%s. %s" % [USER_CHATS_ERROR, RESPONSE_STATUS_ERROR]
 		var verbose = response_status["status_message"]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
@@ -365,6 +366,7 @@ func user_chats() -> Dictionary:
 	return user_chats
 
 func chat_metadata(chat_id: int) -> Dictionary:
+	const USER_CHAT_METADATA_ERROR = "Bład dostępu do danych czatu"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -378,7 +380,9 @@ func chat_metadata(chat_id: int) -> Dictionary:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Getting chat %s metadata failed. HTTP request state: %s" % [chat_id, request_state])
+		var error_message = "%s. %s" % [USER_CHAT_METADATA_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting chat %s metadata failed. HTTP request state: %s" % [chat_id, request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	
 	var response = await get_chat_metadata_request.request_completed
@@ -389,27 +393,33 @@ func chat_metadata(chat_id: int) -> Dictionary:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting chat %s metadata failed. HTTP response state: %s code: %s" %
-				[chat_id, response_state, response_code])
+		var error_message = "%s. %s" % [USER_CHAT_METADATA_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting chat %s metadata failed. HTTP response state: %s code: %s" % [chat_id, response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting chat %s metadata failed. Json cannot parse response" % chat_id)
+		var error_message = "%s. %s" % [USER_CHAT_METADATA_ERROR, JSON_PARSE_ERROR]
+		var verbose = "Getting chat %s metadata failed. Json cannot parse response" % chat_id
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [USER_CHAT_METADATA_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 		
 	return response_data["metadata"]
 
 func chat_history(chat_id: int) -> Array:
+	const USER_CHAT_HISTORY_ERROR = "Bład dostępu do danych czatu"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -424,7 +434,9 @@ func chat_history(chat_id: int) -> Array:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Getting chat %s history failed. HTTP request state: %s" % [chat_id, request_state])
+		var error_message = "%s. %s" % [USER_CHAT_HISTORY_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting chat %s history failed. HTTP request state: %s" % [chat_id, request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 	
 	var response = await get_chat_history_request.request_completed
@@ -435,27 +447,33 @@ func chat_history(chat_id: int) -> Array:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting chat %s history failed. HTTP response state: %s code: %s" %
-				[chat_id, response_state, response_code])
+		var error_message = "%s. %s" % [USER_CHAT_HISTORY_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting chat %s history failed. HTTP response state: %s code: %s" % [chat_id, response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting chat %s history failed. Json cannot parse response" % chat_id)
+		var error_message = "%s. %s" % [USER_CHAT_HISTORY_ERROR, JSON_PARSE_ERROR]
+		var verbose = "Getting chat %s history failed. Json cannot parse response" % chat_id
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [USER_CHAT_HISTORY_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 		
 	return response_data["messages"]
 
 func update_group_chat_member(chat_id: int, action: GroupChatUpdateAction, username: String) -> bool:
+	const GROUP_CHAT_UPDATE_ERROR = "Bład aktualizacji czatu grupowego"
 	#=Request=============================================================
 	var action_string: String = "AddMember" if action == GroupChatUpdateAction.ADD_MEMBER else "DeleteMember"
 	
@@ -475,7 +493,9 @@ func update_group_chat_member(chat_id: int, action: GroupChatUpdateAction, usern
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Updateing group chat %s members failed. HTTP request state: %s" % [chat_id, request_state])
+		var error_message = "%s. %s" % [GROUP_CHAT_UPDATE_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Updateing group chat %s members failed. HTTP request state: %s" % [chat_id, request_state]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	var response = await update_group_chat_member_request.request_completed
@@ -486,26 +506,32 @@ func update_group_chat_member(chat_id: int, action: GroupChatUpdateAction, usern
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Updateing group chat %s members failed. HTTP response state: %s code: %s" %
-				[chat_id, response_state, response_code])
+		var error_message = "%s. %s" % [GROUP_CHAT_UPDATE_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Updateing group chat %s members failed. HTTP response state: %s code: %s" % [chat_id, response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Updateing group chat %s members failed.. Json cannot parse response" % chat_id)
+		var error_message = "%s. %s" % [GROUP_CHAT_UPDATE_ERROR, JSON_PARSE_ERROR]
+		var verbose = "Updateing group chat %s members failed.. Json cannot parse response" % chat_id
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	var response_status = json_response.data
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [GROUP_CHAT_UPDATE_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	return true;
 
 func create_direct_chat(partner_username: String) -> int:
+	const DIRECT_CHAT_CREATION_ERROR = "Bład tworzenia czatu bezpośredniego"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -519,7 +545,9 @@ func create_direct_chat(partner_username: String) -> int:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Creating direct chat failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Creating direct chat failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	
 	var response = await create_direct_chat_request.request_completed
@@ -530,27 +558,32 @@ func create_direct_chat(partner_username: String) -> int:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Creating direct chat failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Creating direct chat failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Creating direct chat failed. Json cannot parse response")
+		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return -1
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	
 	return response_data["chat_id"]
 
 func create_group_chat(title: String) -> int:
+	const GROUP_CHAT_CREATION_ERROR = "Bład tworzenia czatu grupowego"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -564,7 +597,9 @@ func create_group_chat(title: String) -> int:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Creating group chat failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [GROUP_CHAT_CREATION_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Creating group chat failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	
 	var response = await create_group_chat_request.request_completed
@@ -575,27 +610,32 @@ func create_group_chat(title: String) -> int:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Creating group chat failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [GROUP_CHAT_CREATION_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Creating group chat failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Creating group chat failed. Json cannot parse response")
+		var error_message = "%s. %s" % [GROUP_CHAT_CREATION_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return -1
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [GROUP_CHAT_CREATION_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	
 	return response_data["chat_id"]
 
 func bank_funds() -> int:
+	const BANK_FUNDS_ERROR = "Bład pozyksania danych o stanie konta bankowego"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -607,7 +647,9 @@ func bank_funds() -> int:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Getting bank funds failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [BANK_FUNDS_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting bank funds failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return 0
 	
 	var response = await get_user_funds_request.request_completed
@@ -618,27 +660,32 @@ func bank_funds() -> int:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting bank funds failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [BANK_FUNDS_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting bank funds failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return 0
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting bank funds failed. Json cannot parse response")
+		var error_message = "%s. %s" % [BANK_FUNDS_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return 0
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [BANK_FUNDS_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return 0
 	
 	return int(response_data["funds"])
 
 func transfer_funds(receiver: String, title: String, amount: int) -> bool:
+	const TRANSFER_FUNDS_ERROR = "Bład transferu środków bankowych"
 	#=Request=============================================================
 	var payload = {
 		"sender_token" : AppSessionState.get_server_token(),
@@ -653,7 +700,9 @@ func transfer_funds(receiver: String, title: String, amount: int) -> bool:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Transfering funds failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [TRANSFER_FUNDS_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Transfering funds failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	var response = await transfer_funds_request.request_completed
@@ -664,26 +713,31 @@ func transfer_funds(receiver: String, title: String, amount: int) -> bool:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Transfering funds failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [TRANSFER_FUNDS_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Transfering funds failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Transfering funds failed. Json cannot parse response")
+		var error_message = "%s. %s" % [TRANSFER_FUNDS_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return false
 	
 	var response_data = json_response.data
 	
 	if response_data["success"] == false:
-		print(response_data["status_message"])
+		var error_message = "%s. %s" % [TRANSFER_FUNDS_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_data["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	return true
 
 func bank_transaction_history() -> Array:
+	const BANK_TRANSACTION_HISTORY_ERROR = "Bład dostępu do histori transakcji bankowych"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -696,7 +750,9 @@ func bank_transaction_history() -> Array:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Getting bank transaction history failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [BANK_TRANSACTION_HISTORY_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting bank transaction history failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 	
 	var response = await get_user_transaction_history_request.request_completed
@@ -707,32 +763,39 @@ func bank_transaction_history() -> Array:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting bank transaction history failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [BANK_TRANSACTION_HISTORY_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting bank transaction history failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting bank transaction history failed. Json cannot parse response")
+		var error_message = "%s. %s" % [BANK_TRANSACTION_HISTORY_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return Array()
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [BANK_TRANSACTION_HISTORY_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return Array()
 	
 	return response_data["transactions"]
 
 func news_feed() -> Array:
+	const MEWS_FEED_ERROR = "Bład systemu informacji"
 	#=Request=============================================================
 	var request_state = get_news_feed_request.request(get_news_feed_url)
 	
 	if request_state != OK:
-		print("Getting news feed failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [MEWS_FEED_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Getting news feed failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 		
 	var response = await get_news_feed_request.request_completed
@@ -743,27 +806,32 @@ func news_feed() -> Array:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Getting news feed failed. HTTP response state: %s code: %s" % 
-			[response_state, response_code])
+		var error_message = "%s. %s" % [MEWS_FEED_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Getting news feed failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Getting news feed failed. Json cannot parse response")
+		var error_message = "%s. %s" % [MEWS_FEED_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return PackedStringArray()
 	
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		print(response_status["status_message"])
+		var error_message = "%s. %s" % [MEWS_FEED_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_status["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 	
 	return response_data["articles"]
 
 func post_news_article(title: String, content: String) -> bool:
+	const POST_ARTICLE_ERROR = "Bład wysłania posta"
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -777,7 +845,9 @@ func post_news_article(title: String, content: String) -> bool:
 				JSON.stringify(payload))
 	
 	if request_state != OK:
-		print("Posting news article failed. HTTP request state: %s" % request_state)
+		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Posting news article failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	var response = await post_news_article_request.request_completed
@@ -788,21 +858,25 @@ func post_news_article(title: String, content: String) -> bool:
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
-		print("Posting news article failed. HTTP response state: %s code: %s" %
-				[response_state, response_code])
+		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Posting news article failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
 	
 	if json_response.parse(response_text) != OK:
-		print("Posting news article failed. Json cannot parse response")
+		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return false
 	
 	var response_data = json_response.data
 	
 	if response_data["success"] == false:
-		print(response_data["status_message"])
+		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_data["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	return true

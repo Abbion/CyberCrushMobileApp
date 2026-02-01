@@ -22,44 +22,6 @@ var initial_background_bottom_offset: int = 0
 func _ready() -> void:
 	initial_background_bottom_offset = background.offset_bottom
 
-#func _process(delta: float) -> void:
-	#if transition_in_progress == false:
-	#	return
-	
-	#var selector_opacity = new_chat_selector_layout.modulate.a
-	#var transition_progress = (1.0 - selector_opacity)
-	
-	#if new_chat_selector_layout.visible:
-	#	selector_opacity -= (delta * FADE_SPEED)
-	#	var selector_transition_progress = max(selector_opacity, 0.0)
-	#	new_chat_selector_layout.modulate.a = selector_transition_progress
-	
-	#	if selector_opacity <= 0:
-	#		new_chat_selector_layout.hide()
-	
-	#if current_state == DIRECT_CHAT and new_chat_selector_layout.visible == false:
-	#	var direct_chat_opacity = new_direct_chat_layout.modulate.a
-	#	direct_chat_opacity += (delta * FADE_SPEED)
-	#	var direct_transition_progress  = min(direct_chat_opacity, 1.0)
-	#	new_direct_chat_layout.modulate.a = direct_transition_progress
-	#	transition_progress += direct_transition_progress
-		
-	#	if direct_chat_opacity >= 1:
-	#		transition_in_progress = false
-			
-	#elif current_state == GROUP_CHAT and new_chat_selector_layout.visible == false:
-	#	var group_chat_opacity = new_group_chat_layout.modulate.a
-	#	group_chat_opacity += (delta * FADE_SPEED)
-	#	var group_transition_progress  = min(group_chat_opacity, 1.0)
-	#	new_group_chat_layout.modulate.a = group_transition_progress
-	#	transition_progress += group_transition_progress
-		
-	#	if group_chat_opacity >= 1:
-	#		transition_in_progress = false
-	
-	#var background_size_transition = (INPUT_CHAT_LAYOUT_SIZE - initial_background_bottom_offset) * (transition_progress * 0.5)
-	#ackground.offset_bottom = background_size_transition + initial_background_bottom_offset
-
 func reset_state() -> void:
 	current_state = SELECTOR
 	transition_in_progress = false
@@ -99,13 +61,16 @@ func _on_begin_group_chat_button_pressed() -> void:
 	var title: String = group_chat_title_input.text;
 	title = title.strip_edges()
 	
-	if title.length() > MAX_GROUP_CHAT_TITLE_LENGHT:
-		return #INFORM USER
 	if title.length() < MIN_GROUP_CHAT_TITLE_LENGTH:
+		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za krótki. Wymagane minimum %s znaków" % MAX_GROUP_CHAT_TITLE_LENGHT)
+		return
+	if title.length() > MAX_GROUP_CHAT_TITLE_LENGHT:
+		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za długi. Ograniczenie %s znaków" % MAX_GROUP_CHAT_TITLE_LENGHT)
 		return
 	
 	var chat_id = await ServerRequest.create_group_chat(title)
 	if chat_id < 0:
 		return
+	
 	GlobalSignals.new_chat_created.emit(chat_id)
 	reset_state()

@@ -23,18 +23,27 @@ var locketd_message_input_height: int = 0
 const max_message_input_ration = 0.3
 
 func load_chat_at_id(id: int) -> void:
-	#TODO After every call check if the id is VALID!!!!
-	var metadata = await ServerRequest.chat_metadata(id)
+	chat_id = id
+	
+	var metadata = await ServerRequest.chat_metadata(chat_id)
+	if metadata.is_empty():
+		close_chat()
+		return
+	
 	update_meta_data(metadata)
 	
-	var chat_history = await ServerRequest.chat_history(id)
+	var chat_history = await ServerRequest.chat_history(chat_id)
 	build_message_log(chat_history)
 
-	chat_id = id
 	chat_socket = WebSocketPeer.new()
-	#TODO check the connection_state
+	
 	var connection_state = chat_socket.connect_to_url("ws://127.0.0.1:3003/realtime_chat")
-	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED
+	if connection_state == OK:
+		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED
+	else:
+		PopupDisplayServer.push_error("Błąd podczas łączenia się z czatem")
+		close_chat()
+		return
 
 func _ready() -> void:
 	message_scroll_log.get_v_scroll_bar().connect("value_changed", on_scroll_value_changed)
@@ -43,7 +52,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	message_board.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
 	
-	if chat_socket == null:
+	if chat_socket == null or socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.NULL:
 		return
 		
 	message_log.modulate.a = 1.0
@@ -55,58 +64,91 @@ func _process(delta: float) -> void:
 		return
 	
 	if state == WebSocketPeer.State.STATE_OPEN:
-		if socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED:
-			var user_token = AppSessionState.get_server_token()
-			var init = { "type": "init", "token": user_token, "chat_id": chat_id }
-			var init_stirng = JSON.stringify(init, "", false)
-			#TODO check send_status
-			var send_status = chat_socket.send_text(init_stirng)
-			socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.INITIALIZED
-		if socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.INITIALIZED:
-			while chat_socket.get_available_packet_count():
-				var packet = chat_socket.get_packet().get_string_from_utf8()
-				var json_packet = JSON.new()
-	
-				if json_packet.parse(packet) != OK:
-					#TODO close connection and exit
-					print("Packet cannot be read")
+		match socket_state:
+			GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED:
+				init_realtime_chat_connection()
+			GlobalTypes.REALTIME_CHAT_SOCKET_STATE.INITIALIZED:
+				confirm_realtime_chat_initialization()
+			GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED:
+				if try_consume_new_messages() == false:
+					close_chat()
 					return
-				
-				var packet_data = json_packet.data
-				if packet_data["type"] != "info":
-					#TODO close connection and exit
+				if try_send_queued_messages() == false:
+					close_chat()
 					return
-				
-				#if packet_data["response_code"] != "ConnectionSuccess":
-					#TODO close connection and exit
-					#return
-				
-				socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED
-		if socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED:
-			var user_token = AppSessionState.get_server_token()
-			
-			while chat_socket.get_available_packet_count():
-				var packet = chat_socket.get_packet().get_string_from_utf8()
-				var json_packet = JSON.new()
+
+func init_realtime_chat_connection() -> void:
+	var user_token = AppSessionState.get_server_token()
+	var init = { "type": "init", "token": user_token, "chat_id": chat_id }
+	var init_stirng = JSON.stringify(init, "", false)
+	var send_status = chat_socket.send_text(init_stirng)
 	
-				if json_packet.parse(packet) != OK:
-					#TODO close connection and exit
-					print("Packet cannot be read")
-					return
-				
-				var packet_data = json_packet.data
-				var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
-				create_message_entry(packet_data["message"], packet_data["sender"], dateTime)
-			
-			while not message_queue.is_empty():
-				var message_to_send = message_queue.pop_front()
-				var message_packet = { "type": "msg", "token": user_token, "message": message_to_send }
-				var message_packet_stirng = JSON.stringify(message_packet, "", false)
-				#TODO check send_status
-				var send_status = chat_socket.send_text(message_packet_stirng)
-				
-				print("send status: ", send_status)
+	if send_status == OK:
+		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.INITIALIZED
+	else:
+		PopupDisplayServer.push_error("Błąd inicjalizacji czatu")
+		close_chat()
+
+func confirm_realtime_chat_initialization() -> void:
+	var initialization_confirmed: bool = false
+	var packed_read = false
 	
+	while chat_socket.get_available_packet_count():
+		var packet = chat_socket.get_packet().get_string_from_utf8()
+		var json_packet = JSON.new()
+		packed_read = true
+		
+		if json_packet.parse(packet) != OK:
+			PopupDisplayServer.push_error("Otrzymano wiadomość, której nie udało się przetworzyć", "Potwierdzenie inicjalizacji się nie powiodło")
+			continue
+				
+		var packet_data = json_packet.data
+		if packet_data["type"] != "info":
+			PopupDisplayServer.push_error("Połączenie z czatem się nie powiodło", "Typ pakietu: %s" % packet_data["type"])
+			continue
+		
+		var packet_content: String = packet_data["text"]
+		if  packet_content.contains("fail") == false:
+			initialization_confirmed = true
+			break
+		else:
+			PopupDisplayServer.push_error("Połączenie z czatem się nie powiodło", "Kod odpowiedzi: %s" % packet_data["response_code"])
+	
+	if packed_read == false:
+		return
+	
+	if initialization_confirmed == true:
+		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED
+	else:
+		PopupDisplayServer.push_error("Nie rozopznano członka czatu")
+		close_chat()
+
+func try_consume_new_messages() -> bool:
+	while chat_socket.get_available_packet_count():
+		var packet = chat_socket.get_packet().get_string_from_utf8()
+		var json_packet = JSON.new()
+	
+		if json_packet.parse(packet) != OK:
+			PopupDisplayServer.push_error("Otrzymano wiadomość, której nie udało się przetworzyć", "Odczytanie nowej wiadomości nie powiodło się")
+			return false
+				
+		var packet_data = json_packet.data
+		var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
+		create_message_entry(packet_data["message"], packet_data["sender"], dateTime)
+	return true
+
+func try_send_queued_messages() -> bool:
+	var user_token = AppSessionState.get_server_token()
+	while not message_queue.is_empty():
+		var message_to_send = message_queue.pop_front()
+		var message_packet = { "type": "msg", "token": user_token, "message": message_to_send }
+		var message_packet_stirng = JSON.stringify(message_packet, "", false)
+		var send_status = chat_socket.send_text(message_packet_stirng)
+		
+		if send_status != OK:
+			PopupDisplayServer.push_error("Błąd podczas wysyłania wiadomości", "Status %s" % send_status)
+			return false
+	return true
 
 func build_message_log(messages: Array):
 	for message in messages:
