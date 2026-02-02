@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://brnrfuo3a4xlg" path="res://scripts/chat_message_entry_script.gd" id="1_7xolx"]
 
 [node name="chat_message_entry" type="PanelContainer"]
-anchors_preset = -1
+anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 61.0
 grow_horizontal = 2

@@ -5,6 +5,7 @@ extends PanelContainer
 @export var timestamp_text: String
 @export var sender_username: String
 @export var container_width: int
+@export var in_chat_index: int
 
 @onready var message_container: VBoxContainer = $message_container
 @onready var message_label: Label = $message_container/message_label

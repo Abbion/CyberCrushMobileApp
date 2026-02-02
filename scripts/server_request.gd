@@ -418,14 +418,24 @@ func chat_metadata(chat_id: int) -> Dictionary:
 		
 	return response_data["metadata"]
 
-func chat_history(chat_id: int) -> Array:
+func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	const USER_CHAT_HISTORY_ERROR = "Bład dostępu do danych czatu"
 	#=Request=============================================================
-	var payload = {
-		"token" : AppSessionState.get_server_token(),
-		"chat_id" : chat_id,
-		"history_time_stamp" : null
-	}
+	
+	var payload = {}
+	
+	if start_from_index < 0:
+		payload = {
+			"token" : AppSessionState.get_server_token(),
+			"chat_id" : chat_id,
+			"history_last_index" : null
+		}
+	else:
+		payload = {
+			"token" : AppSessionState.get_server_token(),
+			"chat_id" : chat_id,
+			"history_last_index" : start_from_index
+		}
 
 	var request_state = get_chat_history_request.request(
 				get_chat_history_url,

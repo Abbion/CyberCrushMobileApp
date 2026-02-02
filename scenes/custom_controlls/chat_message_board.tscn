@@ -58,6 +58,7 @@ text = "⚙️"
 [node name="scroll_message_log" type="ScrollContainer" parent="board"]
 layout_mode = 2
 size_flags_vertical = 3
+follow_focus = true
 horizontal_scroll_mode = 0
 
 [node name="message_log" type="VBoxContainer" parent="board/scroll_message_log"]
