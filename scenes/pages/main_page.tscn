@@ -39,7 +39,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
-visible = false
 layout_mode = 2
 
 [node name="bank_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_6lmqk")]
@@ -47,6 +46,7 @@ visible = false
 layout_mode = 2
 
 [node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
+visible = false
 layout_mode = 2
 
 [node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
@@ -59,20 +59,20 @@ layout_mode = 2
 size_flags_horizontal = 1
 color = Color(0, 0, 0, 1)
 
-[node name="popup_container" type="MarginContainer" parent="."]
+[node name="popup_margin" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_top = 28.0
-offset_bottom = 28.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-mouse_filter = 0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_right = 30
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 0
 
-[node name="information_popup" parent="popup_container" instance=ExtResource("8_b6xi4")]
-visible = false
+[node name="information_popup" parent="popup_margin" instance=ExtResource("8_b6xi4")]
 layout_mode = 2
+mouse_filter = 2
 
 [connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
 [connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]

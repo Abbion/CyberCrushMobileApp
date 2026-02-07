@@ -10,30 +10,37 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_m7ei6")
 
-[node name="article" type="VBoxContainer" parent="."]
+[node name="article_margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="article" type="VBoxContainer" parent="article_margin"]
 layout_mode = 2
 
-[node name="publish_data" type="HBoxContainer" parent="article"]
+[node name="publish_data" type="HBoxContainer" parent="article_margin/article"]
 layout_mode = 2
 
-[node name="author_label" type="Label" parent="article/publish_data"]
+[node name="author_label" type="Label" parent="article_margin/article/publish_data"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "Author null"
 
-[node name="date_label" type="Label" parent="article/publish_data"]
+[node name="date_label" type="Label" parent="article_margin/article/publish_data"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 12
 text = "Date null"
 
-[node name="title_label" type="Label" parent="article"]
+[node name="title_label" type="Label" parent="article_margin/article"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Title null"
 
-[node name="content_label" type="Label" parent="article"]
+[node name="content_label" type="Label" parent="article_margin/article"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12

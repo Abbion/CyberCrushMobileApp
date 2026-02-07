@@ -3,9 +3,8 @@ extends Control
 var transaction_entry: PackedScene = load("res://scenes/custom_controlls/transaction_entry.tscn")
 @onready var transaction_entries: VBoxContainer = $main_panel/transactions_scroll_window/transactions_list
 @onready var funds_label: Label = $main_panel/card/funds_label
-@onready var main_panel_overlay: ColorRect = $main_panel_overlay
-@onready var main_panel_overlay_center_container: CenterContainer = $main_panel_overlay/center_container
-@onready var new_transaction_window: Control = $main_panel_overlay/center_container/new_transaction
+@onready var overlay_margin: MarginContainer = $overlay_margin
+@onready var new_transaction_window: Control = $overlay_margin/center_container/new_transaction
 
 var user_funds : int = 0
 
@@ -16,7 +15,17 @@ func _ready() -> void:
 	cancel_button.pressed.connect(cancel_new_transaction)
 
 func _process(delta: float) -> void:
-	main_panel_overlay_center_container.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
+	if GlobalConstants.os_is_mobile() == true:
+		var vk_height: int = DisplayServer.virtual_keyboard_get_height()
+		
+		var top_margin = 0.0
+		var bottom_margin = 0.0
+		if vk_height > 0.0:
+			bottom_margin = AppSessionState.app_selector_height
+			top_margin = DisplayServer.get_display_safe_area().position.y
+		
+		var margin = DisplayManager.base_to_viewport_point_converter(Vector2(0.0, float(vk_height - bottom_margin - top_margin)))
+		overlay_margin.add_theme_constant_override("margin_bottom", margin.y)
 
 func update_transaction_history():
 	var transactions = await ServerRequest.bank_transaction_history()
@@ -53,11 +62,11 @@ func _on_refresh_button_down() -> void:
 
 func _on_new_transaction_pressed() -> void:
 	new_transaction_window.visible = true
-	main_panel_overlay.visible = true
+	overlay_margin.visible = true
 
 func cancel_new_transaction() -> void:
 	new_transaction_window.visible = false
-	main_panel_overlay.visible = false
+	overlay_margin.visible = false
 
 func _on_new_transaction_transaction_completed(bool: Variant) -> void:
 	cancel_new_transaction()

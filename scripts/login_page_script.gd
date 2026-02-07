@@ -1,11 +1,17 @@
 extends Control
 
-@onready var username_input = $center_container/aspect_ratio_container/login_panel/username_input
-@onready var password_input = $center_container/aspect_ratio_container/login_panel/password_input
-@onready var login_button = $center_container/aspect_ratio_container/login_panel/login_button
-@onready var center_container = $center_container
+@onready var username_input: LineEdit = $AspectRatioContainer/login_margin/login_panel/username_input
+@onready var password_input: LineEdit = $AspectRatioContainer/login_margin/login_panel/password_input
+@onready var login_button: Button = $AspectRatioContainer/login_margin/login_panel/login_button
+@onready var login_margin: MarginContainer = $AspectRatioContainer/login_margin
+@onready var popup_margin: MarginContainer = $popup_margin
 
-func _ready() -> void:
+func _ready() -> void:	
+	var safe_area = DisplayServer.get_display_safe_area()
+	var margin = DisplayManager.base_to_viewport_point_converter(safe_area.position)
+	popup_margin.add_theme_constant_override("margin_top", margin.y)
+	login_margin.add_theme_constant_override("margin_top", margin.y)
+	
 	lock_input();
 	var token = AppSessionState.get_server_token();
 	if token.is_empty() == false:
@@ -43,11 +49,18 @@ func lock_input():
 	username_input.editable = false
 	password_input.editable = false
 	login_button.disabled = true
-
+	
 func unlock_input():
 	username_input.editable = true
 	password_input.editable = true
 	login_button.disabled = false
 
 func _process(delta: float) -> void:
-	center_container.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom()
+	if GlobalConstants.os_is_mobile() == true:
+		var vk_height: int = DisplayServer.virtual_keyboard_get_height()
+		var top_margin = 0.0
+		if vk_height > 0:
+			top_margin = DisplayServer.get_display_safe_area().position.y
+		
+		var margin = DisplayManager.base_to_viewport_point_converter(Vector2(0.0, float(vk_height - top_margin)))
+		login_margin.add_theme_constant_override("margin_bottom", margin.y)

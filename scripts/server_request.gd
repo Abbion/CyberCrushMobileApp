@@ -9,7 +9,7 @@ enum GroupChatUpdateAction {
 
 const dev_ip = "127.0.0.1"
 const local_ip = "192.168.50.162"
-const current_ip = dev_ip
+const current_ip = local_ip
 
 const REQUEST_STATE_ERROR: String = "Nie znaleziono serwera"
 const RESPONSE_STATE_ERROR: String = "Błąd opowiedzi"

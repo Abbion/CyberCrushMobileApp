@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bq7q3goaxwsfu"]
+[gd_scene load_steps=3 format=3 uid="uid://bq7q3goaxwsfu"]
 
 [ext_resource type="Script" uid="uid://crmthpkwxbr6b" path="res://scenes/custom_controlls/find_control.gd" id="1_ikplo"]
+[ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_4dsp5"]
 
 [node name="find_control" type="Control"]
 layout_mode = 3
@@ -9,12 +10,10 @@ anchor_bottom = 0.046
 offset_bottom = -0.120003
 script = ExtResource("1_ikplo")
 
-[node name="input_field" type="LineEdit" parent="."]
+[node name="input_field" parent="." instance=ExtResource("2_4dsp5")]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.939
-offset_bottom = 0.0129986
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="suggestion_list" type="ItemList" parent="."]
 visible = false

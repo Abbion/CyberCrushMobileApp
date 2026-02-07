@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://do7a0we212jsp"]
+[gd_scene load_steps=4 format=3 uid="uid://do7a0we212jsp"]
 
 [ext_resource type="Script" uid="uid://bll3ts1huagh6" path="res://scripts/login_page_script.gd" id="1_0oykn"]
+[ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_5t3qa"]
 [ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="2_xccwl"]
 
 [node name="login_page" type="Control"]
@@ -13,63 +14,59 @@ grow_vertical = 2
 script = ExtResource("1_0oykn")
 metadata/_edit_use_anchors_ = true
 
-[node name="center_container" type="CenterContainer" parent="."]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 0.5625
+
+[node name="login_margin" type="MarginContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="login_panel" type="VBoxContainer" parent="AspectRatioContainer/login_margin"]
+layout_mode = 2
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="username_label" type="Label" parent="AspectRatioContainer/login_margin/login_panel"]
+layout_mode = 2
+text = "Nazwa użytkownika"
+
+[node name="username_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_5t3qa")]
+layout_mode = 2
+
+[node name="password_label" type="Label" parent="AspectRatioContainer/login_margin/login_panel"]
+layout_mode = 2
+text = "Hasło"
+
+[node name="password_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_5t3qa")]
+layout_mode = 2
+secret = true
+secret_character = "*"
+
+[node name="login_button" type="Button" parent="AspectRatioContainer/login_margin/login_panel"]
+layout_mode = 2
+text = "Zaloguj"
+
+[node name="popup_margin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+mouse_filter = 2
 
-[node name="aspect_ratio_container" type="AspectRatioContainer" parent="center_container"]
-custom_minimum_size = Vector2(400, 300)
+[node name="information_popup" parent="popup_margin" instance=ExtResource("2_xccwl")]
 layout_mode = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="login_panel" type="VBoxContainer" parent="center_container/aspect_ratio_container"]
-layout_mode = 2
-size_flags_vertical = 4
-metadata/_edit_use_anchors_ = true
-
-[node name="username_label" type="Label" parent="center_container/aspect_ratio_container/login_panel"]
-layout_mode = 2
-text = "username"
-
-[node name="username_input" type="LineEdit" parent="center_container/aspect_ratio_container/login_panel"]
-layout_mode = 2
-placeholder_text = "username"
-context_menu_enabled = false
-emoji_menu_enabled = false
-middle_mouse_paste_enabled = false
-caret_blink = true
-
-[node name="password_label" type="Label" parent="center_container/aspect_ratio_container/login_panel"]
-layout_mode = 2
-text = "password"
-
-[node name="password_input" type="LineEdit" parent="center_container/aspect_ratio_container/login_panel"]
-layout_mode = 2
-placeholder_text = "password"
-context_menu_enabled = false
-emoji_menu_enabled = false
-middle_mouse_paste_enabled = false
-caret_blink = true
-secret = true
-secret_character = "*"
-
-[node name="login_button" type="Button" parent="center_container/aspect_ratio_container/login_panel"]
-layout_mode = 2
-text = "Login"
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 405.0
-offset_bottom = 53.0
-
-[node name="information_popup" parent="MarginContainer" instance=ExtResource("2_xccwl")]
-visible = false
-layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
 
 [connection signal="resized" from="." to="." method="_on_resized"]
-[connection signal="pressed" from="center_container/aspect_ratio_container/login_panel/login_button" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="AspectRatioContainer/login_margin/login_panel/login_button" to="." method="_on_login_button_pressed"]

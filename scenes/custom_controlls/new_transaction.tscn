@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://6vc5femhj1f6"]
+[gd_scene load_steps=4 format=3 uid="uid://6vc5femhj1f6"]
 
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_6cxfc"]
 [ext_resource type="Script" uid="uid://dnhrersqcwcso" path="res://scripts/new_transaction_script.gd" id="1_svxld"]
+[ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_mi8gf"]
 
 [node name="new_transaction" type="Control"]
 layout_mode = 3
@@ -49,24 +50,22 @@ text = "Odbiorca przelewu"
 
 [node name="recepiant_input_placeholder" type="Panel" parent="background/transaction_elements"]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 33)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="title_label" type="Label" parent="background/transaction_elements"]
 layout_mode = 2
 text = "Tytuł przelewu"
 
-[node name="title_input" type="LineEdit" parent="background/transaction_elements"]
+[node name="title_input" parent="background/transaction_elements" instance=ExtResource("2_mi8gf")]
 layout_mode = 2
-max_length = 18
 
 [node name="amount_label" type="Label" parent="background/transaction_elements"]
 layout_mode = 2
 text = "Kwota przelewu"
 
-[node name="amount_input" type="LineEdit" parent="background/transaction_elements"]
+[node name="amount_input" parent="background/transaction_elements" instance=ExtResource("2_mi8gf")]
 layout_mode = 2
-max_length = 16
 virtual_keyboard_type = 2
 
 [node name="transaction_actions" type="HBoxContainer" parent="background/transaction_elements"]
@@ -87,7 +86,7 @@ layout_mode = 1
 anchor_left = 0.1
 anchor_top = 0.355
 anchor_right = 0.9
-anchor_bottom = 0.451
+anchor_bottom = 0.44
 offset_bottom = 0.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

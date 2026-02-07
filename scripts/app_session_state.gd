@@ -12,7 +12,7 @@ var token: String = ""
 var user_data: Dictionary = { UserDataType.USERNAME: "", UserDataType.PERSONAL_NUMBER: "" }
 var app_selector_height = 0
 
-func get_server_token() -> String:	
+func get_server_token() -> String:
 	if not token.is_empty():
 		return token
 	

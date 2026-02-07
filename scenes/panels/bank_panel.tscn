@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://0506af3w1mki"]
+[gd_scene load_steps=4 format=3 uid="uid://0506af3w1mki"]
 
 [ext_resource type="Script" uid="uid://b0asa8oyf4u47" path="res://scripts/bank_panel_script.gd" id="1_0pdnh"]
 [ext_resource type="PackedScene" uid="uid://6vc5femhj1f6" path="res://scenes/custom_controlls/new_transaction.tscn" id="2_8ud3o"]
+[ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
 
 [node name="bank_panel" type="Control"]
 layout_mode = 3
@@ -52,8 +53,9 @@ size_flags_vertical = 3
 
 [node name="transactions_list" type="VBoxContainer" parent="main_panel/transactions_scroll_window"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="main_panel_overlay" type="ColorRect" parent="."]
+[node name="overlay_margin" type="MarginContainer" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -61,21 +63,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.373, 0.05, 0.215, 0.879)
 metadata/_edit_use_anchors_ = true
 
-[node name="center_container" type="CenterContainer" parent="main_panel_overlay"]
-clip_contents = true
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="overlay_background" type="TextureRect" parent="overlay_margin"]
+layout_mode = 2
+texture = ExtResource("2_tn1ak")
+expand_mode = 4
 
-[node name="new_transaction" parent="main_panel_overlay/center_container" instance=ExtResource("2_8ud3o")]
+[node name="center_container" type="CenterContainer" parent="overlay_margin"]
+clip_contents = true
+layout_mode = 2
+
+[node name="new_transaction" parent="overlay_margin/center_container" instance=ExtResource("2_8ud3o")]
 layout_mode = 2
 
 [connection signal="button_down" from="main_panel/bank_actions/refresh" to="." method="_on_refresh_button_down"]
 [connection signal="pressed" from="main_panel/bank_actions/new_transaction" to="." method="_on_new_transaction_pressed"]
-[connection signal="transaction_completed" from="main_panel_overlay/center_container/new_transaction" to="." method="_on_new_transaction_transaction_completed"]
+[connection signal="transaction_completed" from="overlay_margin/center_container/new_transaction" to="." method="_on_new_transaction_transaction_completed"]

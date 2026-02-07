@@ -5,10 +5,10 @@ extends PanelContainer
 @export var title: String
 @export var content: String
 
-@onready var author_label = $article/publish_data/author_label
-@onready var date_label = $article/publish_data/date_label
-@onready var title_label = $article/title_label
-@onready var content_label = $article/content_label
+@onready var author_label = $article_margin/article/publish_data/author_label
+@onready var date_label = $article_margin/article/publish_data/date_label
+@onready var title_label = $article_margin/article/title_label
+@onready var content_label = $article_margin/article/content_label
 
 func _ready() -> void:
 	author_label.text = author

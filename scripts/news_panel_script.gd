@@ -3,8 +3,8 @@ extends Control
 @export var news_article_entry: PackedScene
 
 @onready var news_box: VBoxContainer = $VBoxContainer/feed/news_box
-@onready var title_input = $VBoxContainer/post_box/title_input
-@onready var content_input = $VBoxContainer/post_box/content_input
+@onready var title_input: LineEdit = $VBoxContainer/post_box_margin/post_box/title_input
+@onready var content_input: TextEdit = $VBoxContainer/post_box_margin/post_box/long_text_input
 
 func _ready() -> void:
 	refresh_news_feed()
@@ -37,7 +37,7 @@ func send_article():
 	if content.length() < 3:
 		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Wymagane minimum 3 znaki")
 		return
-	if content.length() > 256:
+	if content.length() > 255:
 		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Ograniczenie maksymalnie 256 znaków")
 		return
 	
