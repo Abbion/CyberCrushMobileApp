@@ -59,8 +59,3 @@ func clear_inputs() -> void:
 	title_input.clear()
 	amount_input.clear()
 	recepiant_input.clear()
-
-func _on_visibility_changed() -> void:
-	if visible == false:
-		return
-	update_user_funds()

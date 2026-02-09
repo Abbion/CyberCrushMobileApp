@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://do7a0we212jsp"]
+[gd_scene load_steps=5 format=3 uid="uid://do7a0we212jsp"]
 
-[ext_resource type="Script" uid="uid://bll3ts1huagh6" path="res://scripts/login_page_script.gd" id="1_0oykn"]
-[ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_5t3qa"]
-[ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="2_xccwl"]
+[ext_resource type="Script" uid="uid://bll3ts1huagh6" path="res://scripts/login_page_script.gd" id="1_iydcg"]
+[ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_dmx6h"]
+[ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="3_xbu75"]
+[ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="4_sbehe"]
 
 [node name="login_page" type="Control"]
 layout_mode = 3
@@ -11,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_0oykn")
+script = ExtResource("1_iydcg")
 metadata/_edit_use_anchors_ = true
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
@@ -37,14 +38,14 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 text = "Nazwa użytkownika"
 
-[node name="username_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_5t3qa")]
+[node name="username_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_dmx6h")]
 layout_mode = 2
 
 [node name="password_label" type="Label" parent="AspectRatioContainer/login_margin/login_panel"]
 layout_mode = 2
 text = "Hasło"
 
-[node name="password_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_5t3qa")]
+[node name="password_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_dmx6h")]
 layout_mode = 2
 secret = true
 secret_character = "*"
@@ -52,6 +53,17 @@ secret_character = "*"
 [node name="login_button" type="Button" parent="AspectRatioContainer/login_margin/login_panel"]
 layout_mode = 2
 text = "Zaloguj"
+
+[node name="spinner_margin" type="MarginContainer" parent="AspectRatioContainer/login_margin/login_panel"]
+layout_mode = 2
+theme_override_constants/margin_top = 30
+
+[node name="spinner" parent="AspectRatioContainer/login_margin/login_panel/spinner_margin" instance=ExtResource("3_xbu75")]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+spinner_scale = 0.25
 
 [node name="popup_margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -62,7 +74,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="information_popup" parent="popup_margin" instance=ExtResource("2_xccwl")]
+[node name="information_popup" parent="popup_margin" instance=ExtResource("4_sbehe")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0

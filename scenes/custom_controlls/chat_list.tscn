@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cshv3dqh1nyxj"]
+[gd_scene load_steps=6 format=3 uid="uid://cshv3dqh1nyxj"]
 
 [ext_resource type="Script" uid="uid://cp5rmln1itjl1" path="res://scripts/chat_list_script.gd" id="1_rjbdb"]
+[ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_5pg7g"]
 [ext_resource type="PackedScene" uid="uid://d32k05xyh4brq" path="res://scenes/custom_controlls/new_chat.tscn" id="2_6j0wu"]
+[ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_fcj2p"]
+[ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_q8thl"]
 
 [node name="chat_list" type="Control"]
 layout_mode = 3
@@ -12,7 +15,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rjbdb")
 
+[node name="spinner_container" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="spinner" parent="spinner_container" instance=ExtResource("2_fcj2p")]
+layout_mode = 2
+spinner_scale = 0.5
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,27 +56,21 @@ theme_override_font_sizes/font_size = 32
 text = "  +  "
 metadata/_edit_use_anchors_ = true
 
-[node name="overlay" type="ColorRect" parent="."]
+[node name="overlay_margin" parent="." instance=ExtResource("2_q8thl")]
 visible = false
-custom_minimum_size = Vector2(400, 720)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.188344, 0.151032, 0.043477, 0.762)
 
-[node name="center_container" type="CenterContainer" parent="overlay"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="background" type="TextureRect" parent="overlay_margin"]
+modulate = Color(1, 1, 1, 0.729412)
+layout_mode = 2
+texture = ExtResource("2_5pg7g")
+expand_mode = 4
 
-[node name="new_chat" parent="overlay/center_container" instance=ExtResource("2_6j0wu")]
+[node name="center_container" type="CenterContainer" parent="overlay_margin"]
+layout_mode = 2
+
+[node name="new_chat" parent="overlay_margin/center_container" instance=ExtResource("2_6j0wu")]
 layout_mode = 2
 
 [connection signal="pressed" from="add_chat" to="." method="_on_add_chat_pressed"]
-[connection signal="panel_closed" from="overlay/center_container/new_chat" to="." method="_on_new_chat_panel_closed"]
+[connection signal="panel_closed" from="overlay_margin/center_container/new_chat" to="." method="_on_new_chat_panel_closed"]

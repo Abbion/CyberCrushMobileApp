@@ -7,20 +7,15 @@
 script/source = "extends Control
 
 @onready var chat_list: Control = $chat_list
-@export var message_board: PackedScene
-const message_board_name = \"message_board\"
+@onready var message_board = $chat_message_board
 
 func _ready() -> void:
 	GlobalSignals.new_chat_created.connect(on_chat_created)
 	GlobalSignals.close_chat_board.connect(on_chat_closed)
 
 func open_chat(chat_id: int) -> void:
-	var chat_message_board = message_board.instantiate()
-	chat_message_board.name = message_board_name
-	chat_message_board.hide()
-	add_child(chat_message_board)
-	await chat_message_board.load_chat_at_id(chat_id);
-	chat_message_board.show()
+	await message_board.load_chat_at_id(chat_id);
+	message_board.show()
 	chat_list.hide()
 
 func _on_chat_list_open_chat(chat_id: int) -> void:
@@ -29,19 +24,12 @@ func _on_chat_list_open_chat(chat_id: int) -> void:
 func on_chat_closed() -> void:
 	chat_list.refresh_chat_list()
 	chat_list.show()
-	remove_message_board()
+	message_board.hide()
 
 func on_chat_created(chat_id: int) -> void:
 	open_chat(chat_id)
 	chat_list.refresh_chat_list()
 	chat_list.reset_layout()
-
-func remove_message_board() -> void:
-	for child in get_children():
-		if child.name == message_board_name:
-			remove_child(child)
-			child.queue_free()
-			break
 "
 
 [node name="chat_panel" type="Control"]
@@ -52,9 +40,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_nvn48")
-message_board = ExtResource("1_nvn48")
 
 [node name="chat_list" parent="." instance=ExtResource("2_ke17o")]
+layout_mode = 1
+
+[node name="chat_message_board" parent="." instance=ExtResource("1_nvn48")]
+visible = false
 layout_mode = 1
 
 [connection signal="open_chat" from="chat_list" to="." method="_on_chat_list_open_chat"]

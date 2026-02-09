@@ -2,23 +2,27 @@ extends PanelContainer
 
 @export var message_alignment: GlobalTypes.CHAT_MESSAGE_ALIGNMENT
 @export var message_text: String
-@export var timestamp_text: String
 @export var sender_username: String
 @export var container_width: int
 @export var in_chat_index: int
+var timestamp: GlobalTypes.DateTime
 
-@onready var message_container: VBoxContainer = $message_container
-@onready var message_label: Label = $message_container/message_label
-@onready var timestamp_label: Label = $message_container/timestamp_label
-@onready var sender_username_label: Label = $message_container/sender_username_label
+@onready var message_container: VBoxContainer = $message_margin/message_data
+@onready var sender_username_label: Label = $message_margin/message_data/sender_username_label
+@onready var message_label: Label = $message_margin/message_data/message_label
+@onready var timestamp_label: Label = $message_margin/message_data/timestamp_label
 
 const message_container_separator = 5
 const max_message_width_ratio = 0.7
 var text_resized = false
+var base_time_stamp
+
+var elapsed_time: float = 0.0
+const TIME_TO_REFRESH_TIMESTAMP = 90.0 # In seconds
 
 func _ready() -> void:
 	message_label.text = message_text
-	timestamp_label.text = timestamp_text
+	timestamp_label.text = timestamp.get_string()
 	sender_username_label.text = sender_username
 	
 	if message_alignment == GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT:
@@ -27,6 +31,12 @@ func _ready() -> void:
 	else:
 		sender_username_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+
+func _process(delta: float) -> void:
+	elapsed_time += delta
+	if elapsed_time > TIME_TO_REFRESH_TIMESTAMP:
+		timestamp_label.text = timestamp.get_string()
+		elapsed_time = 0.0
 
 func _on_message_label_resized() -> void:
 	if text_resized or message_label == null:

@@ -2,14 +2,20 @@ extends Control
 
 @export var news_article_entry: PackedScene
 
-@onready var news_box: VBoxContainer = $VBoxContainer/feed/news_box
+@onready var feed: VBoxContainer = $VBoxContainer/scroll_feed/feed
 @onready var title_input: LineEdit = $VBoxContainer/post_box_margin/post_box/title_input
 @onready var content_input: TextEdit = $VBoxContainer/post_box_margin/post_box/long_text_input
+
+@onready var scroll_feed: ScrollContainer = $VBoxContainer/scroll_feed
+@onready var spinner_container: CenterContainer = $VBoxContainer/spinner_container
 
 func _ready() -> void:
 	refresh_news_feed()
 
 func refresh_news_feed():
+	spinner_container.show()
+	scroll_feed.hide()
+	
 	var articles = await ServerRequest.news_feed()
 	for article in articles:
 		var author = article["author"]
@@ -22,7 +28,10 @@ func refresh_news_feed():
 		article_entry.date = GlobalTypes.DateTime.from_string(date).get_string()
 		article_entry.title = title
 		article_entry.content = content
-		news_box.add_child(article_entry)
+		feed.add_child(article_entry)
+		
+	spinner_container.hide()
+	scroll_feed.show()
 
 func send_article():
 	var title: String = title_input.text
@@ -49,8 +58,8 @@ func send_article():
 	article_entry.title = title
 	article_entry.content = content
 	
-	news_box.add_child(article_entry)
-	news_box.move_child(article_entry, 0)
+	feed.add_child(article_entry)
+	feed.move_child(article_entry, 0)
 
 func _on_publush_button_pressed() -> void:
 	send_article()

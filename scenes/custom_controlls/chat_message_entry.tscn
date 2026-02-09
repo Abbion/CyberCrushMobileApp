@@ -10,7 +10,6 @@ grow_horizontal = 2
 mouse_filter = 1
 script = ExtResource("1_7xolx")
 message_text = "Null"
-timestamp_text = "null"
 sender_username = "null"
 metadata/_edit_use_anchors_ = true
 
@@ -19,27 +18,32 @@ clip_contents = true
 layout_mode = 2
 color = Color(0.487756, 1.02879e-06, 3.36915e-07, 1)
 
-[node name="message_container" type="VBoxContainer" parent="."]
+[node name="message_margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="message_data" type="VBoxContainer" parent="message_margin"]
 layout_mode = 2
 size_flags_horizontal = 9
 theme_override_constants/separation = 5
 
-[node name="sender_username_label" type="Label" parent="message_container"]
+[node name="sender_username_label" type="Label" parent="message_margin/message_data"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "null"
 ellipsis_char = ""
 
-[node name="message_label" type="Label" parent="message_container"]
+[node name="message_label" type="Label" parent="message_margin/message_data"]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/line_spacing = 0
 text = "Null"
 
-[node name="timestamp_label" type="Label" parent="message_container"]
+[node name="timestamp_label" type="Label" parent="message_margin/message_data"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "null"
 
-[connection signal="resized" from="message_container/message_label" to="." method="_on_message_label_resized"]
+[connection signal="resized" from="message_margin/message_data/message_label" to="." method="_on_message_label_resized"]

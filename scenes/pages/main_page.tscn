@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
 [ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="8_b6xi4"]
 
-[node name="MainPage" type="Control"]
+[node name="main_page" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x7tum")
+news_panel_scene = ExtResource("6_3vdiw")
+bank_panel_scene = ExtResource("3_6lmqk")
+chat_panel_scene = ExtResource("5_esk2p")
+id_panel_scene = ExtResource("3_xap5f")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -33,25 +37,10 @@ metadata/_edit_use_anchors_ = true
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="app_margin" type="MarginContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 632)
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
-layout_mode = 2
-
-[node name="bank_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_6lmqk")]
-visible = false
-layout_mode = 2
-
-[node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
-visible = false
-layout_mode = 2
-
-[node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
-visible = false
-layout_mode = 2
 
 [node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]
 custom_minimum_size = Vector2(0, 60)
@@ -74,6 +63,8 @@ theme_override_constants/margin_right = 0
 layout_mode = 2
 mouse_filter = 2
 
+[connection signal="tree_entered" from="." to="." method="on_tree_entered"]
+[connection signal="tree_exited" from="." to="." method="on_tree_exited"]
 [connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
 [connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]
 [connection signal="my_id_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_my_id_selected"]

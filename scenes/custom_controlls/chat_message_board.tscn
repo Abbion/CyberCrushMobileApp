@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://b33lb6oqou8we"]
+[gd_scene load_steps=7 format=3 uid="uid://b33lb6oqou8we"]
 
 [ext_resource type="Script" uid="uid://eq00ajhbkh3u" path="res://scripts/chat_message_board_script.gd" id="1_c16fi"]
 [ext_resource type="PackedScene" uid="uid://bhthbs3apue7x" path="res://scenes/custom_controlls/chat_settings.tscn" id="2_ifct0"]
 [ext_resource type="PackedScene" uid="uid://5damwlt2tv6e" path="res://scenes/custom_controlls/chat_message_entry.tscn" id="3_g7fpo"]
+[ext_resource type="PackedScene" uid="uid://gn8f4wkuvip1" path="res://scenes/custom_controlls/long_text_input.tscn" id="4_3756x"]
+[ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="4_tnq2v"]
+[ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="5_3756x"]
 
 [node name="chat_message_board" type="Control"]
 layout_mode = 3
@@ -15,32 +18,30 @@ script = ExtResource("1_c16fi")
 chat_settings = ExtResource("2_ifct0")
 message_entry = ExtResource("3_g7fpo")
 
-[node name="board" type="VBoxContainer" parent="."]
+[node name="board_margin" parent="." instance=ExtResource("4_tnq2v")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+
+[node name="board" type="VBoxContainer" parent="board_margin"]
+layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="top_panel" type="Panel" parent="board"]
+[node name="top_panel" type="Panel" parent="board_margin/board"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="board/top_panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="board_margin/board/top_panel"]
 layout_mode = 0
 offset_right = 405.0
 offset_bottom = 40.0
 theme_override_constants/separation = 0
 
-[node name="back_button" type="Button" parent="board/top_panel/HBoxContainer"]
+[node name="back_button" type="Button" parent="board_margin/board/top_panel/HBoxContainer"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "<"
 
-[node name="title" type="Label" parent="board/top_panel/HBoxContainer"]
+[node name="title" type="Label" parent="board_margin/board/top_panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -48,51 +49,52 @@ text = "null"
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="chat_settings_button" type="Button" parent="board/top_panel/HBoxContainer"]
+[node name="chat_settings_button" type="Button" parent="board_margin/board/top_panel/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 text = "⚙️"
 
-[node name="scroll_message_log" type="ScrollContainer" parent="board"]
+[node name="scroll_message_log" type="ScrollContainer" parent="board_margin/board"]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="message_log" type="VBoxContainer" parent="board/scroll_message_log"]
+[node name="message_log" type="VBoxContainer" parent="board_margin/board/scroll_message_log"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="message_panel" type="HBoxContainer" parent="board"]
+[node name="message_panel" type="HBoxContainer" parent="board_margin/board"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="message_input" type="TextEdit" parent="board/message_panel"]
+[node name="message_input" parent="board_margin/board/message_panel" instance=ExtResource("4_3756x")]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Wiadomość"
-wrap_mode = 1
-scroll_smooth = true
-scroll_fit_content_height = true
+max_visible_lines = 5
+max_character_limit = 512
+over_character_limit_labal_color = Color(0.626931, 0, 0.214729, 1)
+under_character_limit_labal_color = Color(1, 1, 1, 1)
 
-[node name="message_send_button" type="Button" parent="board/message_panel"]
+[node name="message_send_button" type="Button" parent="board_margin/board/message_panel"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 text = ">"
 
-[node name="overlay" type="ColorRect" parent="."]
+[node name="settings_overlay" parent="." instance=ExtResource("4_tnq2v")]
 visible = false
+layout_mode = 1
+
+[node name="background" type="TextureRect" parent="settings_overlay"]
 layout_mode = 2
-offset_right = 405.0
-offset_bottom = 720.0
-color = Color(0, 0, 0, 0.396078)
+texture = ExtResource("5_3756x")
+expand_mode = 4
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
-[connection signal="pressed" from="board/top_panel/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="board/top_panel/HBoxContainer/chat_settings_button" to="." method="_on_chat_settings_button_pressed"]
-[connection signal="text_changed" from="board/message_panel/message_input" to="." method="_on_message_input_text_changed"]
-[connection signal="pressed" from="board/message_panel/message_send_button" to="." method="_on_message_send_button_pressed"]
+[connection signal="pressed" from="board_margin/board/top_panel/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="board_margin/board/top_panel/HBoxContainer/chat_settings_button" to="." method="_on_chat_settings_button_pressed"]
+[connection signal="pressed" from="board_margin/board/message_panel/message_send_button" to="." method="_on_message_send_button_pressed"]

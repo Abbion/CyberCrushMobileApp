@@ -7,7 +7,7 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.039
 offset_bottom = -0.35
-color = Color(0.165656, 0.165656, 0.165656, 1)
+color = Color(0.596678, 0.153481, 0.800526, 1)
 script = ExtResource("1_ph4a7")
 
 [node name="top_bar_margin" type="MarginContainer" parent="."]

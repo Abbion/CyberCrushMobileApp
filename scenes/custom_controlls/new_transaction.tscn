@@ -89,5 +89,4 @@ anchor_right = 0.9
 anchor_bottom = 0.44
 offset_bottom = 0.0
 
-[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="background/transaction_elements/transaction_actions/transer_action" to="." method="_on_transer_action_pressed"]

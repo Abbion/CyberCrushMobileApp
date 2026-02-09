@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv2ucan1l6s11"]
+
+[ext_resource type="Script" uid="uid://c46j4hmpw5yj8" path="res://scripts/vk_overlay.gd" id="1_jsipt"]
+
+[node name="vk_overlay" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jsipt")

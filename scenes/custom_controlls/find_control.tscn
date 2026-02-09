@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bq7q3goaxwsfu"]
 
-[ext_resource type="Script" uid="uid://crmthpkwxbr6b" path="res://scenes/custom_controlls/find_control.gd" id="1_ikplo"]
+[ext_resource type="Script" uid="uid://crmthpkwxbr6b" path="res://scripts/find_control.gd" id="1_ikplo"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_4dsp5"]
 
 [node name="find_control" type="Control"]

@@ -9,21 +9,23 @@ class ChatSortData:
 	var time_stamp: Dictionary
 
 @onready var chat_list = $ScrollContainer/chat_list
-@onready var overlay = $overlay
-@onready var overlay_center_container = $overlay/center_container
+@onready var overlay_margin = $overlay_margin
+@onready var overlay_center_container = $overlay_margin/center_container
+
+@onready var chat_scroll = $ScrollContainer
+@onready var spinner_container = $spinner_container
 
 signal open_chat(chat_id: int)
 
 var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.tscn")
 
 func _ready() -> void:
-	update_chats_list()
-
-func _process(delta: float) -> void:
-	overlay_center_container.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
+	refresh_chat_list()
 
 func update_chats_list():
 	var user_chats = await ServerRequest.user_chats()
+	if user_chats.is_empty():
+		return
 	var direct_chats = user_chats["direct"]
 	var group_chats = user_chats["group"]
 	
@@ -107,13 +109,19 @@ func clear_chats_list() -> void:
 		entry.queue_free()
 
 func refresh_chat_list() -> void:
+	spinner_container.show()
+	chat_scroll.hide()
+	
 	update_chats_list()
+	
+	spinner_container.hide()
+	chat_scroll.show()
 
 func reset_layout() -> void:
-	overlay.hide()
+	overlay_margin.hide()
 
 func _on_add_chat_pressed() -> void:
-	overlay.show()
+	overlay_margin.show()
 
 func _on_new_chat_panel_closed() -> void:
 	reset_layout()

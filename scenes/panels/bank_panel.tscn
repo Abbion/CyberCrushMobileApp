@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://0506af3w1mki"]
+[gd_scene load_steps=6 format=3 uid="uid://0506af3w1mki"]
 
 [ext_resource type="Script" uid="uid://b0asa8oyf4u47" path="res://scripts/bank_panel_script.gd" id="1_0pdnh"]
 [ext_resource type="PackedScene" uid="uid://6vc5femhj1f6" path="res://scenes/custom_controlls/new_transaction.tscn" id="2_8ud3o"]
+[ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_mvofu"]
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
+[ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yxmd7"]
 
 [node name="bank_panel" type="Control"]
 layout_mode = 3
@@ -47,25 +49,29 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "New transaction"
 
-[node name="transactions_scroll_window" type="ScrollContainer" parent="main_panel"]
+[node name="spinner_container" type="CenterContainer" parent="main_panel"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="transactions_list" type="VBoxContainer" parent="main_panel/transactions_scroll_window"]
+[node name="spinner" parent="main_panel/spinner_container" instance=ExtResource("2_yxmd7")]
+layout_mode = 2
+spinner_scale = 0.5
+
+[node name="transactions_scroll" type="ScrollContainer" parent="main_panel"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="transactions_list" type="VBoxContainer" parent="main_panel/transactions_scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="overlay_margin" type="MarginContainer" parent="."]
+[node name="overlay_margin" parent="." instance=ExtResource("2_mvofu")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="overlay_background" type="TextureRect" parent="overlay_margin"]
+modulate = Color(1, 1, 1, 0.647059)
 layout_mode = 2
 texture = ExtResource("2_tn1ak")
 expand_mode = 4

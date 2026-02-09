@@ -3,6 +3,7 @@ extends Node
 enum CHAT_MESSAGE_ALIGNMENT { LEFT, RIGHT }
 enum CHAT_TYPE{ DIRECT, GROUP }
 enum REALTIME_CHAT_SOCKET_STATE{ NULL, CREATED, INITIALIZED, CONNECTED, CLOSED }
+const BASE_YEAR = 2000
 
 class UserData:
 	var username: String = ""
@@ -59,5 +60,67 @@ class DateTime:
 		
 		return dateTime
 	
+	func is_leap_year() -> bool:
+		return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+	
+	func days_in_year() -> int:
+		return 366 if is_leap_year() else 365
+
+	func days_in_month() -> int:
+		match month:
+			1, 3, 5, 7, 8, 10, 12:
+				return 31
+			4, 6, 9, 11:
+				return 30
+			2:
+				return 29 if is_leap_year() else 28
+			_:
+				return 0
+	
+	func minutes_since_base_year() -> int:
+		var total_minutes := 0
+		
+		for y in range(BASE_YEAR, year):
+			total_minutes += days_in_year() * 24 * 60
+		
+		for m in range(1, month):
+			total_minutes += days_in_month() * 24 * 60
+		
+		total_minutes += (day - 1) * 24 * 60
+		
+		total_minutes += hour * 60
+		total_minutes += minute
+		
+		return total_minutes
+	
 	func get_string() -> String:
-		return "%02d/%02d/%s %02d:%02d" %[day, month, year, hour, minute]
+		var default_format = "%02d/%02d/%s %02d:%02d" %[day, month, year, hour, minute]
+		var minutes_for_default_format = 24 * 60;
+		var current_datetime = now()
+		
+		var minutes_in_self = minutes_since_base_year()
+		var minutes_in_current = current_datetime.minutes_since_base_year()
+		var minutes_diff = minutes_in_current - minutes_in_self
+		
+		if minutes_diff > minutes_for_default_format:
+			return default_format
+		
+		var hours_elapsed = int(floor(float(minutes_diff) / 60.0))
+		
+		if hours_elapsed >= 1:
+			if hours_elapsed >= 2:
+				return "%s godziny temu" % floor(hours_elapsed)
+			else:
+				return "godzinę temu"
+		
+		var minutes_elapsed_diff = minutes_diff - (hours_elapsed * 60)
+		
+		if minutes_elapsed_diff < 60:
+			if minutes_elapsed_diff <= 1:
+				return "teraz"
+			if minutes_elapsed_diff <= 4:
+				return "%s minuty temu" % floor(minutes_elapsed_diff)
+			else:
+				return "%s minut temu" % floor(minutes_elapsed_diff)
+		
+		return default_format

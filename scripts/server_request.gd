@@ -423,19 +423,13 @@ func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	#=Request=============================================================
 	
 	var payload = {}
+	var history_last_index = null if start_from_index < 0 else start_from_index
 	
-	if start_from_index < 0:
-		payload = {
-			"token" : AppSessionState.get_server_token(),
-			"chat_id" : chat_id,
-			"history_last_index" : null
-		}
-	else:
-		payload = {
-			"token" : AppSessionState.get_server_token(),
-			"chat_id" : chat_id,
-			"history_last_index" : start_from_index
-		}
+	payload = {
+		"token" : AppSessionState.get_server_token(),
+		"chat_id" : chat_id,
+		"history_last_index" : history_last_index
+	}
 
 	var request_state = get_chat_history_request.request(
 				get_chat_history_url,

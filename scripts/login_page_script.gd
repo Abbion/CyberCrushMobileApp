@@ -5,12 +5,12 @@ extends Control
 @onready var login_button: Button = $AspectRatioContainer/login_margin/login_panel/login_button
 @onready var login_margin: MarginContainer = $AspectRatioContainer/login_margin
 @onready var popup_margin: MarginContainer = $popup_margin
+@onready var login_spinner_margin: MarginContainer = $AspectRatioContainer/login_margin/login_panel/spinner_margin
 
 func _ready() -> void:	
 	var safe_area = DisplayServer.get_display_safe_area()
 	var margin = DisplayManager.base_to_viewport_point_converter(safe_area.position)
 	popup_margin.add_theme_constant_override("margin_top", margin.y)
-	login_margin.add_theme_constant_override("margin_top", margin.y)
 	
 	lock_input();
 	var token = AppSessionState.get_server_token();
@@ -49,11 +49,13 @@ func lock_input():
 	username_input.editable = false
 	password_input.editable = false
 	login_button.disabled = true
+	login_spinner_margin.show()
 	
 func unlock_input():
 	username_input.editable = true
 	password_input.editable = true
 	login_button.disabled = false
+	login_spinner_margin.hide()
 
 func _process(delta: float) -> void:
 	if GlobalConstants.os_is_mobile() == true:

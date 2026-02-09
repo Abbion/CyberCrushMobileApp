@@ -12,7 +12,7 @@ var free_slots: int = 0
 @onready var add_user_input = $ColorRect/add_user_view/find_control
 
 @export var chat_id: int = -1;
-signal closed
+signal closed(settings: Node)
 
 func initialize() -> void:
 	await get_metadata()
@@ -69,7 +69,7 @@ func go_to_remove_user_view() -> void:
 	remove_user_view.show()
 
 func close_chat_settings() -> void:
-	closed.emit()
+	closed.emit(self)
 
 func _on_remove_button_pressed() -> void:
 	var any_member_removed = false

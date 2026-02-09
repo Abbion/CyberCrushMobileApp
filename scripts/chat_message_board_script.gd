@@ -11,18 +11,16 @@ var locketd_message_input_height: int = 0
 var chunk_counter: int = 0
 var scroll_to_new_chunk: bool = false
 
-@onready var message_scroll_log: ScrollContainer = $board/scroll_message_log
-@onready var message_log: VBoxContainer  = $board/scroll_message_log/message_log
-@onready var title: Label = $board/top_panel/HBoxContainer/title
-@onready var message_input: TextEdit = $board/message_panel/message_input
-@onready var chat_settings_button: Button = $board/top_panel/HBoxContainer/chat_settings_button
-@onready var overlay: ColorRect = $overlay
+@onready var message_scroll_log: ScrollContainer = $board_margin/board/scroll_message_log
+@onready var message_log: VBoxContainer  = $board_margin/board/scroll_message_log/message_log
+@onready var title: Label = $board_margin/board/top_panel/HBoxContainer/title
+@onready var message_input: TextEdit = $board_margin/board/message_panel/message_input
+@onready var chat_settings_button: Button = $board_margin/board/top_panel/HBoxContainer/chat_settings_button
+@onready var settings_overlay: MarginContainer = $settings_overlay
 @onready var message_board = $board
 
 @export var chat_settings: PackedScene;
 @export var message_entry: PackedScene
-
-const max_message_input_ration = 0.3
 
 func load_chat_at_id(id: int) -> void:
 	chat_id = id
@@ -54,8 +52,6 @@ func _ready() -> void:
 	v_scroll.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta: float) -> void:
-	message_board.anchor_bottom = HelperFunctions.virtual_keyboard_normalized_size_from_bottom(AppSessionState.app_selector_height)
-	
 	if chat_socket == null or socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.NULL:
 		return
 		
@@ -80,8 +76,8 @@ func _process(delta: float) -> void:
 				if try_send_queued_messages() == false:
 					close_chat()
 					return
-	if should_load_older_messages() == true:
-		load_older_messages()
+		if should_load_older_messages() == true:
+			load_older_messages()
 
 func init_realtime_chat_connection() -> void:
 	var user_token = AppSessionState.get_server_token()
@@ -244,17 +240,20 @@ func update_meta_data(metadata: Dictionary) -> void:
 	pass
 
 func clear_chat() -> void:
+	chunk_counter = 0
 	for entry in message_log.get_children():
 		message_log.remove_child(entry)
 		entry.queue_free()
 
 func disconnect_from_chat() -> void:
-	chat_socket.close()
+	if chat_socket != null:
+		chat_socket.close()
 	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CLOSED
 	chat_id = -1
 	message_queue.clear()
 
 func _on_back_button_pressed() -> void:
+	close_chat()
 	GlobalSignals.close_chat_board.emit()
 
 func _on_message_send_button_pressed() -> void:
@@ -279,7 +278,6 @@ func _on_message_send_button_pressed() -> void:
 	message_input.text = ""
 	
 	anchor_message_log = true
-	reset_message_input()
 
 func create_message_entry(index: int, message: String, sender: String, dateTime: GlobalTypes.DateTime):
 	var username = AppSessionState.get_username()
@@ -294,7 +292,7 @@ func create_message_entry(index: int, message: String, sender: String, dateTime:
 	var message_entry = message_entry.instantiate()
 	message_entry.message_alignment = message_alignment
 	message_entry.message_text = message
-	message_entry.timestamp_text = dateTime.get_string()
+	message_entry.timestamp = dateTime
 	message_entry.sender_username = sender
 	message_entry.in_chat_index = index
 	message_entry.size_flags_horizontal = size_flag
@@ -313,20 +311,18 @@ func scroll_to_chunk(chunk_index: int) -> void:
 	message_scroll_log.scroll_vertical = chunk.size.y
 
 func _on_chat_settings_button_pressed() -> void:
-	overlay.show()
+	settings_overlay.show()
 	
 	var settings = chat_settings.instantiate()
 	settings.chat_id = chat_id
 	settings.connect("closed", settings_panel_closed)
 	await settings.initialize()
-	overlay.add_child(settings)
+	settings_overlay.add_child(settings)
 
-func settings_panel_closed() -> void:
-	overlay.hide()
-	
-	for child in overlay.get_children():
-		overlay.remove_child(child)
-		child.queue_free()
+func settings_panel_closed(settings: Node) -> void:
+	settings_overlay.hide()
+	settings_overlay.remove_child(settings)
+	settings.queue_free()
 
 func close_chat() -> void:
 	disconnect_from_chat();
@@ -354,50 +350,6 @@ func on_scroll_changed() -> void:
 		scroll_to_chunk(0)
 		var v_scroll = message_scroll_log.get_v_scroll_bar()
 		scroll_to_new_chunk = false
-
-#_on_message_input_text_changed variable seciton
-var last_scroll_vertical: float = 0
-#================
-
-func _on_message_input_text_changed() -> void:
-	var message_board_height = message_board.size.y
-	var message_input_height = message_input.size.y
-	var message_input_ratio = float(message_input_height) / float(message_board_height)
-	
-	# if the message input is bigger than the max
-	# disable fit and set a custom minimum size to enable scrolling
-	# this locks the message input height
-	# if the message input is locked and the scroll is not visible reset fit sstate
-	if message_input_ratio > max_message_input_ration:
-		message_input.scroll_fit_content_height = false
-		if lock_message_input_height == false:
-			locketd_message_input_height = message_input_height
-			lock_message_input_height = true
-		else:
-			var v_scroll = message_input.get_v_scroll_bar()
-			if v_scroll.visible == false:
-				reset_message_input()
-				return
-		
-		message_input.custom_minimum_size.y = locketd_message_input_height
-		
-		var vertical_scroll_direction = message_input.scroll_vertical - last_scroll_vertical
-		if vertical_scroll_direction < 0:
-			# This updates the scroll so that the message input
-			# alligns with the last line
-			var v_scroll = message_input.get_v_scroll_bar()
-			var current_value = v_scroll.value
-			v_scroll.value = current_value - 1
-			v_scroll.value = current_value
-	else:
-		reset_message_input()
-	
-	last_scroll_vertical = message_input.scroll_vertical
-
-func reset_message_input() -> void:
-	message_input.scroll_fit_content_height = true
-	lock_message_input_height = false
-	message_input.custom_minimum_size.y = 0
 
 func get_first_chunk() -> VBoxContainer:
 	return message_log.get_child(chunk_counter - 1)

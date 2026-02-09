@@ -2,10 +2,17 @@ extends Control
 
 var id_page_entry = load("res://scenes/custom_controlls/id_page_entry.tscn")
 @onready var id_entries = $id_entires
+@onready var spinner_container: CenterContainer = $spinner_container
 
 func _ready() -> void:
 	var user_data = await ServerRequest.user_data()
+	spinner_container.show()
+	
+	id_entries.hide()
+	
 	build_data_entires(user_data)
+	spinner_container.hide()
+	id_entries.show()
 
 func build_data_entires(user_data: GlobalTypes.UserData) -> void:
 	var id_page_entry_username_instance = id_page_entry.instantiate()
@@ -26,5 +33,4 @@ func build_data_entires(user_data: GlobalTypes.UserData) -> void:
 		id_entries.add_child(id_page_entry_extra_data_instance)
 
 func _on_logout_button_button_down() -> void:
-	AppSessionState.clear()
-	get_tree().change_scene_to_file(GlobalConstants.LOGIN_PAGE_SCENE)
+	GlobalSignals.logout.emit()

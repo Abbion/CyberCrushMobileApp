@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkqj6aswsuht5"]
+[gd_scene load_steps=6 format=3 uid="uid://bkqj6aswsuht5"]
 
 [ext_resource type="PackedScene" uid="uid://ciim22jn3qi4d" path="res://scenes/custom_controlls/news_article_entry.tscn" id="1_b7gsk"]
 [ext_resource type="Script" uid="uid://n8fown1plprm" path="res://scripts/news_panel_script.gd" id="1_p00wx"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="3_lwmmg"]
 [ext_resource type="PackedScene" uid="uid://gn8f4wkuvip1" path="res://scenes/custom_controlls/long_text_input.tscn" id="3_ot28r"]
+[ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="5_83qtp"]
 
 [node name="news_panel" type="Control"]
 layout_mode = 3
@@ -63,12 +64,22 @@ text = "Publikuj"
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="feed" type="ScrollContainer" parent="VBoxContainer"]
+[node name="spinner_container" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="news_box" type="VBoxContainer" parent="VBoxContainer/feed"]
+[node name="spinner" parent="VBoxContainer/spinner_container" instance=ExtResource("5_83qtp")]
+layout_mode = 2
+spinner_scale = 0.5
+
+[node name="scroll_feed" type="ScrollContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="feed" type="VBoxContainer" parent="VBoxContainer/scroll_feed"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [connection signal="pressed" from="VBoxContainer/post_box_margin/post_box/post_actions/publush_button" to="." method="_on_publush_button_pressed"]
