@@ -17,6 +17,9 @@ func base_to_viewport_point_converter(value: Vector2) -> Vector2:
 	return value * scale
 
 func on_gui_focus_chaned(node: Node) -> void:
+	if node.get_meta("skip_vk_check") == true:
+		return
+	
 	if node is LineEdit or node is TextEdit:
 		DisplayServer.virtual_keyboard_show(node.text)
 	else:

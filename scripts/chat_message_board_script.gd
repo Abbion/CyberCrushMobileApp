@@ -13,7 +13,7 @@ var scroll_to_new_chunk: bool = false
 
 @onready var message_scroll_log: ScrollContainer = $board_margin/board/scroll_message_log
 @onready var message_log: VBoxContainer  = $board_margin/board/scroll_message_log/message_log
-@onready var title: Label = $board_margin/board/top_panel/HBoxContainer/title
+@onready var title: Label = $board_margin/board/top_panel/HBoxContainer/title_margin/title
 @onready var message_input: TextEdit = $board_margin/board/message_panel/message_input
 @onready var chat_settings_button: Button = $board_margin/board/top_panel/HBoxContainer/chat_settings_button
 @onready var settings_overlay: MarginContainer = $settings_overlay
@@ -54,8 +54,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if chat_socket == null or socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.NULL:
 		return
-		
-	message_log.modulate.a = 1.0
 	
 	chat_socket.poll()
 	var state = chat_socket.get_ready_state()
@@ -254,10 +252,9 @@ func disconnect_from_chat() -> void:
 
 func _on_back_button_pressed() -> void:
 	close_chat()
-	GlobalSignals.close_chat_board.emit()
 
 func _on_message_send_button_pressed() -> void:
-	var message_to_send = message_input.text
+	var message_to_send = message_input.get_cleaned_text()
 	message_to_send = message_to_send.strip_edges()
 	
 	if message_to_send.is_empty():
@@ -327,6 +324,7 @@ func settings_panel_closed(settings: Node) -> void:
 func close_chat() -> void:
 	disconnect_from_chat();
 	clear_chat();
+	GlobalSignals.close_chat_board.emit()
 
 func _on_tree_exiting() -> void:
 	close_chat()

@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://05lcwxuxxiv1" path="res://scripts/top_bar.gd" id="1_ph4a7"]
 
 [node name="top_bar" type="ColorRect"]
-anchors_preset = -1
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 0.039
-offset_bottom = -0.35
+offset_bottom = 28.0
 color = Color(0.596678, 0.153481, 0.800526, 1)
 script = ExtResource("1_ph4a7")
 

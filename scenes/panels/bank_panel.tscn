@@ -42,12 +42,12 @@ layout_mode = 2
 [node name="refresh" type="Button" parent="main_panel/bank_actions"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Refresh"
+text = "Odśwież"
 
 [node name="new_transaction" type="Button" parent="main_panel/bank_actions"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "New transaction"
+text = "Nowa transakcja"
 
 [node name="spinner_container" type="CenterContainer" parent="main_panel"]
 layout_mode = 2
@@ -65,6 +65,15 @@ size_flags_vertical = 3
 [node name="transactions_list" type="VBoxContainer" parent="main_panel/transactions_scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="empty_transactions" type="CenterContainer" parent="main_panel"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="empty_transaction_label" type="Label" parent="main_panel/empty_transactions"]
+layout_mode = 2
+text = "Historia transakcji jest pusta"
 
 [node name="overlay_margin" parent="." instance=ExtResource("2_mvofu")]
 visible = false

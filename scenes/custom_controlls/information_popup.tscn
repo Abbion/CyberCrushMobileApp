@@ -45,6 +45,7 @@ autowrap_mode = 3
 wait_time = 3.0
 one_shot = true
 
+[connection signal="tree_entered" from="." to="." method="on_tree_entered"]
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="resized" from="background/margin" to="." method="_on_margin_resized"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

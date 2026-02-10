@@ -22,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 
 [node name="spinner" parent="spinner_container" instance=ExtResource("2_fcj2p")]
 layout_mode = 2
@@ -40,6 +41,20 @@ metadata/_edit_use_anchors_ = true
 [node name="chat_list" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="empty_chat_list_container" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="empty_chat_list_label" type="Label" parent="empty_chat_list_container"]
+layout_mode = 2
+text = "Lista czatów jest pusta"
 
 [node name="add_chat" type="Button" parent="."]
 layout_mode = 1

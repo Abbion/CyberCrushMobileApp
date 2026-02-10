@@ -4,7 +4,7 @@ extends Control
 
 @onready var feed: VBoxContainer = $VBoxContainer/scroll_feed/feed
 @onready var title_input: LineEdit = $VBoxContainer/post_box_margin/post_box/title_input
-@onready var content_input: TextEdit = $VBoxContainer/post_box_margin/post_box/long_text_input
+@onready var content_input: TextEdit = $VBoxContainer/post_box_margin/post_box/content_input
 
 @onready var scroll_feed: ScrollContainer = $VBoxContainer/scroll_feed
 @onready var spinner_container: CenterContainer = $VBoxContainer/spinner_container
@@ -42,7 +42,7 @@ func send_article():
 		PopupDisplayServer.push_warning("Tytuł posta jest za długi. Ograniczenie maksymalnie 32 zaków")
 		return
 	
-	var content: String = content_input.text
+	var content: String = content_input.get_cleaned_text()
 	if content.length() < 3:
 		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Wymagane minimum 3 znaki")
 		return
@@ -60,6 +60,9 @@ func send_article():
 	
 	feed.add_child(article_entry)
 	feed.move_child(article_entry, 0)
+	
+	title_input.clear()
+	content_input.clear()
 
 func _on_publush_button_pressed() -> void:
 	send_article()

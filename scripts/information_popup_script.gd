@@ -8,7 +8,6 @@ extends Control
 
 func _ready() -> void:
 	hide()
-	GlobalSignals.consume_popup.connect(on_consume_request)
 
 func on_consume_request(popup_info: PopupDisplayServer.PopupInfo) -> void:
 	match popup_info.type:
@@ -47,6 +46,9 @@ func happy_info_popup(content: String) -> void:
 func _on_timer_timeout() -> void:
 	hide()
 	GlobalSignals.popup_closed.emit()
+
+func on_tree_entered() -> void:
+		GlobalSignals.consume_popup.connect(on_consume_request)
 
 func _on_tree_exited() -> void:
 	GlobalSignals.consume_popup.disconnect(on_consume_request)

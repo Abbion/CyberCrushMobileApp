@@ -46,9 +46,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Treść"
 
-[node name="long_text_input" parent="VBoxContainer/post_box_margin/post_box" instance=ExtResource("3_ot28r")]
+[node name="content_input" parent="VBoxContainer/post_box_margin/post_box" instance=ExtResource("3_ot28r")]
 layout_mode = 2
 size_flags_vertical = 3
+max_visible_lines = 5
 max_character_limit = 255
 over_character_limit_labal_color = Color(1, 0, 0, 1)
 under_character_limit_labal_color = Color(1, 1, 1, 1)

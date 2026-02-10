@@ -7,7 +7,7 @@ extends Control
 @onready var popup_margin: MarginContainer = $popup_margin
 @onready var login_spinner_margin: MarginContainer = $AspectRatioContainer/login_margin/login_panel/spinner_margin
 
-func _ready() -> void:	
+func _ready() -> void:
 	var safe_area = DisplayServer.get_display_safe_area()
 	var margin = DisplayManager.base_to_viewport_point_converter(safe_area.position)
 	popup_margin.add_theme_constant_override("margin_top", margin.y)

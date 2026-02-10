@@ -24,7 +24,6 @@ var start_height_obtained: bool = false
 var start_height_value: float = 0.0
 
 func _ready() -> void:
-	#start_height = size.y
 	character_limit_counter_label.text = "0/%s" % max_character_limit
 	get_v_scroll_bar().visibility_changed.connect(update_limit_counter_label)
 
@@ -120,3 +119,11 @@ func on_caret_changed() -> void:
 	var height_diff = get_caret_draw_pos().y - get_line_height()
 	if height_diff < 0:
 		get_v_scroll_bar().value -= 1
+
+func get_cleaned_text() -> String:
+	var cleaned_text := text
+	cleaned_text = cleaned_text.strip_edges()
+	var regex := RegEx.new()
+	regex.compile("\n+")
+	cleaned_text = regex.sub(cleaned_text, "\n", true)
+	return cleaned_text

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b33lb6oqou8we"]
+[gd_scene load_steps=7 format=3 uid="uid://keq3vr862823"]
 
 [ext_resource type="Script" uid="uid://eq00ajhbkh3u" path="res://scripts/chat_message_board_script.gd" id="1_c16fi"]
 [ext_resource type="PackedScene" uid="uid://bhthbs3apue7x" path="res://scenes/custom_controlls/chat_settings.tscn" id="2_ifct0"]
@@ -41,7 +41,12 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "<"
 
-[node name="title" type="Label" parent="board_margin/board/top_panel/HBoxContainer"]
+[node name="title_margin" type="MarginContainer" parent="board_margin/board/top_panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+
+[node name="title" type="Label" parent="board_margin/board/top_panel/HBoxContainer/title_margin"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -80,10 +85,12 @@ over_character_limit_labal_color = Color(0.626931, 0, 0.214729, 1)
 under_character_limit_labal_color = Color(1, 1, 1, 1)
 
 [node name="message_send_button" type="Button" parent="board_margin/board/message_panel"]
+editor_description = "vk"
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 text = ">"
+metadata/skip_vk_check = true
 
 [node name="settings_overlay" parent="." instance=ExtResource("4_tnq2v")]
 visible = false

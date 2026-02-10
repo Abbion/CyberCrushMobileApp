@@ -14,6 +14,7 @@ class ChatSortData:
 
 @onready var chat_scroll = $ScrollContainer
 @onready var spinner_container = $spinner_container
+@onready var empty_chat_list_container = $empty_chat_list_container
 
 signal open_chat(chat_id: int)
 
@@ -111,11 +112,16 @@ func clear_chats_list() -> void:
 func refresh_chat_list() -> void:
 	spinner_container.show()
 	chat_scroll.hide()
+	empty_chat_list_container.hide()
 	
-	update_chats_list()
+	await update_chats_list()
 	
 	spinner_container.hide()
 	chat_scroll.show()
+	
+	if chat_list.get_child_count() == 0:
+		chat_list.hide()
+		empty_chat_list_container.show()
 
 func reset_layout() -> void:
 	overlay_margin.hide()

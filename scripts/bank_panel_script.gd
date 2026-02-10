@@ -1,13 +1,14 @@
 extends Control
 
 var transaction_entry: PackedScene = load("res://scenes/custom_controlls/transaction_entry.tscn")
-@onready var transaction_entries: VBoxContainer = $main_panel/transactions_scroll/transactions_list
+@onready var transactions_list: VBoxContainer = $main_panel/transactions_scroll/transactions_list
 @onready var funds_label: Label = $main_panel/card/funds_label
 @onready var overlay_margin: MarginContainer = $overlay_margin
 @onready var new_transaction_window: Control = $overlay_margin/center_container/new_transaction
 
 @onready var transactions_scroll = $main_panel/transactions_scroll
 @onready var spinner_container: CenterContainer = $main_panel/spinner_container
+@onready var empty_transactions_container: CenterContainer = $main_panel/empty_transactions
 
 var user_funds : int = 0
 
@@ -38,22 +39,27 @@ func update_transaction_history():
 		transaction_entry_instance.amount = int(amount)
 		transaction_entry_instance.peer = sender_username + " -> " + receiver_username
 		transaction_entry_instance.date = datetime.get_string()
-		transaction_entries.add_child(transaction_entry_instance)
+		transactions_list.add_child(transaction_entry_instance)
 
 func refresh_user_bank_account() -> void:
 	spinner_container.show()
 	transactions_scroll.hide()
+	empty_transactions_container.hide()
 	
-	for transaction in transaction_entries.get_children():
-		transaction_entries.remove_child(transaction)
+	for transaction in transactions_list.get_children():
+		transactions_list.remove_child(transaction)
 		transaction.queue_free()
 		
-	update_transaction_history()
+	await update_transaction_history()
 	user_funds = await ServerRequest.bank_funds()
-	funds_label.text = "Funds: " + str(user_funds)
+	funds_label.text = "Dostępne środki: " + str(user_funds)
 	
 	spinner_container.hide()
 	transactions_scroll.show()
+	
+	if transactions_list.get_child_count() == 0:
+		transactions_scroll.hide()
+		empty_transactions_container.show()
 	
 func _on_refresh_button_down() -> void:
 	refresh_user_bank_account()

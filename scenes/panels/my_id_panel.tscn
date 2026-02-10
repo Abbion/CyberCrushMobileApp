@@ -24,13 +24,20 @@ grow_vertical = 2
 layout_mode = 2
 spinner_scale = 0.5
 
-[node name="id_entires" type="VBoxContainer" parent="."]
+[node name="attributes_margin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.95
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="attributes" type="VBoxContainer" parent="attributes_margin"]
+layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="logout_button" type="Button" parent="."]
@@ -46,7 +53,7 @@ offset_top = -0.0400391
 offset_right = -0.130035
 size_flags_horizontal = 4
 size_flags_vertical = 10
-text = "Logout"
+text = "Wyloguj"
 metadata/_edit_use_anchors_ = true
 
 [connection signal="button_down" from="logout_button" to="." method="_on_logout_button_button_down"]

@@ -17,8 +17,13 @@ func _ready() -> void:
 	if GlobalConstants.os_is_mobile() == true:
 		var safe_area = DisplayServer.get_display_safe_area()
 		var top_margin = DisplayManager.base_to_viewport_point_converter(safe_area.position)
-		top_bar.custom_minimum_size.y = top_margin.y
-		popup_margin.add_theme_constant_override("margin_top", top_margin.y)
+		
+		if top_margin.y < 1:
+			top_margin.y = get_viewport().size.y * 0.075
+		
+		var top_bar_height = top_margin.y * 1.25
+		top_bar.custom_minimum_size.y = top_bar_height
+		popup_margin.add_theme_constant_override("margin_top", top_bar_height)
 	else:
 		popup_margin.add_theme_constant_override("margin_top", top_bar.size.y)
 	

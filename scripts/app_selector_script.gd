@@ -1,7 +1,5 @@
 extends ColorRect
 
-#TODO move to global events
-
 signal socials_selected
 signal bank_selected
 signal messages_selected

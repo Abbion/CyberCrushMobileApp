@@ -19,6 +19,9 @@ var ready_to_consume = true
 func _ready() -> void:
 	GlobalSignals.popup_closed.connect(set_ready_to_consume)
 
+func _exit_tree() -> void:
+	GlobalSignals.popup_closed.disconnect(set_ready_to_consume)
+
 func set_ready_to_consume() -> void:
 	ready_to_consume = true
 	if popup_info_queue.size() > 0:

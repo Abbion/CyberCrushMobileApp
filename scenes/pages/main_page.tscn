@@ -38,7 +38,6 @@ custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
 [node name="app_margin" type="MarginContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 632)
 layout_mode = 2
 size_flags_vertical = 3
 
