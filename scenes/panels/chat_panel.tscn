@@ -4,15 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://cshv3dqh1nyxj" path="res://scenes/custom_controlls/chat_list.tscn" id="2_ke17o"]
 
 [sub_resource type="GDScript" id="GDScript_nvn48"]
-script/source = "extends Control
+script/source = "#Refactor 1
+extends Control
 
 @onready var chat_list: Control = $chat_list
 @onready var message_board = $chat_message_board
 
 func open_chat(chat_id: int) -> void:
-	await message_board.load_chat_at_id(chat_id);
-	message_board.show()
 	chat_list.hide()
+	message_board.show()
+	await message_board.load_chat_at_id(chat_id);
 
 func _on_chat_list_open_chat(chat_id: int) -> void:
 	open_chat(chat_id)

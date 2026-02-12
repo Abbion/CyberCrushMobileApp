@@ -1,3 +1,4 @@
+#Refactor 1
 extends Control
 
 @onready var background: ColorRect = $background
@@ -43,17 +44,17 @@ func happy_info_popup(content: String) -> void:
 	popup_type_label.add_theme_color_override("font_color", Color.GREEN_YELLOW)
 	content_label.text = content
 
-func _on_timer_timeout() -> void:
+func on_timer_timeout() -> void:
 	hide()
 	GlobalSignals.popup_closed.emit()
 
 func on_tree_entered() -> void:
 		GlobalSignals.consume_popup.connect(on_consume_request)
 
-func _on_tree_exited() -> void:
+func on_tree_exited() -> void:
 	GlobalSignals.consume_popup.disconnect(on_consume_request)
 
-func _on_margin_resized() -> void:
+func on_margin_resized() -> void:
 	if margin == null or background == null:
 		return
 	background.size.y = margin.size.y

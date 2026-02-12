@@ -16,7 +16,7 @@ grow_vertical = 2
 script = ExtResource("1_p00wx")
 news_article_entry = ExtResource("1_b7gsk")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="news_container" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,28 +25,28 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="post_box_margin" type="MarginContainer" parent="VBoxContainer"]
+[node name="post_box_margin" type="MarginContainer" parent="news_container"]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 10
 
-[node name="post_box" type="VBoxContainer" parent="VBoxContainer/post_box_margin"]
+[node name="post_box" type="VBoxContainer" parent="news_container/post_box_margin"]
 layout_mode = 2
 
-[node name="title_label" type="Label" parent="VBoxContainer/post_box_margin/post_box"]
+[node name="title_label" type="Label" parent="news_container/post_box_margin/post_box"]
 layout_mode = 2
 text = "Tytuł"
 
-[node name="title_input" parent="VBoxContainer/post_box_margin/post_box" instance=ExtResource("3_lwmmg")]
+[node name="title_input" parent="news_container/post_box_margin/post_box" instance=ExtResource("3_lwmmg")]
 layout_mode = 2
 
-[node name="content_label" type="Label" parent="VBoxContainer/post_box_margin/post_box"]
+[node name="content_label" type="Label" parent="news_container/post_box_margin/post_box"]
 layout_mode = 2
 text = "Treść"
 
-[node name="content_input" parent="VBoxContainer/post_box_margin/post_box" instance=ExtResource("3_ot28r")]
+[node name="content_input" parent="news_container/post_box_margin/post_box" instance=ExtResource("3_ot28r")]
 layout_mode = 2
 size_flags_vertical = 3
 max_visible_lines = 5
@@ -54,33 +54,33 @@ max_character_limit = 255
 over_character_limit_labal_color = Color(1, 0, 0, 1)
 under_character_limit_labal_color = Color(1, 1, 1, 1)
 
-[node name="post_actions" type="HBoxContainer" parent="VBoxContainer/post_box_margin/post_box"]
+[node name="post_actions" type="HBoxContainer" parent="news_container/post_box_margin/post_box"]
 layout_mode = 2
 
-[node name="publush_button" type="Button" parent="VBoxContainer/post_box_margin/post_box/post_actions"]
+[node name="publush_button" type="Button" parent="news_container/post_box_margin/post_box/post_actions"]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Publikuj"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="news_container"]
 layout_mode = 2
 
-[node name="spinner_container" type="CenterContainer" parent="VBoxContainer"]
+[node name="spinner_container" type="CenterContainer" parent="news_container"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="spinner" parent="VBoxContainer/spinner_container" instance=ExtResource("5_83qtp")]
+[node name="spinner" parent="news_container/spinner_container" instance=ExtResource("5_83qtp")]
 layout_mode = 2
 spinner_scale = 0.5
 
-[node name="scroll_feed" type="ScrollContainer" parent="VBoxContainer"]
+[node name="scroll_feed" type="ScrollContainer" parent="news_container"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="feed" type="VBoxContainer" parent="VBoxContainer/scroll_feed"]
+[node name="feed" type="VBoxContainer" parent="news_container/scroll_feed"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="pressed" from="VBoxContainer/post_box_margin/post_box/post_actions/publush_button" to="." method="_on_publush_button_pressed"]
+[connection signal="pressed" from="news_container/post_box_margin/post_box/post_actions/publush_button" to="." method="on_publush_button_pressed"]

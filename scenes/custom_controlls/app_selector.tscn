@@ -35,7 +35,7 @@ size_flags_horizontal = 0
 color = Color(0.28, 0.28, 0.28, 1)
 script = ExtResource("1_qxl34")
 
-[node name="app_container" type="HBoxContainer" parent="."]
+[node name="app_selector_container" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +45,7 @@ grow_vertical = 2
 theme_override_constants/separation = 65
 alignment = 1
 
-[node name="socials" type="TextureButton" parent="app_container"]
+[node name="socials" type="TextureButton" parent="app_selector_container"]
 material = SubResource("ShaderMaterial_3wr1x")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -55,7 +55,7 @@ texture_normal = ExtResource("1_jhmka")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="bank" type="TextureButton" parent="app_container"]
+[node name="bank" type="TextureButton" parent="app_selector_container"]
 material = SubResource("ShaderMaterial_modrm")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -65,7 +65,7 @@ texture_normal = ExtResource("2_qxl34")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="messages" type="TextureButton" parent="app_container"]
+[node name="chat" type="TextureButton" parent="app_selector_container"]
 material = SubResource("ShaderMaterial_2kamf")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -75,7 +75,7 @@ texture_normal = ExtResource("3_modrm")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="my_id" type="TextureButton" parent="app_container"]
+[node name="my_id" type="TextureButton" parent="app_selector_container"]
 material = SubResource("ShaderMaterial_wh21d")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -85,7 +85,7 @@ texture_normal = ExtResource("4_3wr1x")
 ignore_texture_size = true
 stretch_mode = 4
 
-[connection signal="pressed" from="app_container/socials" to="." method="_on_socials_pressed"]
-[connection signal="pressed" from="app_container/bank" to="." method="_on_bank_pressed"]
-[connection signal="pressed" from="app_container/messages" to="." method="_on_messages_pressed"]
-[connection signal="pressed" from="app_container/my_id" to="." method="_on_my_id_pressed"]
+[connection signal="pressed" from="app_selector_container/socials" to="." method="on_socials_pressed"]
+[connection signal="pressed" from="app_selector_container/bank" to="." method="on_bank_pressed"]
+[connection signal="pressed" from="app_selector_container/chat" to="." method="on_chat_pressed"]
+[connection signal="pressed" from="app_selector_container/my_id" to="." method="on_my_id_pressed"]

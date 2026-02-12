@@ -1,3 +1,4 @@
+#Refactor 1
 extends Node
 
 #TODO Add time outs to requests
@@ -129,7 +130,7 @@ func login(username: String, password: String) -> String:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -180,7 +181,7 @@ func validate_token(token: String) -> bool:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -228,7 +229,7 @@ func user_data() -> GlobalTypes.UserData:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:				
@@ -267,7 +268,7 @@ func user_data() -> GlobalTypes.UserData:
 	user_data.extra_data = json_extra_data.data
 	return user_data
 
-func all_usernames() -> PackedStringArray:
+func all_usernames(exclude_user: bool) -> PackedStringArray:
 	const ALL_USERNAMES_ERROR = "Bład dostępu do użytkowników"
 	#=Request=============================================================
 	var request_state = get_all_usernames_request.request(get_all_usernames_url)
@@ -282,7 +283,7 @@ func all_usernames() -> PackedStringArray:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -308,7 +309,13 @@ func all_usernames() -> PackedStringArray:
 		PopupDisplayServer.push_error(error_message, verbose)
 		return PackedStringArray()
 	
-	return response_data["usernames"]
+	var usernames: Array = response_data["usernames"]
+	if exclude_user:
+		var user_index = usernames.find(AppSessionState.get_username())
+		if user_index > -1:
+			usernames.remove_at(user_index)
+	
+	return usernames
 
 func user_chats() -> Dictionary:
 	const USER_CHATS_ERROR = "Bład dostępu do czatów użytkownika"
@@ -333,7 +340,7 @@ func user_chats() -> Dictionary:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -389,7 +396,7 @@ func chat_metadata(chat_id: int) -> Dictionary:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -423,7 +430,7 @@ func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	#=Request=============================================================
 	
 	var payload = {}
-	var history_last_index = null if start_from_index < 0 else start_from_index
+	var history_last_index: Variant = null if start_from_index < 0 else start_from_index
 	
 	payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -447,7 +454,7 @@ func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -506,7 +513,7 @@ func update_group_chat_member(chat_id: int, action: GroupChatUpdateAction, usern
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -558,7 +565,7 @@ func create_direct_chat(partner_username: String) -> int:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -578,9 +585,14 @@ func create_direct_chat(partner_username: String) -> int:
 	var response_data = json_response.data
 	var response_status = response_data["response_status"]
 	
+	#TODO return success in server on "chat already exists!"
 	if response_status["success"] == false:
-		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, RESPONSE_STATUS_ERROR]
 		var verbose = response_status["status_message"]
+		if verbose.contains("Direct chat already exsits!"):
+			PopupDisplayServer.push_info("Czat z użytkownikiem %s już istnieje" % partner_username)
+			return response_data["chat_id"]
+		
+		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, RESPONSE_STATUS_ERROR]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return -1
 	
@@ -610,7 +622,7 @@ func create_group_chat(title: String) -> int:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -660,7 +672,7 @@ func bank_funds() -> int:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -713,7 +725,7 @@ func transfer_funds(receiver: String, title: String, amount: int) -> bool:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -763,7 +775,7 @@ func bank_transaction_history() -> Array:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -806,7 +818,7 @@ func news_feed() -> Array:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:
@@ -858,7 +870,7 @@ func post_news_article(title: String, content: String) -> bool:
 	#=Response============================================================
 	var response_state: int = response[0]
 	var response_code: int = response[1]
-	var headers: PackedStringArray = response[2]
+	var _headers: PackedStringArray = response[2]
 	var body: PackedByteArray = response[3]
 	
 	if response_state != HTTPRequest.RESULT_SUCCESS:

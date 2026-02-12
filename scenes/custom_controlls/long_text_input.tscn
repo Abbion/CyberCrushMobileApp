@@ -34,8 +34,8 @@ horizontal_alignment = 2
 vertical_alignment = 2
 
 [connection signal="caret_changed" from="." to="." method="on_caret_changed"]
-[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_entered" from="." to="." method="on_focus_entered"]
 [connection signal="gui_input" from="." to="." method="on_gui_input"]
-[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="resized" from="." to="." method="on_resized"]
 [connection signal="text_changed" from="." to="." method="on_text_changed"]
 [connection signal="text_set" from="." to="." method="on_text_set"]

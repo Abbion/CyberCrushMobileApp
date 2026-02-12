@@ -1,42 +1,40 @@
+#Refactor 1
 extends Control
 
-var transaction_entry: PackedScene = load("res://scenes/custom_controlls/transaction_entry.tscn")
-@onready var transactions_list: VBoxContainer = $main_panel/transactions_scroll/transactions_list
-@onready var funds_label: Label = $main_panel/card/funds_label
+@export var transaction_entry: PackedScene
+@onready var transactions_list: VBoxContainer = $bank_container/transactions_scroll/transactions_list
+@onready var funds_label: Label = $bank_container/card/funds_label
 @onready var overlay_margin: MarginContainer = $overlay_margin
 @onready var new_transaction_window: Control = $overlay_margin/center_container/new_transaction
 
-@onready var transactions_scroll = $main_panel/transactions_scroll
-@onready var spinner_container: CenterContainer = $main_panel/spinner_container
-@onready var empty_transactions_container: CenterContainer = $main_panel/empty_transactions
+@onready var transactions_scroll: ScrollContainer = $bank_container/transactions_scroll
+@onready var spinner_container: CenterContainer = $bank_container/spinner_container
+@onready var empty_transactions_container: CenterContainer = $bank_container/empty_transactions
 
 var user_funds : int = 0
 
 func _ready() -> void:
 	refresh_user_bank_account()
-	
-	var cancel_button : Button = new_transaction_window.find_child("cancel_action");
-	cancel_button.pressed.connect(cancel_new_transaction)
 
 func update_transaction_history():
-	var transactions = await ServerRequest.bank_transaction_history()
-	var username = AppSessionState.get_username()
+	var transactions := await ServerRequest.bank_transaction_history()
+	var username := AppSessionState.get_username()
 	
 	for transaction in transactions:
 		var sender_username = transaction["sender_username"]
 		var receiver_username = transaction["receiver_username"]
 		var title = transaction["message"]
-		var amount = transaction["amount"]
+		var founds_trsfered = transaction["amount"]
 		var date = transaction["time_stamp"]
 		
 		if sender_username == username:
-			amount = -amount
+			founds_trsfered = -founds_trsfered
 			
-		var datetime = GlobalTypes.DateTime.from_string(date)
+		var datetime := GlobalTypes.DateTime.from_string(date)
 		
-		var transaction_entry_instance = transaction_entry.instantiate()
+		var transaction_entry_instance := transaction_entry.instantiate()
 		transaction_entry_instance.title = title
-		transaction_entry_instance.amount = int(amount)
+		transaction_entry_instance.founds_trsfered = int(founds_trsfered)
 		transaction_entry_instance.peer = sender_username + " -> " + receiver_username
 		transaction_entry_instance.date = datetime.get_string()
 		transactions_list.add_child(transaction_entry_instance)
@@ -61,16 +59,16 @@ func refresh_user_bank_account() -> void:
 		transactions_scroll.hide()
 		empty_transactions_container.show()
 	
-func _on_refresh_button_down() -> void:
+func on_refresh_button_pressed() -> void:
 	refresh_user_bank_account()
 
-func _on_new_transaction_pressed() -> void:
+func on_new_transaction_pressed() -> void:
 	new_transaction_window.update_user_funds()
 	overlay_margin.visible = true
 
-func cancel_new_transaction() -> void:
-	overlay_margin.visible = false
-
-func _on_new_transaction_transaction_completed(bool: Variant) -> void:
-	cancel_new_transaction()
+func on_new_transaction_transaction_completed(_competed: bool) -> void:
+	overlay_margin.hide()
 	refresh_user_bank_account()
+
+func on_new_transaction_transaction_canceled() -> void:
+	overlay_margin.hide()

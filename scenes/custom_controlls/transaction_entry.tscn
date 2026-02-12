@@ -13,26 +13,26 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_7gjj6")
 
-[node name="v_box_container" type="VBoxContainer" parent="."]
+[node name="data_container" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="title" type="Label" parent="v_box_container"]
+[node name="title" type="Label" parent="data_container"]
 layout_mode = 2
 text = "title"
 clip_text = true
 
-[node name="amount" type="Label" parent="v_box_container"]
+[node name="amount" type="Label" parent="data_container"]
 layout_mode = 2
 text = "amount"
 
-[node name="peer" type="Label" parent="v_box_container"]
+[node name="peer" type="Label" parent="data_container"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "who"
 
-[node name="date" type="Label" parent="v_box_container"]
+[node name="date" type="Label" parent="data_container"]
 layout_mode = 2
 text = "date"
 
-[node name="separator" type="HSeparator" parent="v_box_container"]
+[node name="separator" type="HSeparator" parent="data_container"]
 layout_mode = 2

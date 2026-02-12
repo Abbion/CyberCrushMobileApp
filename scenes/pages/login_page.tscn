@@ -15,7 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_iydcg")
 metadata/_edit_use_anchors_ = true
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+[node name="aspect_ration_container" type="AspectRatioContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,41 +24,41 @@ grow_horizontal = 2
 grow_vertical = 2
 ratio = 0.5625
 
-[node name="login_margin" type="MarginContainer" parent="AspectRatioContainer"]
+[node name="login_margin" type="MarginContainer" parent="aspect_ration_container"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="login_panel" type="VBoxContainer" parent="AspectRatioContainer/login_margin"]
+[node name="login_panel" type="VBoxContainer" parent="aspect_ration_container/login_margin"]
 layout_mode = 2
 size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true
 
-[node name="username_label" type="Label" parent="AspectRatioContainer/login_margin/login_panel"]
+[node name="username_label" type="Label" parent="aspect_ration_container/login_margin/login_panel"]
 layout_mode = 2
 text = "Nazwa użytkownika"
 
-[node name="username_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_dmx6h")]
+[node name="username_input" parent="aspect_ration_container/login_margin/login_panel" instance=ExtResource("2_dmx6h")]
 layout_mode = 2
 
-[node name="password_label" type="Label" parent="AspectRatioContainer/login_margin/login_panel"]
+[node name="password_label" type="Label" parent="aspect_ration_container/login_margin/login_panel"]
 layout_mode = 2
 text = "Hasło"
 
-[node name="password_input" parent="AspectRatioContainer/login_margin/login_panel" instance=ExtResource("2_dmx6h")]
+[node name="password_input" parent="aspect_ration_container/login_margin/login_panel" instance=ExtResource("2_dmx6h")]
 layout_mode = 2
 secret = true
 secret_character = "*"
 
-[node name="login_button" type="Button" parent="AspectRatioContainer/login_margin/login_panel"]
+[node name="login_button" type="Button" parent="aspect_ration_container/login_margin/login_panel"]
 layout_mode = 2
 text = "Zaloguj"
 
-[node name="spinner_margin" type="MarginContainer" parent="AspectRatioContainer/login_margin/login_panel"]
+[node name="spinner_margin" type="MarginContainer" parent="aspect_ration_container/login_margin/login_panel"]
 layout_mode = 2
 theme_override_constants/margin_top = 30
 
-[node name="spinner" parent="AspectRatioContainer/login_margin/login_panel/spinner_margin" instance=ExtResource("3_xbu75")]
+[node name="spinner" parent="aspect_ration_container/login_margin/login_panel/spinner_margin" instance=ExtResource("3_xbu75")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -81,4 +81,4 @@ size_flags_vertical = 0
 mouse_filter = 2
 
 [connection signal="resized" from="." to="." method="_on_resized"]
-[connection signal="pressed" from="AspectRatioContainer/login_margin/login_panel/login_button" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/login_button" to="." method="on_login_button_pressed"]

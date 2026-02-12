@@ -1,3 +1,4 @@
+#Refactor 1
 extends Node
 
 enum PopupType {
@@ -14,7 +15,7 @@ class PopupInfo:
 
 var popup_info_queue: Array
 var popup_list: Array
-var ready_to_consume = true
+var ready_to_consume: bool = true
 
 func _ready() -> void:
 	GlobalSignals.popup_closed.connect(set_ready_to_consume)
@@ -53,6 +54,7 @@ func push_warning(content: String, verbose: String = "") -> void:
 	warning_popup.content = content
 	warning_popup.verbose = verbose
 	popup_info_queue.push_back(warning_popup)
+	popup_list.push_back(warning_popup)
 	try_consume()
 	
 func push_info(content: String, verbose: String = "") -> void:
@@ -61,6 +63,7 @@ func push_info(content: String, verbose: String = "") -> void:
 	info_popup.content = content
 	info_popup.verbose = verbose
 	popup_info_queue.push_back(info_popup)
+	popup_list.push_back(info_popup)
 	try_consume()
 	
 func push_happy_info(content: String, verbose: String = "") -> void:
@@ -69,4 +72,18 @@ func push_happy_info(content: String, verbose: String = "") -> void:
 	happy_info_popup.content = content
 	happy_info_popup.verbose = verbose
 	popup_info_queue.push_back(happy_info_popup)
+	popup_list.push_back(happy_info_popup)
 	try_consume()
+
+func popup_type_to_string(popup_type: PopupType) -> String:
+	match popup_type:
+		PopupType.ERROR:
+			return "Błąd"
+		PopupType.WARNING:
+			return "Uwaga"
+		PopupType.INFO:
+			return "Informacja"
+		PopupType.HAPPY_INFO:
+			return "Szczęśliwa informacja"
+	
+	return "null"

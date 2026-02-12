@@ -23,7 +23,7 @@ chat_panel_scene = ExtResource("5_esk2p")
 id_panel_scene = ExtResource("3_xap5f")
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="main_page_container" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,15 +33,15 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="top_bar" parent="VBoxContainer" instance=ExtResource("2_ued0y")]
+[node name="top_bar" parent="main_page_container" instance=ExtResource("2_ued0y")]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="app_margin" type="MarginContainer" parent="VBoxContainer"]
+[node name="panel_margin" type="MarginContainer" parent="main_page_container"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]
+[node name="app_selector" parent="main_page_container" instance=ExtResource("2_7nifb")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 1
@@ -64,7 +64,7 @@ mouse_filter = 2
 
 [connection signal="tree_entered" from="." to="." method="on_tree_entered"]
 [connection signal="tree_exited" from="." to="." method="on_tree_exited"]
-[connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
-[connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]
-[connection signal="my_id_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_my_id_selected"]
-[connection signal="socials_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_socials_selected"]
+[connection signal="bank_selected" from="main_page_container/app_selector" to="." method="on_app_selector_bank_selected"]
+[connection signal="messages_selected" from="main_page_container/app_selector" to="." method="on_app_selector_messages_selected"]
+[connection signal="my_id_selected" from="main_page_container/app_selector" to="." method="on_app_selector_my_id_selected"]
+[connection signal="socials_selected" from="main_page_container/app_selector" to="." method="on_app_selector_socials_selected"]

@@ -1,3 +1,4 @@
+#Refactor 1
 extends Node
 
 enum CHAT_MESSAGE_ALIGNMENT { LEFT, RIGHT }
@@ -25,18 +26,18 @@ class DateTime:
 		naive_timestamp = naive_timestamp.replace("T", " ");
 		
 		# The format is [yyyy-mm-dd hh:mm:ss.ms]
-		var dateTime: DateTime = DateTime.new()
-		var dash_split = naive_timestamp.split("-")
+		var dateTime := DateTime.new()
+		var dash_split := naive_timestamp.split("-")
 		
 		if dash_split.size() < 3:
 			return dateTime
 		
-		var dt_split = dash_split.get(2).split(" ")
+		var dt_split := dash_split.get(2).split(" ")
 		
 		if dt_split.size() < 2:
 			return dateTime
 		
-		var time_components = dt_split.get(1).split(":")
+		var time_components := dt_split.get(1).split(":")
 		
 		if time_components.size() < 3:
 			return dateTime
@@ -50,8 +51,8 @@ class DateTime:
 		return dateTime
 	
 	static func now() -> DateTime:
-		var dateTime: DateTime = DateTime.new()
-		var time = Time.get_datetime_dict_from_system(true)
+		var dateTime := DateTime.new()
+		var time := Time.get_datetime_dict_from_system(true)
 		dateTime.year = time.year
 		dateTime.month = time.month
 		dateTime.day = time.day
@@ -94,18 +95,18 @@ class DateTime:
 		return total_minutes
 	
 	func get_string() -> String:
-		var default_format = "%02d/%02d/%s %02d:%02d" %[day, month, year, hour, minute]
-		var minutes_for_default_format = 24 * 60;
-		var current_datetime = now()
+		var default_format := "%02d/%02d/%s %02d:%02d" %[day, month, year, hour, minute]
+		var minutes_for_default_format := 24 * 60;
+		var current_datetime := now()
 		
-		var minutes_in_self = minutes_since_base_year()
-		var minutes_in_current = current_datetime.minutes_since_base_year()
-		var minutes_diff = minutes_in_current - minutes_in_self
+		var minutes_in_self := minutes_since_base_year()
+		var minutes_in_current := current_datetime.minutes_since_base_year()
+		var minutes_diff := minutes_in_current - minutes_in_self
 		
 		if minutes_diff > minutes_for_default_format:
 			return default_format
 		
-		var hours_elapsed = int(floor(float(minutes_diff) / 60.0))
+		var hours_elapsed := int(floor(float(minutes_diff) / 60.0))
 		
 		if hours_elapsed >= 1:
 			if hours_elapsed >= 2:
@@ -113,7 +114,7 @@ class DateTime:
 			else:
 				return "godzinę temu"
 		
-		var minutes_elapsed_diff = minutes_diff - (hours_elapsed * 60)
+		var minutes_elapsed_diff := minutes_diff - (hours_elapsed * 60)
 		
 		if minutes_elapsed_diff < 60:
 			if minutes_elapsed_diff <= 1:

@@ -1,18 +1,35 @@
+#Refactor 1
 extends ColorRect
+enum AppPanels {
+	SOCIAL,
+	BANK,
+	CHAT,
+	ID
+}
+
+var current_panel := AppPanels.SOCIAL
 
 signal socials_selected
 signal bank_selected
 signal messages_selected
 signal my_id_selected
 
-func _on_socials_pressed() -> void:
-	socials_selected.emit()
+func on_socials_pressed() -> void:
+	if current_panel != AppPanels.SOCIAL:
+		current_panel = AppPanels.SOCIAL
+		socials_selected.emit()
 
-func _on_bank_pressed() -> void:
-	bank_selected.emit()
+func on_bank_pressed() -> void:
+	if current_panel != AppPanels.BANK:
+		current_panel = AppPanels.BANK
+		bank_selected.emit()
 	
-func _on_messages_pressed() -> void:
-	messages_selected.emit()
+func on_chat_pressed() -> void:
+	if current_panel != AppPanels.CHAT:
+		current_panel = AppPanels.CHAT
+		messages_selected.emit()
 
-func _on_my_id_pressed() -> void:
-	my_id_selected.emit()
+func on_my_id_pressed() -> void:
+	if current_panel != AppPanels.ID:
+		current_panel = AppPanels.ID
+		my_id_selected.emit()

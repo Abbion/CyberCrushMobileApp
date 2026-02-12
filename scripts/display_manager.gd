@@ -1,3 +1,4 @@
+#Refactor 1
 extends Node
 
 var base_width: float = float(ProjectSettings.get_setting("display/window/size/viewport_width"))
@@ -8,16 +9,19 @@ func _ready() -> void:
 
 func base_to_viewport_point_converter(value: Vector2) -> Vector2:
 	var viewport_size = get_viewport().size
-	var viewport_ratio = float(viewport_size.x) / float(viewport_size.y)
+	var viewport_ratio := float(viewport_size.x) / float(viewport_size.y)
 	
-	var scale = base_width / float(viewport_size.x)
+	var scale := base_width / float(viewport_size.x)
 	if (viewport_ratio > 1) :
 		scale = base_height / float(viewport_size.y)
 
 	return value * scale
 
 func on_gui_focus_chaned(node: Node) -> void:
-	if node.get_meta("skip_vk_check") == true:
+	if GlobalConstants.os_is_mobile() == false:
+		return
+		
+	if node.has_meta("skip_vk_check") == true:
 		return
 	
 	if node is LineEdit or node is TextEdit:

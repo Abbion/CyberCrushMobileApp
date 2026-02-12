@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpd4dwiw60q8b"]
-
-[ext_resource type="Script" uid="uid://b6ubqnl0gy7uj" path="res://scripts/line_text_input.gd" id="1_cui18"]
+[gd_scene format=3 uid="uid://cpd4dwiw60q8b"]
 
 [node name="line_text_input" type="LineEdit"]
 anchors_preset = 15
@@ -9,6 +7,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 virtual_keyboard_enabled = false
-script = ExtResource("1_cui18")
 
 [connection signal="gui_input" from="." to="." method="on_gui_input"]

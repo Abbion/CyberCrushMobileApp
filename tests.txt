@@ -1,35 +1,43 @@
 - Login screen
- - Login with a disabled server
- - Login with non existing username and password
- - Login with non existing username and existing password
- - Login with non existing password and existing username
- - Login with existing username and password
- - Login with empty username
- - Login with empty password
+ - Login with a disabled server								[]
+ - Login with non existing username and password			[X]
+ - Login with non existing username and existing password	[X]
+ - Login with non existing password and existing username	[X]
+ - Login with existing username and password				[X]
+ - Login with empty username								[X]
+ - Login with empty password								[X]
 
 - News panel
- - Post empty title article
- - Post empty content article
- - Post article with a too short title
- - Post article with a too long title
- - Clear input after panel switch
+ - Post empty title article					[X]
+ - Post empty content article				[X]
+ - Post article with a too short title		[X]
+ - Post article with a too long title		[X]
+ - Clear input after panel switch			[X]
 
 - Bank panel
- - Create a transaction with no receiver
- - Create a transaction with no title
- - Create a transaction with no amount
- - Create a transaction with negative amount
- - Create a transaction with amout over the user funds
- - Clear transaction panel
+ - Send a valid transaction									[X]
+ - Try send transaction to self								[X]
+ - Create a transaction with no receiver					[X]
+ - Create a transaction with no title						[X]
+ - Create a transaction with too long title (default 32)	[X]
+ - Create a transaction with no amount						[X]
+ - Create a transaction with negative amount				[X]
+ - Create a transaction with ammount over the user funds	[X]
+ - Clear transaction panel									[X]
  
 - Chat panel
- - Send empty message
- - Send message with only white spaces
- - Create a direct chat with non existing user
- - Add non existing user to group chat
- - Remove non existing user to group chat
- - Open a group chat for user that has been removed
- - Message board closes when the users switches panels
+ - Send a normal message									[X]
+ - Send empty message										[X]
+ - Send message with only white spaces						[X]
+ - Create a direct chat with non existing user				[X]
+ - Create a direct chat with existing user					[X]
+ - Create a direct chat with existing user with whom direct chat exists [X]
+ - Create a group chat										[X]
+ - Add non existing user to group chat						[X]
+ - Add existing user to group chat							[X]
+ - Remove existing user to group chat who is in chat		[X]
+ - Open a group chat for user that has been removed			[X]
+ - Message board closes when the users switches panels		[X]
 
 - ID panel
- - logout clears the current user token
+ - logout clears the current user token						[X]

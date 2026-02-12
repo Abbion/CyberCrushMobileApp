@@ -1,3 +1,4 @@
+#Refactor 1
 extends Control
 
 const DIRECT_CHAT: int = 0
@@ -8,23 +9,23 @@ class ChatSortData:
 	var chat_id: int
 	var time_stamp: Dictionary
 
-@onready var chat_list = $ScrollContainer/chat_list
+@onready var chat_list = $chat_list_container/chat_list
 @onready var overlay_margin = $overlay_margin
 @onready var overlay_center_container = $overlay_margin/center_container
 
-@onready var chat_scroll = $ScrollContainer
+@onready var chat_list_container = $chat_list_container
 @onready var spinner_container = $spinner_container
 @onready var empty_chat_list_container = $empty_chat_list_container
 
-signal open_chat(chat_id: int)
+@export var chat_entry : PackedScene
 
-var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.tscn")
+signal open_chat(chat_id: int)
 
 func _ready() -> void:
 	refresh_chat_list()
 
 func update_chats_list():
-	var user_chats = await ServerRequest.user_chats()
+	var user_chats := await ServerRequest.user_chats()
 	if user_chats.is_empty():
 		return
 	var direct_chats = user_chats["direct"]
@@ -37,7 +38,7 @@ func update_chats_list():
 		if chat["last_message"] == null:
 			continue
 		
-		var chat_to_sort: ChatSortData = ChatSortData.new()
+		var chat_to_sort := ChatSortData.new()
 		chat_to_sort.chat_type = DIRECT_CHAT
 		chat_to_sort.chat_id = int(chat["chat_id"])
 		chat_to_sort.time_stamp = Time.get_datetime_dict_from_datetime_string(chat["last_message_time_stamp"], false)
@@ -47,7 +48,7 @@ func update_chats_list():
 		if chat["last_message"] == null:
 			continue
 		
-		var chat_to_sort: ChatSortData = ChatSortData.new()
+		var chat_to_sort := ChatSortData.new()
 		chat_to_sort.chat_type = GROUP_CHAT
 		chat_to_sort.chat_id = int(chat["chat_id"])
 		chat_to_sort.time_stamp = Time.get_datetime_dict_from_datetime_string(chat["last_message_time_stamp"], false)
@@ -111,13 +112,13 @@ func clear_chats_list() -> void:
 
 func refresh_chat_list() -> void:
 	spinner_container.show()
-	chat_scroll.hide()
+	chat_list_container.hide()
 	empty_chat_list_container.hide()
 	
 	await update_chats_list()
 	
 	spinner_container.hide()
-	chat_scroll.show()
+	chat_list_container.show()
 	
 	if chat_list.get_child_count() == 0:
 		chat_list.hide()
@@ -126,10 +127,10 @@ func refresh_chat_list() -> void:
 func reset_layout() -> void:
 	overlay_margin.hide()
 
-func _on_add_chat_pressed() -> void:
+func on_add_chat_pressed() -> void:
 	overlay_margin.show()
 
-func _on_new_chat_panel_closed() -> void:
+func on_new_chat_panel_closed() -> void:
 	reset_layout()
 
 func on_chat_opened(chat_id: int) -> void:

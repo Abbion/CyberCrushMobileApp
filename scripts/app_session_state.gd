@@ -1,7 +1,8 @@
+#Refactor
 extends Node
 
-var config = ConfigFile.new()
-const configuration_path = "user://configuration.cfg"
+var config: ConfigFile = ConfigFile.new()
+const configuration_path: String = "user://configuration.cfg"
 
 enum UserDataType {
 	USERNAME,
@@ -10,13 +11,13 @@ enum UserDataType {
 
 var token: String = ""
 var user_data: Dictionary = { UserDataType.USERNAME: "", UserDataType.PERSONAL_NUMBER: "" }
-var app_selector_height = 0
+var app_selector_height: int = 0
 
 func get_server_token() -> String:
 	if not token.is_empty():
 		return token
 	
-	var err = config.load(configuration_path)
+	var err := config.load(configuration_path)
 	
 	if err != OK:
 		print("AppState: Error cannot open the configuration file to load the token.")
@@ -28,7 +29,7 @@ func get_server_token() -> String:
 func set_server_token(new_token: String) -> bool:
 	token = new_token;
 	config.set_value("server_access", "server_token", token)
-	var save_result = config.save(configuration_path);
+	var save_result := config.save(configuration_path);
 	
 	if save_result != OK:
 		print("AppState: Error cannot save token")
@@ -39,7 +40,7 @@ func get_username() -> String:
 	if not user_data[UserDataType.USERNAME].is_empty():
 		return user_data[UserDataType.USERNAME]
 		
-	var err = config.load(configuration_path)
+	var err := config.load(configuration_path)
 	
 	if err != OK:
 		print("AppState: Error cannot open the configuration file to load the username.")
@@ -52,7 +53,7 @@ func get_personal_code() -> String:
 	if not user_data[UserDataType.PERSONAL_NUMBER].is_empty():
 		return user_data[UserDataType.PERSONAL_NUMBER]
 		
-	var err = config.load(configuration_path)
+	var err := config.load(configuration_path)
 	
 	if err != OK:
 		print("AppState: Error cannot open the configuration file to load the personal code.")
@@ -67,7 +68,7 @@ func set_user_data(username: String, personal_number: String) -> bool:
 	
 	config.set_value("user_data", "username", username)
 	config.set_value("user_data", "personal_number", personal_number)
-	var save_result = config.save(configuration_path);
+	var save_result := config.save(configuration_path);
 	
 	if save_result != OK:
 		print("AppState: Error cannot save user data")
@@ -82,7 +83,7 @@ func clear() -> bool:
 	config.set_value("user_data", "username", "")
 	config.set_value("user_data", "personal_number", "")
 	config.set_value("server_access", "server_token", "")
-	var save_result = config.save(configuration_path);
+	var save_result := config.save(configuration_path);
 	
 	if save_result != OK:
 		print("AppState: Error cannot clear state")

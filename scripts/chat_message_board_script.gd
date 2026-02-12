@@ -1,3 +1,4 @@
+#Refactor 1
 extends Control
 
 var chat_socket: WebSocketPeer
@@ -13,28 +14,30 @@ var scroll_to_new_chunk: bool = false
 
 @onready var message_scroll_log: ScrollContainer = $board_margin/board/scroll_message_log
 @onready var message_log: VBoxContainer  = $board_margin/board/scroll_message_log/message_log
-@onready var title: Label = $board_margin/board/top_panel/HBoxContainer/title_margin/title
+@onready var title: Label = $board_margin/board/top_panel/top_bar_container/title_margin/title
 @onready var message_input: TextEdit = $board_margin/board/message_panel/message_input
-@onready var chat_settings_button: Button = $board_margin/board/top_panel/HBoxContainer/chat_settings_button
+@onready var chat_settings_button: Button = $board_margin/board/top_panel/top_bar_container/chat_settings_button
 @onready var settings_overlay: MarginContainer = $settings_overlay
-@onready var message_board = $board
+@onready var chat_settings = $settings_overlay/chat_settings
+@onready var spinner_container = $board_margin/spinner_container
 
-@export var chat_settings: PackedScene;
 @export var message_entry: PackedScene
 
 func load_chat_at_id(id: int) -> void:
 	chat_id = id
+	await chat_settings.update_settings_panel(chat_id)
 	
-	var metadata = await ServerRequest.chat_metadata(chat_id)
+	var metadata := await ServerRequest.chat_metadata(chat_id)
 	if metadata.is_empty():
 		close_chat()
 		return
 	
 	update_meta_data(metadata)
 	
-	var chat_history = await ServerRequest.chat_history(chat_id)
+	var chat_history := await ServerRequest.chat_history(chat_id)
 	buld_chat_chunk(chat_history)
-
+	spinner_container.hide()
+	
 	chat_socket = WebSocketPeer.new()
 	
 	var connection_state = chat_socket.connect_to_url("ws://127.0.0.1:3003/realtime_chat")
@@ -51,12 +54,12 @@ func _ready() -> void:
 	var v_scroll = message_scroll_log.get_v_scroll_bar()
 	v_scroll.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if chat_socket == null or socket_state == GlobalTypes.REALTIME_CHAT_SOCKET_STATE.NULL:
 		return
 	
 	chat_socket.poll()
-	var state = chat_socket.get_ready_state()
+	var state := chat_socket.get_ready_state()
 	
 	if state == WebSocketPeer.State.STATE_CONNECTING:
 		return
@@ -78,10 +81,10 @@ func _process(delta: float) -> void:
 			load_older_messages()
 
 func init_realtime_chat_connection() -> void:
-	var user_token = AppSessionState.get_server_token()
-	var init = { "type": "init", "token": user_token, "chat_id": chat_id }
-	var init_stirng = JSON.stringify(init, "", false)
-	var send_status = chat_socket.send_text(init_stirng)
+	var user_token := AppSessionState.get_server_token()
+	var init := { "type": "init", "token": user_token, "chat_id": chat_id }
+	var init_stirng := JSON.stringify(init, "", false)
+	var send_status := chat_socket.send_text(init_stirng)
 	
 	if send_status == OK:
 		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.INITIALIZED
@@ -90,12 +93,12 @@ func init_realtime_chat_connection() -> void:
 		close_chat()
 
 func confirm_realtime_chat_initialization() -> void:
-	var initialization_confirmed: bool = false
-	var packed_read = false
+	var initialization_confirmed := false
+	var packed_read := false
 	
 	while chat_socket.get_available_packet_count():
-		var packet = chat_socket.get_packet().get_string_from_utf8()
-		var json_packet = JSON.new()
+		var packet := chat_socket.get_packet().get_string_from_utf8()
+		var json_packet := JSON.new()
 		packed_read = true
 		
 		if json_packet.parse(packet) != OK:
@@ -124,7 +127,7 @@ func confirm_realtime_chat_initialization() -> void:
 		close_chat()
 
 func try_consume_new_messages() -> bool:
-	var first_chunk = get_first_chunk()
+	var first_chunk := get_first_chunk()
 	
 	if first_chunk == null:
 		PopupDisplayServer.push_error("Nie można odczytać nowych wiadomości", "First chunk was not found")
@@ -132,27 +135,27 @@ func try_consume_new_messages() -> bool:
 		return false
 	
 	while chat_socket.get_available_packet_count():
-		var packet = chat_socket.get_packet().get_string_from_utf8()
-		var json_packet = JSON.new()
+		var packet := chat_socket.get_packet().get_string_from_utf8()
+		var json_packet := JSON.new()
 	
 		if json_packet.parse(packet) != OK:
 			PopupDisplayServer.push_error("Otrzymano wiadomość, której nie udało się przetworzyć", "Odczytanie nowej wiadomości nie powiodło się")
 			return false
 				
 		var packet_data = json_packet.data
-		var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
-		var message_entry = create_message_entry(packet_data["in_chat_index"], packet_data["message"], packet_data["sender"], dateTime)
-		first_chunk.add_child(message_entry)
+		var dateTime := GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
+		var message_entry_object = create_message_entry(packet_data["in_chat_index"], packet_data["message"], packet_data["sender"], dateTime)
+		first_chunk.add_child(message_entry_object)
 		
 	return true
 
 func try_send_queued_messages() -> bool:
-	var user_token = AppSessionState.get_server_token()
+	var user_token := AppSessionState.get_server_token()
 	while not message_queue.is_empty():
 		var message_to_send = message_queue.pop_front()
-		var message_packet = { "type": "msg", "token": user_token, "message": message_to_send }
-		var message_packet_stirng = JSON.stringify(message_packet, "", false)
-		var send_status = chat_socket.send_text(message_packet_stirng)
+		var message_packet := { "type": "msg", "token": user_token, "message": message_to_send }
+		var message_packet_stirng := JSON.stringify(message_packet, "", false)
+		var send_status := chat_socket.send_text(message_packet_stirng)
 		
 		if send_status != OK:
 			PopupDisplayServer.push_error("Błąd podczas wysyłania wiadomości", "Status %s" % send_status)
@@ -160,12 +163,12 @@ func try_send_queued_messages() -> bool:
 	return true
 
 func should_load_older_messages() -> bool:
-	var scroll_value = message_scroll_log.scroll_vertical
+	var scroll_value := message_scroll_log.scroll_vertical
 	if scroll_value > 0:
 		return false
 		
-	var last_chat_chunk = message_log.get_child(0)
-	var last_message = last_chat_chunk.get_child(0)
+	var last_chat_chunk := message_log.get_child(0)
+	var last_message := last_chat_chunk.get_child(0)
 	if last_message == null:
 		return false
 	
@@ -178,27 +181,26 @@ func should_load_older_messages() -> bool:
 var lock_requesting_chat_history = false
 #------------------
 
-#TODO pass the index to not look for last message twice
 func load_older_messages() -> void:
 	if lock_requesting_chat_history == true:
 		return
 		
 	lock_requesting_chat_history = true
 	
-	var last_chat_chunk = message_log.get_child(0)
-	var last_message = last_chat_chunk.get_child(0)
+	var last_chat_chunk := message_log.get_child(0)
+	var last_message := last_chat_chunk.get_child(0)
 	if last_message == null:
 		return
 	
 	var last_message_index = last_message.in_chat_index
-	var new_messages = await ServerRequest.chat_history(chat_id, last_message_index)
+	var new_messages := await ServerRequest.chat_history(chat_id, last_message_index)
 	buld_chat_chunk(new_messages)
 	scroll_to_new_chunk = true
 	
 	lock_requesting_chat_history = false
 
 func buld_chat_chunk(messages: Array) -> void:
-	var chunk = VBoxContainer.new()
+	var chunk := VBoxContainer.new()
 	chunk.name = "chunk_%s" % chunk_counter
 	chunk_counter += 1
 	fill_chunk(chunk, messages)
@@ -207,13 +209,13 @@ func buld_chat_chunk(messages: Array) -> void:
 
 func fill_chunk(chunk: VBoxContainer, messages: Array) -> void:
 	for message in messages:
-		var dateTime: GlobalTypes.DateTime = GlobalTypes.DateTime.from_string(message["time_stamp"])
-		var message_entry = create_message_entry(message["in_chat_index"], message["message"], message["sender"], dateTime)
-		chunk.add_child(message_entry)
+		var dateTime := GlobalTypes.DateTime.from_string(message["time_stamp"])
+		var message_entry_object = create_message_entry(message["in_chat_index"], message["message"], message["sender"], dateTime)
+		chunk.add_child(message_entry_object)
 
 func update_meta_data(metadata: Dictionary) -> void:
-	var username = AppSessionState.get_username()
-	var chat_type: GlobalTypes.CHAT_TYPE = GlobalTypes.CHAT_TYPE.DIRECT
+	var username := AppSessionState.get_username()
+	var chat_type := GlobalTypes.CHAT_TYPE.DIRECT
 	
 	if metadata.has("Group"):
 		chat_type = GlobalTypes.CHAT_TYPE.GROUP
@@ -250,10 +252,10 @@ func disconnect_from_chat() -> void:
 	chat_id = -1
 	message_queue.clear()
 
-func _on_back_button_pressed() -> void:
+func on_back_button_pressed() -> void:
 	close_chat()
 
-func _on_message_send_button_pressed() -> void:
+func on_message_send_button_pressed() -> void:
 	var message_to_send = message_input.get_cleaned_text()
 	message_to_send = message_to_send.strip_edges()
 	
@@ -261,40 +263,40 @@ func _on_message_send_button_pressed() -> void:
 		message_input.text = ""
 		return
 	
-	var first_chunk = get_first_chunk()
+	var first_chunk := get_first_chunk()
 	if first_chunk == null:
 		PopupDisplayServer.push_error("Nie można wysłać waidomości", "First chunk was not found")
 		close_chat()
 		return
 	
-	var username = AppSessionState.get_username()
-	var date_time = GlobalTypes.DateTime.now()
-	var message_entry = create_message_entry(-1, message_to_send, username, date_time)
-	first_chunk.add_child(message_entry)
+	var username := AppSessionState.get_username()
+	var date_time := GlobalTypes.DateTime.now()
+	var message_entry_object = create_message_entry(-1, message_to_send, username, date_time)
+	first_chunk.add_child(message_entry_object)
 	message_queue.push_back(message_to_send)
 	message_input.text = ""
 	
 	anchor_message_log = true
 
 func create_message_entry(index: int, message: String, sender: String, dateTime: GlobalTypes.DateTime):
-	var username = AppSessionState.get_username()
-	var message_alignment = GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT
-	var size_flag = Control.SIZE_SHRINK_BEGIN
-	var container_width = size.x
+	var username := AppSessionState.get_username()
+	var message_alignment := GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT
+	var size_flag := Control.SIZE_SHRINK_BEGIN
+	var container_width := size.x
 	
 	if sender == username:
 		message_alignment = GlobalTypes.CHAT_MESSAGE_ALIGNMENT.RIGHT
 		size_flag = Control.SIZE_SHRINK_END
 		
-	var message_entry = message_entry.instantiate()
-	message_entry.message_alignment = message_alignment
-	message_entry.message_text = message
-	message_entry.timestamp = dateTime
-	message_entry.sender_username = sender
-	message_entry.in_chat_index = index
-	message_entry.size_flags_horizontal = size_flag
-	message_entry.container_width = container_width
-	return message_entry
+	var message_entry_object = message_entry.instantiate()
+	message_entry_object.message_alignment = message_alignment
+	message_entry_object.message_text = message
+	message_entry_object.timestamp = dateTime
+	message_entry_object.sender_username = sender
+	message_entry_object.in_chat_index = index
+	message_entry_object.size_flags_horizontal = size_flag
+	message_entry_object.container_width = container_width
+	return message_entry_object
 
 func scroll_to_bottom() -> void:
 	var max_value = message_scroll_log.get_v_scroll_bar().max_value
@@ -307,31 +309,24 @@ func scroll_to_chunk(chunk_index: int) -> void:
 	
 	message_scroll_log.scroll_vertical = chunk.size.y
 
-func _on_chat_settings_button_pressed() -> void:
+func on_chat_settings_button_pressed() -> void:
 	settings_overlay.show()
-	
-	var settings = chat_settings.instantiate()
-	settings.chat_id = chat_id
-	settings.connect("closed", settings_panel_closed)
-	await settings.initialize()
-	settings_overlay.add_child(settings)
 
-func settings_panel_closed(settings: Node) -> void:
+func on_settings_panel_closed(_settings: Node) -> void:
 	settings_overlay.hide()
-	settings_overlay.remove_child(settings)
-	settings.queue_free()
 
 func close_chat() -> void:
 	disconnect_from_chat();
 	clear_chat();
 	GlobalSignals.close_chat_board.emit()
+	spinner_container.show()
 
-func _on_tree_exiting() -> void:
+func on_tree_exiting() -> void:
 	close_chat()
 
 func on_scroll_value_changed(value: float) -> void:
-	var scroll_message_log_height = message_scroll_log.size.y
-	var max_value = message_scroll_log.get_v_scroll_bar().max_value
+	var scroll_message_log_height := message_scroll_log.size.y
+	var max_value := message_scroll_log.get_v_scroll_bar().max_value
 	
 	if scroll_message_log_height > max_value:
 		return
@@ -346,7 +341,6 @@ func on_scroll_changed() -> void:
 		scroll_to_bottom()
 	if scroll_to_new_chunk == true:
 		scroll_to_chunk(0)
-		var v_scroll = message_scroll_log.get_v_scroll_bar()
 		scroll_to_new_chunk = false
 
 func get_first_chunk() -> VBoxContainer:

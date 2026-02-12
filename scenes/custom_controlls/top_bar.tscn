@@ -21,10 +21,10 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 0
 
-[node name="VBoxContainer" type="HBoxContainer" parent="top_bar_margin"]
+[node name="bar_elements_container" type="HBoxContainer" parent="top_bar_margin"]
 layout_mode = 2
 
-[node name="date_time" type="Label" parent="top_bar_margin/VBoxContainer"]
+[node name="date_time" type="Label" parent="top_bar_margin/bar_elements_container"]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "12:00"

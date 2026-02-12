@@ -46,4 +46,4 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "null"
 
-[connection signal="resized" from="message_margin/message_data/message_label" to="." method="_on_message_label_resized"]
+[connection signal="resized" from="message_margin/message_data/message_label" to="." method="on_message_label_resized"]
