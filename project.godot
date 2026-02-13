@@ -25,6 +25,7 @@ PopupDisplayServer="*res://scripts/popup_display_server.gd"
 ServerRequest="*res://scripts/server_request.gd"
 GlobalSignals="*res://scripts/global_signals.gd"
 DisplayManager="*res://scripts/display_manager.gd"
+UserManager="*res://scripts/user_manager.gd"
 
 [display]
 
