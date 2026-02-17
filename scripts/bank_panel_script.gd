@@ -6,6 +6,7 @@ extends Control
 @onready var funds_label: Label = $bank_container/card/funds_label
 @onready var overlay_margin: MarginContainer = $overlay_margin
 @onready var new_transaction_window: Control = $overlay_margin/center_container/new_transaction
+@onready var refresh_button: Button = $bank_container/bank_actions/refresh
 
 @onready var transactions_scroll: ScrollContainer = $bank_container/transactions_scroll
 @onready var spinner_container: CenterContainer = $bank_container/spinner_container
@@ -40,6 +41,7 @@ func update_transaction_history():
 		transactions_list.add_child(transaction_entry_instance)
 
 func refresh_user_bank_account() -> void:
+	refresh_button.disabled = true
 	spinner_container.show()
 	transactions_scroll.hide()
 	empty_transactions_container.hide()
@@ -58,6 +60,8 @@ func refresh_user_bank_account() -> void:
 	if transactions_list.get_child_count() == 0:
 		transactions_scroll.hide()
 		empty_transactions_container.show()
+	
+	refresh_button.disabled = false
 	
 func on_refresh_button_pressed() -> void:
 	refresh_user_bank_account()

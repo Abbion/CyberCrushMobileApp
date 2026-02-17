@@ -14,7 +14,7 @@ var scroll_to_new_chunk: bool = false
 
 @onready var message_scroll_log: ScrollContainer = $board_margin/board/scroll_message_log
 @onready var message_log: VBoxContainer  = $board_margin/board/scroll_message_log/message_log
-@onready var title: Label = $board_margin/board/top_panel/top_bar_container/title_margin/title
+@onready var title_label: Label = $board_margin/board/top_panel/top_bar_container/title_margin/title
 @onready var message_input: TextEdit = $board_margin/board/message_panel/message_input
 @onready var chat_settings_button: Button = $board_margin/board/top_panel/top_bar_container/chat_settings_button
 @onready var settings_overlay: MarginContainer = $settings_overlay
@@ -40,7 +40,8 @@ func load_chat_at_id(id: int) -> void:
 	
 	chat_socket = WebSocketPeer.new()
 	
-	var connection_state = chat_socket.connect_to_url("ws://127.0.0.1:3003/realtime_chat")
+	var url = ServerRequest.build_url(ServerRequest.ProtocoloType.WEB_SOCKET, "realtime_chat", 3003, "chat")
+	var connection_state = chat_socket.connect_to_url(url)
 	if connection_state == OK:
 		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED
 	else:
@@ -180,11 +181,10 @@ func should_load_older_messages() -> bool:
 #load_older_messages variable seciton
 var lock_requesting_chat_history = false
 #------------------
-
 func load_older_messages() -> void:
 	if lock_requesting_chat_history == true:
 		return
-		
+	
 	lock_requesting_chat_history = true
 	
 	var last_chat_chunk := message_log.get_child(0)
@@ -226,7 +226,7 @@ func update_meta_data(metadata: Dictionary) -> void:
 		if username == chat_admin:
 			chat_settings_button.show()
 		
-		title.text = group_chat_metadata["title"]
+		title_label.text = group_chat_metadata["title"]
 	else:
 		var direct_chat_metadata = metadata["Direct"]
 		var username_a = direct_chat_metadata["username_a"]
@@ -236,7 +236,7 @@ func update_meta_data(metadata: Dictionary) -> void:
 		if partner == username:
 			partner = username_b
 			
-		title.text = partner
+		title_label.text = partner
 	pass
 
 func clear_chat() -> void:
@@ -251,6 +251,7 @@ func disconnect_from_chat() -> void:
 	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CLOSED
 	chat_id = -1
 	message_queue.clear()
+	title_label.text = "loading..."
 
 func on_back_button_pressed() -> void:
 	close_chat()

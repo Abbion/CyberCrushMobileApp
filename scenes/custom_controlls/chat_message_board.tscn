@@ -50,7 +50,7 @@ theme_override_constants/margin_left = 10
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "null"
+text = "loading..."
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 

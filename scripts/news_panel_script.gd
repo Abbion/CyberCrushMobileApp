@@ -6,6 +6,7 @@ extends Control
 @onready var feed: VBoxContainer = $news_container/scroll_feed/feed
 @onready var title_input: LineEdit = $news_container/post_box_margin/post_box/title_input
 @onready var content_input: TextEdit = $news_container/post_box_margin/post_box/content_input
+@onready var publish_button: Button = $"news_container/post_box_margin/post_box/post_actions/publish button"
 
 @onready var scroll_feed: ScrollContainer = $news_container/scroll_feed
 @onready var spinner_container: CenterContainer = $news_container/spinner_container
@@ -51,7 +52,7 @@ func send_article():
 		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Ograniczenie maksymalnie 256 znaków")
 		return
 	
-	ServerRequest.post_news_article(title, content)
+	await ServerRequest.post_news_article(title, content)
 	
 	var article_entry = news_article_entry.instantiate()
 	article_entry.author = AppSessionState.get_username()
@@ -65,5 +66,7 @@ func send_article():
 	title_input.clear()
 	content_input.clear()
 
-func on_publush_button_pressed() -> void:
+func on_publish_button_pressed() -> void:
+	publish_button.disabled = true
 	send_article()
+	publish_button.disabled = false
