@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://gn8f4wkuvip1"]
+
+[ext_resource type="Script" uid="uid://qd4sea1drih0" path="res://scripts/long_text_input.gd" id="1_77yd6"]
+
+[node name="long_text_input" type="TextEdit"]
+anchors_preset = -1
+anchor_left = 0.326
+anchor_top = 0.382
+anchor_right = 0.326
+anchor_bottom = 0.382
+offset_left = -0.0299988
+offset_top = -0.0400085
+offset_right = 149.97
+offset_bottom = 39.96
+grow_horizontal = 2
+grow_vertical = 2
+wrap_mode = 1
+scroll_fit_content_height = true
+script = ExtResource("1_77yd6")
+
+[node name="character_limit_counter" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.2)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -21.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "23/255"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="text_changed" from="." to="." method="on_text_changed"]

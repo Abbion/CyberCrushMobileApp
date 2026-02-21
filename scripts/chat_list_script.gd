@@ -1,3 +1,4 @@
+#Refactor 1
 extends Control
 
 const DIRECT_CHAT: int = 0
@@ -8,18 +9,25 @@ class ChatSortData:
 	var chat_id: int
 	var time_stamp: Dictionary
 
-@onready var chat_list = $ScrollContainer/chat_list
-@onready var create_chat_overlay = $create_chat_overlay
+@onready var chat_list = $chat_list_container/chat_list
+@onready var overlay_margin = $overlay_margin
+@onready var overlay_center_container = $overlay_margin/center_container
+
+@onready var chat_list_container = $chat_list_container
+@onready var spinner_container = $spinner_container
+@onready var empty_chat_list_container = $empty_chat_list_container
+
+@export var chat_entry : PackedScene
 
 signal open_chat(chat_id: int)
 
-var chat_entry : PackedScene = load("res://scenes/custom_controlls/chat_entry.tscn")
-
 func _ready() -> void:
-	update_chats_list()
+	refresh_chat_list()
 
 func update_chats_list():
-	var user_chats = await ServerRequest.user_chats()
+	var user_chats := await ServerRequest.user_chats()
+	if user_chats.is_empty():
+		return
 	var direct_chats = user_chats["direct"]
 	var group_chats = user_chats["group"]
 	
@@ -30,9 +38,9 @@ func update_chats_list():
 		if chat["last_message"] == null:
 			continue
 		
-		var chat_to_sort: ChatSortData = ChatSortData.new()
+		var chat_to_sort := ChatSortData.new()
 		chat_to_sort.chat_type = DIRECT_CHAT
-		chat_to_sort.chat_id = int(chat["chat_id"])		
+		chat_to_sort.chat_id = int(chat["chat_id"])
 		chat_to_sort.time_stamp = Time.get_datetime_dict_from_datetime_string(chat["last_message_time_stamp"], false)
 		sorted_chats.push_back(chat_to_sort)
 	
@@ -40,7 +48,7 @@ func update_chats_list():
 		if chat["last_message"] == null:
 			continue
 		
-		var chat_to_sort: ChatSortData = ChatSortData.new()
+		var chat_to_sort := ChatSortData.new()
 		chat_to_sort.chat_type = GROUP_CHAT
 		chat_to_sort.chat_id = int(chat["chat_id"])
 		chat_to_sort.time_stamp = Time.get_datetime_dict_from_datetime_string(chat["last_message_time_stamp"], false)
@@ -66,7 +74,7 @@ func update_chats_list():
 			)
 			
 			if direct_chat_index < 0:
-				print("Chat not found")
+				PopupDisplayServer.push_warning("Nie odnaleziono czatu bezpośredniego")
 				continue
 			
 			var direct_chat = direct_chats[direct_chat_index]
@@ -85,7 +93,7 @@ func update_chats_list():
 			)
 			
 			if group_chat_index < 0:
-				print("Chat not found")
+				PopupDisplayServer.push_warning("Nie odnaleziono czatu grupowego")
 				continue
 			
 			var group_chat = group_chats[group_chat_index]
@@ -103,15 +111,26 @@ func clear_chats_list() -> void:
 		entry.queue_free()
 
 func refresh_chat_list() -> void:
-	update_chats_list()
+	spinner_container.show()
+	chat_list_container.hide()
+	empty_chat_list_container.hide()
+	
+	await update_chats_list()
+	
+	spinner_container.hide()
+	chat_list_container.show()
+	
+	if chat_list.get_child_count() == 0:
+		chat_list.hide()
+		empty_chat_list_container.show()
 
 func reset_layout() -> void:
-	create_chat_overlay.hide()
+	overlay_margin.hide()
 
-func _on_add_chat_pressed() -> void:
-	create_chat_overlay.show()
+func on_add_chat_pressed() -> void:
+	overlay_margin.show()
 
-func _on_new_chat_panel_closed() -> void:
+func on_new_chat_panel_closed() -> void:
 	reset_layout()
 
 func on_chat_opened(chat_id: int) -> void:

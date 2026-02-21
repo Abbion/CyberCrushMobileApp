@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd05lxguklptk"]
+
+[ext_resource type="Script" uid="uid://c04jutsc7xakc" path="res://scripts/bug_log_entry.gd" id="1_70q2m"]
+
+[node name="bug_log_entry" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_70q2m")
+
+[node name="data_margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="data_stack_container" type="VBoxContainer" parent="data_margin"]
+layout_mode = 2
+
+[node name="type_label" type="Label" parent="data_margin/data_stack_container"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+text = "null"
+autowrap_mode = 3
+
+[node name="short_description_label" type="Label" parent="data_margin/data_stack_container"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+text = "null"
+autowrap_mode = 3
+
+[node name="long_description_label" type="Label" parent="data_margin/data_stack_container"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+text = "null"
+autowrap_mode = 3

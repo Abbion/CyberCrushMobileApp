@@ -11,12 +11,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1my76")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(300, 400)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="selector_view" type="VBoxContainer" parent="ColorRect"]
+[node name="selector_view" type="VBoxContainer" parent="background"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -31,29 +31,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="view_title" type="Label" parent="ColorRect/selector_view"]
+[node name="view_title" type="Label" parent="background/selector_view"]
 layout_mode = 2
 text = "Zarządzanie uczestnikami czatu"
 horizontal_alignment = 1
 
-[node name="free_slots_label" type="Label" parent="ColorRect/selector_view"]
+[node name="free_slots_label" type="Label" parent="background/selector_view"]
 layout_mode = 2
 text = "Wolne miejsca: ?"
 horizontal_alignment = 1
 
-[node name="add_user_button" type="Button" parent="ColorRect/selector_view"]
+[node name="add_user_button" type="Button" parent="background/selector_view"]
 layout_mode = 2
 text = "Dodaj"
 
-[node name="remove_user_button" type="Button" parent="ColorRect/selector_view"]
+[node name="remove_user_button" type="Button" parent="background/selector_view"]
 layout_mode = 2
 text = "Usuń"
 
-[node name="back_button" type="Button" parent="ColorRect/selector_view"]
+[node name="back_button" type="Button" parent="background/selector_view"]
 layout_mode = 2
 text = "wróć"
 
-[node name="add_user_view" type="Control" parent="ColorRect"]
+[node name="add_user_view" type="Control" parent="background"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -68,7 +68,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="view" type="VBoxContainer" parent="ColorRect/add_user_view"]
+[node name="view" type="VBoxContainer" parent="background/add_user_view"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -83,29 +83,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="view_title" type="Label" parent="ColorRect/add_user_view/view"]
+[node name="view_title" type="Label" parent="background/add_user_view/view"]
 layout_mode = 2
 text = "Dodaj użytkownika"
 horizontal_alignment = 1
 
-[node name="username_label" type="Label" parent="ColorRect/add_user_view/view"]
+[node name="username_label" type="Label" parent="background/add_user_view/view"]
 layout_mode = 2
 text = "Nazwa użytkownika:"
 
-[node name="find_control_placeholder" type="Panel" parent="ColorRect/add_user_view/view"]
+[node name="find_control_placeholder" type="Panel" parent="background/add_user_view/view"]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 26.58)
 layout_mode = 2
 
-[node name="add_button" type="Button" parent="ColorRect/add_user_view/view"]
+[node name="add_button" type="Button" parent="background/add_user_view/view"]
 layout_mode = 2
 text = "Dodaj"
 
-[node name="back_button" type="Button" parent="ColorRect/add_user_view/view"]
+[node name="back_button" type="Button" parent="background/add_user_view/view"]
 layout_mode = 2
 text = "wróć"
 
-[node name="find_control" parent="ColorRect/add_user_view" instance=ExtResource("1_d7itt")]
+[node name="find_control" parent="background/add_user_view" instance=ExtResource("1_d7itt")]
 layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -115,7 +115,7 @@ offset_top = -23.0
 offset_right = 119.0
 offset_bottom = 7.0
 
-[node name="remove_user_view" type="VBoxContainer" parent="ColorRect"]
+[node name="remove_user_view" type="VBoxContainer" parent="background"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -131,29 +131,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="view_title" type="Label" parent="ColorRect/remove_user_view"]
+[node name="view_title" type="Label" parent="background/remove_user_view"]
 layout_mode = 2
 text = "Usuń użytkownika"
 
-[node name="users_list_container" type="ScrollContainer" parent="ColorRect/remove_user_view"]
+[node name="users_list_container" type="ScrollContainer" parent="background/remove_user_view"]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
-[node name="user_list" type="VBoxContainer" parent="ColorRect/remove_user_view/users_list_container"]
+[node name="user_list" type="VBoxContainer" parent="background/remove_user_view/users_list_container"]
 layout_mode = 2
 
-[node name="remove_button" type="Button" parent="ColorRect/remove_user_view"]
+[node name="remove_button" type="Button" parent="background/remove_user_view"]
 layout_mode = 2
 text = "Usuń"
 
-[node name="back_button" type="Button" parent="ColorRect/remove_user_view"]
+[node name="back_button" type="Button" parent="background/remove_user_view"]
 layout_mode = 2
 text = "wróć"
 
-[connection signal="pressed" from="ColorRect/selector_view/add_user_button" to="." method="go_to_add_user_view"]
-[connection signal="pressed" from="ColorRect/selector_view/remove_user_button" to="." method="go_to_remove_user_view"]
-[connection signal="pressed" from="ColorRect/selector_view/back_button" to="." method="close_chat_settings"]
-[connection signal="pressed" from="ColorRect/add_user_view/view/add_button" to="." method="_on_add_button_pressed"]
-[connection signal="pressed" from="ColorRect/add_user_view/view/back_button" to="." method="go_to_selector_view"]
-[connection signal="pressed" from="ColorRect/remove_user_view/remove_button" to="." method="_on_remove_button_pressed"]
-[connection signal="pressed" from="ColorRect/remove_user_view/back_button" to="." method="go_to_selector_view"]
+[connection signal="pressed" from="background/selector_view/add_user_button" to="." method="go_to_add_user_view"]
+[connection signal="pressed" from="background/selector_view/remove_user_button" to="." method="go_to_remove_user_view"]
+[connection signal="pressed" from="background/selector_view/back_button" to="." method="close_chat_settings"]
+[connection signal="pressed" from="background/add_user_view/view/add_button" to="." method="on_add_button_pressed"]
+[connection signal="pressed" from="background/add_user_view/view/back_button" to="." method="go_to_selector_view"]
+[connection signal="pressed" from="background/remove_user_view/remove_button" to="." method="on_remove_button_pressed"]
+[connection signal="pressed" from="background/remove_user_view/back_button" to="." method="go_to_selector_view"]

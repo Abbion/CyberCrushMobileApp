@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvmqfcmkhcbkt"]
+
+[ext_resource type="Script" uid="uid://cejc7mgqxx0uc" path="res://scripts/information_popup_script.gd" id="1_7dqi6"]
+
+[node name="information_popup" type="Control"]
+layout_mode = 3
+anchor_right = 0.751
+offset_right = -0.155029
+grow_horizontal = 2
+script = ExtResource("1_7dqi6")
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 2
+offset_right = 304.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="margin" type="MarginContainer" parent="background"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="data" type="VBoxContainer" parent="background/margin"]
+layout_mode = 2
+
+[node name="popup_type_label" type="Label" parent="background/margin/data"]
+layout_mode = 2
+text = "Info"
+
+[node name="content" type="Label" parent="background/margin/data"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+text = "Null "
+autowrap_mode = 3
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="tree_entered" from="." to="." method="on_tree_entered"]
+[connection signal="tree_exited" from="." to="." method="on_tree_exited"]
+[connection signal="resized" from="background/margin" to="." method="on_margin_resized"]
+[connection signal="timeout" from="timer" to="." method="on_timer_timeout"]

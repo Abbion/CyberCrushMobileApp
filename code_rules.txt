@@ -1,0 +1,21 @@
+Editor naming convention
+	- For objects added to the scene tree, use snake_case.
+	- Add all scripts to the script folder without adding _script at the end.
+
+Code conventions
+	- For class and enum names, use CamelCase.
+	- For enum variable and constant names, use SCREAMING_SNAKE_CASE.
+	- For variable names, use snake_case.
+	- Long variable names are better than acronyms.
+	- Try to use := for variable assignment when possible.
+	- In the script header, abide by this order hierarchy:
+		1. @export variables
+		2. Constants
+		3. @import
+		4. Script variables
+	- Don't use the _ prefix when creating a signal listener.
+	- All server requests should be handled by the ServerRequest.gd script.
+	- When handling errors, use PopupDisplayServer.push_error(simple, verbose) to inform the user.
+
+This document was written at the end of the mocking phase.
+Some files don't align with these rules but should be refactored in the future.

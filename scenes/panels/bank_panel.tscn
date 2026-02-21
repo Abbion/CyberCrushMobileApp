@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://0506af3w1mki"]
+[gd_scene load_steps=7 format=3 uid="uid://0506af3w1mki"]
 
 [ext_resource type="Script" uid="uid://b0asa8oyf4u47" path="res://scripts/bank_panel_script.gd" id="1_0pdnh"]
 [ext_resource type="PackedScene" uid="uid://6vc5femhj1f6" path="res://scenes/custom_controlls/new_transaction.tscn" id="2_8ud3o"]
+[ext_resource type="PackedScene" uid="uid://du3o6e82qrxja" path="res://scenes/custom_controlls/transaction_entry.tscn" id="2_25ivn"]
+[ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_mvofu"]
+[ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
+[ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yxmd7"]
 
 [node name="bank_panel" type="Control"]
 layout_mode = 3
@@ -11,61 +15,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0pdnh")
+transaction_entry = ExtResource("2_25ivn")
 
-[node name="main_panel" type="VBoxContainer" parent="."]
-layout_mode = 2
-offset_right = 405.0
-offset_bottom = 720.0
+[node name="bank_container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="card" type="ColorRect" parent="main_panel"]
+[node name="card" type="ColorRect" parent="bank_container"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 color = Color(1, 0, 1, 0.117647)
 
-[node name="funds_label" type="Label" parent="main_panel/card"]
+[node name="funds_label" type="Label" parent="bank_container/card"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Funds: "
 
-[node name="bank_actions" type="HBoxContainer" parent="main_panel"]
+[node name="bank_actions" type="HBoxContainer" parent="bank_container"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="refresh" type="Button" parent="main_panel/bank_actions"]
+[node name="refresh" type="Button" parent="bank_container/bank_actions"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Refresh"
+text = "Odśwież"
 
-[node name="new_transaction" type="Button" parent="main_panel/bank_actions"]
+[node name="new_transaction" type="Button" parent="bank_container/bank_actions"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "New transaction"
+text = "Nowa transakcja"
 
-[node name="transactions_scroll_window" type="ScrollContainer" parent="main_panel"]
+[node name="spinner_container" type="CenterContainer" parent="bank_container"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="transactions_list" type="VBoxContainer" parent="main_panel/transactions_scroll_window"]
+[node name="spinner" parent="bank_container/spinner_container" instance=ExtResource("2_yxmd7")]
 layout_mode = 2
+spinner_scale = 0.5
 
-[node name="main_panel_overlay" type="ColorRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 405.0
-offset_bottom = 720.0
-color = Color(0.205117, 0.205117, 0.205117, 0.490196)
-
-[node name="new_transaction" parent="." instance=ExtResource("2_8ud3o")]
+[node name="transactions_scroll" type="ScrollContainer" parent="bank_container"]
 visible = false
 layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-offset_left = 50.0
-offset_top = 152.0
-offset_right = 358.0
-offset_bottom = 567.0
+size_flags_vertical = 3
 
-[connection signal="button_down" from="main_panel/bank_actions/refresh" to="." method="_on_refresh_button_down"]
-[connection signal="pressed" from="main_panel/bank_actions/new_transaction" to="." method="_on_new_transaction_pressed"]
-[connection signal="transaction_completed" from="new_transaction" to="." method="_on_new_transaction_transaction_completed"]
+[node name="transactions_list" type="VBoxContainer" parent="bank_container/transactions_scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="empty_transactions" type="CenterContainer" parent="bank_container"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="empty_transaction_label" type="Label" parent="bank_container/empty_transactions"]
+layout_mode = 2
+text = "Historia transakcji jest pusta"
+
+[node name="overlay_margin" parent="." instance=ExtResource("2_mvofu")]
+visible = false
+layout_mode = 1
+
+[node name="overlay_background" type="TextureRect" parent="overlay_margin"]
+modulate = Color(1, 1, 1, 0.647059)
+layout_mode = 2
+texture = ExtResource("2_tn1ak")
+expand_mode = 4
+
+[node name="center_container" type="CenterContainer" parent="overlay_margin"]
+clip_contents = true
+layout_mode = 2
+
+[node name="new_transaction" parent="overlay_margin/center_container" instance=ExtResource("2_8ud3o")]
+layout_mode = 2
+
+[connection signal="pressed" from="bank_container/bank_actions/refresh" to="." method="on_refresh_button_pressed"]
+[connection signal="pressed" from="bank_container/bank_actions/new_transaction" to="." method="on_new_transaction_pressed"]
+[connection signal="transaction_canceled" from="overlay_margin/center_container/new_transaction" to="." method="on_new_transaction_transaction_canceled"]
+[connection signal="transaction_completed" from="overlay_margin/center_container/new_transaction" to="." method="on_new_transaction_transaction_completed"]

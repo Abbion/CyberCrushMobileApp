@@ -1,18 +1,26 @@
+#Refactor 1
 extends Control
 
 @export var news_article_entry: PackedScene
 
-@onready var news_box: VBoxContainer = $VBoxContainer/feed/news_box
-@onready var title_input = $VBoxContainer/post_box/title_input
-@onready var content_input = $VBoxContainer/post_box/content_input
+@onready var feed: VBoxContainer = $news_container/scroll_feed/feed
+@onready var title_input: LineEdit = $news_container/post_box_margin/post_box/title_input
+@onready var content_input: TextEdit = $news_container/post_box_margin/post_box/content_input
+@onready var publish_button: Button = $"news_container/post_box_margin/post_box/post_actions/publish button"
+
+@onready var scroll_feed: ScrollContainer = $news_container/scroll_feed
+@onready var spinner_container: CenterContainer = $news_container/spinner_container
 
 func _ready() -> void:
 	refresh_news_feed()
 
 func refresh_news_feed():
-	var articles = await ServerRequest.news_feed()
+	spinner_container.show()
+	scroll_feed.hide()
+	
+	var articles := await ServerRequest.news_feed()
 	for article in articles:
-		var author = article["username"]
+		var author = article["author"]
 		var date = article["timestamp"]
 		var title = article["title"]
 		var content = article["content"]
@@ -22,19 +30,29 @@ func refresh_news_feed():
 		article_entry.date = GlobalTypes.DateTime.from_string(date).get_string()
 		article_entry.title = title
 		article_entry.content = content
-		news_box.add_child(article_entry)
+		feed.add_child(article_entry)
+		
+	spinner_container.hide()
+	scroll_feed.show()
 
 func send_article():
-	var title: String = title_input.text
-	
-	if len(title) < 3 or len(title) > 28:
+	var title := title_input.text
+	if title.length() < 3:
+		PopupDisplayServer.push_warning("Tytuł posta jest za krótki. Wymagane minimum 3 znaki")
+		return
+	if title.length() > 32:
+		PopupDisplayServer.push_warning("Tytuł posta jest za długi. Ograniczenie maksymalnie 32 zaków")
 		return
 	
-	var content: String = content_input.text
-	if len(content) < 10 or len(content) > 255:
+	var content: String = content_input.get_cleaned_text()
+	if content.length() < 3:
+		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Wymagane minimum 3 znaki")
+		return
+	if content.length() > 255:
+		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Ograniczenie maksymalnie 256 znaków")
 		return
 	
-	ServerRequest.post_news_article(title, content)
+	await ServerRequest.post_news_article(title, content)
 	
 	var article_entry = news_article_entry.instantiate()
 	article_entry.author = AppSessionState.get_username()
@@ -42,8 +60,13 @@ func send_article():
 	article_entry.title = title
 	article_entry.content = content
 	
-	news_box.add_child(article_entry)
-	news_box.move_child(article_entry, 0)
+	feed.add_child(article_entry)
+	feed.move_child(article_entry, 0)
+	
+	title_input.clear()
+	content_input.clear()
 
-func _on_publush_button_pressed() -> void:
+func on_publish_button_pressed() -> void:
+	publish_button.disabled = true
 	send_article()
+	publish_button.disabled = false

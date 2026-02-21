@@ -1,39 +1,40 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfie8i6cij8t7"]
 
-[ext_resource type="PackedScene" uid="uid://b33lb6oqou8we" path="res://scenes/custom_controlls/chat_message_board.tscn" id="1_nvn48"]
+[ext_resource type="PackedScene" uid="uid://keq3vr862823" path="res://scenes/custom_controlls/chat_message_board.tscn" id="1_nvn48"]
 [ext_resource type="PackedScene" uid="uid://cshv3dqh1nyxj" path="res://scenes/custom_controlls/chat_list.tscn" id="2_ke17o"]
 
 [sub_resource type="GDScript" id="GDScript_nvn48"]
-script/source = "extends Control
+script/source = "#Refactor 1
+extends Control
 
 @onready var chat_list: Control = $chat_list
-@onready var chat_message_board: Control = $chat_message_board
-
-func _ready() -> void:
-	GlobalSignals.new_chat_created.connect(on_chat_created)
+@onready var message_board = $chat_message_board
 
 func open_chat(chat_id: int) -> void:
-	chat_message_board.load_chat_at_id(chat_id);
-	chat_message_board.visible = true
-	chat_list.visible = false
+	chat_list.hide()
+	message_board.show()
+	await message_board.load_chat_at_id(chat_id);
 
 func _on_chat_list_open_chat(chat_id: int) -> void:
 	open_chat(chat_id)
 
-func _on_chat_message_board_exit_chat() -> void:
+func on_chat_closed() -> void:
 	chat_list.refresh_chat_list()
 	chat_list.show()
-	chat_message_board.hide()
-
-func _on_hidden() -> void:
-	chat_list.refresh_chat_list()
-	chat_list.show()
-	chat_message_board.hide()
+	message_board.hide()
 
 func on_chat_created(chat_id: int) -> void:
 	open_chat(chat_id)
 	chat_list.refresh_chat_list()
 	chat_list.reset_layout()
+
+func on_tree_entered() -> void:
+	GlobalSignals.new_chat_created.connect(on_chat_created)
+	GlobalSignals.close_chat_board.connect(on_chat_closed)
+
+func on_tree_exited() -> void:
+	GlobalSignals.new_chat_created.disconnect(on_chat_created)
+	GlobalSignals.close_chat_board.disconnect(on_chat_closed)
 "
 
 [node name="chat_panel" type="Control"]
@@ -52,6 +53,6 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
-[connection signal="hidden" from="." to="." method="_on_hidden"]
+[connection signal="tree_entered" from="." to="." method="on_tree_entered"]
+[connection signal="tree_exited" from="." to="." method="on_tree_exited"]
 [connection signal="open_chat" from="chat_list" to="." method="_on_chat_list_open_chat"]
-[connection signal="exit_chat" from="chat_message_board" to="." method="_on_chat_message_board_exit_chat"]

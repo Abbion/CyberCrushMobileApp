@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://b33lb6oqou8we"]
+
+[ext_resource type="Script" uid="uid://eq00ajhbkh3u" path="res://scripts/chat_message_board_script.gd" id="1_c16fi"]
+[ext_resource type="PackedScene" uid="uid://bhthbs3apue7x" path="res://scenes/custom_controlls/chat_settings.tscn" id="2_ifct0"]
+[ext_resource type="PackedScene" uid="uid://5damwlt2tv6e" path="res://scenes/custom_controlls/chat_message_entry.tscn" id="3_g7fpo"]
+
+[node name="chat_message_board" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c16fi")
+chat_settings = ExtResource("2_ifct0")
+message_entry = ExtResource("3_g7fpo")
+
+[node name="board" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="top_panel" type="Panel" parent="board"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="board/top_panel"]
+layout_mode = 0
+offset_right = 405.0
+offset_bottom = 40.0
+theme_override_constants/separation = 0
+
+[node name="back_button" type="Button" parent="board/top_panel/HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "<"
+
+[node name="title" type="Label" parent="board/top_panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "null"
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="chat_settings_button" type="Button" parent="board/top_panel/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "⚙️"
+
+[node name="scroll_message_log" type="ScrollContainer" parent="board"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="message_log" type="VBoxContainer" parent="board/scroll_message_log"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="message_panel" type="HBoxContainer" parent="board"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="message_input" type="TextEdit" parent="board/message_panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Wiadomość"
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="message_send_button" type="Button" parent="board/message_panel"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+text = ">"
+
+[node name="overlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 2
+offset_right = 405.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.396078)
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="pressed" from="board/top_panel/HBoxContainer/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="board/top_panel/HBoxContainer/chat_settings_button" to="." method="_on_chat_settings_button_pressed"]
+[connection signal="scroll_ended" from="board/scroll_message_log" to="." method="_on_scroll_message_log_scroll_ended"]
+[connection signal="scroll_started" from="board/scroll_message_log" to="." method="_on_scroll_message_log_scroll_started"]
+[connection signal="resized" from="board/scroll_message_log/message_log" to="." method="_on_message_log_resized"]
+[connection signal="pressed" from="board/message_panel/message_send_button" to="." method="_on_message_send_button_pressed"]

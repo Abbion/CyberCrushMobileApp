@@ -1,60 +1,77 @@
-extends Control
+#Refactor 1
+extends PanelContainer
 
 @export var message_alignment: GlobalTypes.CHAT_MESSAGE_ALIGNMENT
 @export var message_text: String
-@export var timestamp_text: String
 @export var sender_username: String
+@export var container_width: int
+@export var in_chat_index: int
+var timestamp: GlobalTypes.DateTime
 
-@onready var message_container: VBoxContainer = $message_container
-@onready var message_label: Label = $message_container/message_label
-@onready var timestamp_label: Label = $message_container/message_metadata/timestamp_label
-@onready var sender_username_label: Label = $message_container/message_metadata/sender_username_label
-@onready var message_metadata: HBoxContainer = $message_container/message_metadata
-@onready var message_background: ColorRect = $message_background
+@onready var message_container: VBoxContainer = $message_margin/message_data
+@onready var sender_username_label: Label = $message_margin/message_data/sender_username_label
+@onready var message_label: Label = $message_margin/message_data/message_label
+@onready var timestamp_label: Label = $message_margin/message_data/timestamp_label
 
-const message_container_separator = 5
+const message_container_separator := 5
+const max_message_width_ratio := 0.7
+var text_resized := false
+var base_time_stamp
+
+var elapsed_time := 0.0
+const TIME_TO_REFRESH_TIMESTAMP := 90.0 # In seconds
 
 func _ready() -> void:
 	message_label.text = message_text
-	timestamp_label.text = timestamp_text
+	timestamp_label.text = timestamp.get_string()
 	sender_username_label.text = sender_username
 	
-	var lines = message_text.split("\n")
-	var max_line_width: float = 0.0
-	var message_height = 0.0
-	
-	for line in lines:
-		var bounds = message_label.get_theme_font("font").get_string_size(line)
-		if bounds.x > max_line_width:
-			max_line_width = bounds.x
-	
-	if max_line_width < message_container.size.x:
-		message_container.size.x = max_line_width
-		message_label.custom_minimum_size.x = max_line_width
-	else:
-		message_label.custom_minimum_size.x = message_container.size.x
-	
 	if message_alignment == GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT:
-		message_container.set_anchors_preset(Control.PRESET_TOP_LEFT)
+		sender_username_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		message_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-		message_metadata.alignment = BoxContainer.ALIGNMENT_BEGIN
 	else:
-		var page_width = size.x
-		var message_container_position = page_width - message_container.size.x
-		message_container.position.x = message_container_position
-		message_background.position.x = page_width - max_line_width
-		
-		message_container.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+		sender_username_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		message_label.size_flags_horizontal = Control.SIZE_SHRINK_END
-		message_metadata.alignment = BoxContainer.ALIGNMENT_END
 
-	var message_label_height = 0.0
-	for i in range(message_label.get_line_count()):
-		message_label_height += message_label.get_line_height(i)
+func _process(delta: float) -> void:
+	elapsed_time += delta
+	if elapsed_time > TIME_TO_REFRESH_TIMESTAMP:
+		timestamp_label.text = timestamp.get_string()
+		elapsed_time = 0.0
+
+func on_message_label_resized() -> void:
+	if text_resized or message_label == null:
+		return
+		
+	var text_length = message_label.text.length()
 	
-	custom_minimum_size.y = message_label_height + timestamp_label.get_line_height(0) + message_container_separator
+	if text_length == 0:
+		return
 	
-	message_background.size.x = message_label.custom_minimum_size.x
-	message_background.size.y = message_label_height
+	var last_character := message_label.get_character_bounds(text_length - 1)
+	var message_width := last_character.position.x + last_character.size.x
+	var viewport_width := get_viewport_rect().size.x
+	var max_message_width := viewport_width * max_message_width_ratio
+	
+	if message_width > max_message_width:
+		message_label.custom_minimum_size.x = container_width * max_message_width_ratio
+		message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	else:
+		var last_sender_character := sender_username_label.text.length()
+		var last_timestamp_character := timestamp_label.text.length()
+		if last_sender_character == 0 or last_timestamp_character == 0:
+			return
+		
+		var sender_last_character := sender_username_label.get_character_bounds(last_sender_character - 1)
+		var timestamp_last_character := timestamp_label.get_character_bounds(last_timestamp_character - 1)
+		
+		var sender_width := sender_last_character.position.x + sender_last_character.size.x
+		var timestamp_width := timestamp_last_character.position.x + timestamp_last_character.size.x
+		
+		var anchor := message_width / viewport_width
+		anchor = max(anchor, sender_width / viewport_width)
+		anchor = max(anchor, timestamp_width / viewport_width)
+		
+		anchor_right = anchor
+		
+	text_resized = true

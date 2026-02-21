@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bt5wtau8jm4ev"]
+[gd_scene load_steps=9 format=3 uid="uid://bt5wtau8jm4ev"]
 
 [ext_resource type="Script" uid="uid://b45tryrl3k5w4" path="res://scripts/main_page_script.gd" id="1_x7tum"]
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
@@ -7,8 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
 [ext_resource type="PackedScene" uid="uid://dfie8i6cij8t7" path="res://scenes/panels/chat_panel.tscn" id="5_esk2p"]
 [ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
+[ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="8_b6xi4"]
 
-[node name="MainPage" type="Control"]
+[node name="main_page" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,8 +17,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x7tum")
+news_panel_scene = ExtResource("6_3vdiw")
+bank_panel_scene = ExtResource("3_6lmqk")
+chat_panel_scene = ExtResource("5_esk2p")
+id_panel_scene = ExtResource("3_xap5f")
+metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="main_page_container" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,37 +31,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="top_bar" parent="VBoxContainer" instance=ExtResource("2_ued0y")]
+[node name="top_bar" parent="main_page_container" instance=ExtResource("2_ued0y")]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 632)
+[node name="panel_margin" type="MarginContainer" parent="main_page_container"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="bank_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_6lmqk")]
-visible = false
-layout_mode = 2
-
-[node name="my_id_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("3_xap5f")]
-visible = false
-layout_mode = 2
-
-[node name="chat_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("5_esk2p")]
-visible = false
-layout_mode = 2
-
-[node name="news_panel" parent="VBoxContainer/PanelContainer" instance=ExtResource("6_3vdiw")]
-layout_mode = 2
-
-[node name="app_selector" parent="VBoxContainer" instance=ExtResource("2_7nifb")]
+[node name="app_selector" parent="main_page_container" instance=ExtResource("2_7nifb")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 1
 color = Color(0, 0, 0, 1)
 
-[connection signal="bank_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_bank_selected"]
-[connection signal="messages_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_messages_selected"]
-[connection signal="my_id_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_my_id_selected"]
-[connection signal="socials_selected" from="VBoxContainer/app_selector" to="." method="_on_app_selector_socials_selected"]
+[node name="popup_margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 0
+
+[node name="information_popup" parent="popup_margin" instance=ExtResource("8_b6xi4")]
+layout_mode = 2
+mouse_filter = 2
+
+[connection signal="tree_entered" from="." to="." method="on_tree_entered"]
+[connection signal="tree_exited" from="." to="." method="on_tree_exited"]
+[connection signal="bank_selected" from="main_page_container/app_selector" to="." method="on_app_selector_bank_selected"]
+[connection signal="messages_selected" from="main_page_container/app_selector" to="." method="on_app_selector_messages_selected"]
+[connection signal="my_id_selected" from="main_page_container/app_selector" to="." method="on_app_selector_my_id_selected"]
+[connection signal="socials_selected" from="main_page_container/app_selector" to="." method="on_app_selector_socials_selected"]

@@ -1,3 +1,4 @@
+#Refactor 1
 extends Control
 
 @export var all_suggestions: PackedStringArray
@@ -5,11 +6,11 @@ extends Control
 @onready var suggestion_list: ItemList = $suggestion_list
 @onready var find_input: LineEdit = $input_field
 
-func _on_suggestion_list_item_selected(index: int) -> void:
+func on_suggestion_list_item_selected(index: int) -> void:
 	find_input.text = suggestion_list.get_item_text(index)
 	suggestion_list.visible = false
 
-func _on_text_changed(new_text: String) -> void:
+func on_text_changed(new_text: String) -> void:
 	suggestion_list.clear()
 	
 	if new_text.is_empty():
@@ -19,7 +20,7 @@ func _on_text_changed(new_text: String) -> void:
 	var fit_dir: Dictionary = {}
 	
 	for suggestion in all_suggestions:
-		var fit = HelperFunctions.fuzzy_string(new_text.to_lower(), suggestion.to_lower())
+		var fit := HelperFunctions.fuzzy_string(new_text.to_lower(), suggestion.to_lower())
 		fit_dir[suggestion] = fit
 	
 	var highest_fit: Dictionary = {}
@@ -28,7 +29,7 @@ func _on_text_changed(new_text: String) -> void:
 		if len(highest_fit) < max_suggestions:
 			highest_fit[suggestion] = fit_dir[suggestion]
 		else:
-			var min_value: float = 2
+			var min_value: float = 2.0
 			var min_key: String = ""
 			
 			for highest_suggestion in highest_fit.keys():
@@ -74,8 +75,13 @@ func _on_text_changed(new_text: String) -> void:
 	else:
 		suggestion_list.visible = false
 
-func get_value() -> String:
+func is_in_suggestions() -> bool:
 	if find_input.text in all_suggestions:
+		return true
+	return false
+
+func get_value() -> String:
+	if is_in_suggestions():
 		return find_input.text
 	return ""
 

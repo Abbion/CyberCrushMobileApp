@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="cyber_crush_mobile_app"
+config/name="cyber_crush_mobile_app (4.4)"
 run/main_scene="res://scenes/pages/login_page.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
@@ -21,16 +21,27 @@ AppSessionState="*res://scripts/app_session_state.gd"
 GlobalConstants="*res://scripts/global_constants.gd"
 HelperFunctions="*res://scripts/helper_functions.gd"
 GlobalTypes="*res://scripts/global_types.gd"
-GlobalSignals="*res://scripts/global_signals.gd"
+PopupDisplayServer="*res://scripts/popup_display_server.gd"
 ServerRequest="*res://scripts/server_request.gd"
+GlobalSignals="*res://scripts/global_signals.gd"
+DisplayManager="*res://scripts/display_manager.gd"
+UserManager="*res://scripts/user_manager.gd"
 
 [display]
 
 window/size/viewport_width=405
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/handheld/orientation=1
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
+viewport/hdr_2d=true
