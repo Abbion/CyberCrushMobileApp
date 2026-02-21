@@ -142,8 +142,9 @@ func try_consume_new_messages() -> bool:
 		if json_packet.parse(packet) != OK:
 			PopupDisplayServer.push_error("Otrzymano wiadomość, której nie udało się przetworzyć", "Odczytanie nowej wiadomości nie powiodło się")
 			return false
-				
+		
 		var packet_data = json_packet.data
+		PopupDisplayServer.push_info("Nowa wiadomość od %s" % packet_data["sender"])
 		var dateTime := GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
 		var message_entry_object = create_message_entry(packet_data["in_chat_index"], packet_data["message"], packet_data["sender"], dateTime)
 		first_chunk.add_child(message_entry_object)

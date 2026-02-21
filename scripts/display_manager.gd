@@ -25,6 +25,7 @@ func on_gui_focus_chaned(node: Node) -> void:
 		return
 	
 	if node is LineEdit or node is TextEdit:
-		DisplayServer.virtual_keyboard_show(node.text)
+		# LineEdit and TextEdit should handle displaying vk keyboard
+		return
 	else:
 		DisplayServer.virtual_keyboard_hide()

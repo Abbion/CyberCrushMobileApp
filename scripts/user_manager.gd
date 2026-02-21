@@ -6,7 +6,7 @@ var saved_credentials: int = 0
 
 func _ready() -> void:
 	var err := credentials_file.load(credentials_file_path)
-	
+
 	if err != OK:
 		return
 
@@ -62,13 +62,15 @@ func remove_user_credentails(username: String) -> bool:
 		
 	var section := "user_%s" % remove_index
 	credentials_file.erase_section(section)
+	credentials_file.set_value("metadata", "saved_credentials", saved_credentials - 1)
+	save_db("remove_user_credentails")
 	
 	for index in range(remove_index, saved_credentials - 1):
 		var new_section := "user_%s" % index
 		var old_section := "user_%s" % (index + 1)
 		if rename_user_section(old_section, new_section) == false:
 			PopupDisplayServer.push_error("Błąd podczas zwalniania danych uwierzytelniających użytkownika")
-			credentials_file.clear()
+			clear_db()
 			return false
 	
 	saved_credentials -= 1
@@ -127,3 +129,7 @@ func save_db(caller: String) -> bool:
 		
 	PopupDisplayServer.push_error("Błąd zapisu danych użytkownika", "Error: %s. Origin: %s" % [err, caller])
 	return false
+
+func clear_db():
+	credentials_file.clear()
+	save_db("clear_db")

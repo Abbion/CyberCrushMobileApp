@@ -44,6 +44,7 @@ layout_mode = 2
 [node name="username_input" parent="aspect_ration_container/login_margin/login_panel/username_input_options" instance=ExtResource("2_dmx6h")]
 layout_mode = 2
 size_flags_horizontal = 3
+vk_type_type = 0
 
 [node name="show_saved_users_button" type="Button" parent="aspect_ration_container/login_margin/login_panel/username_input_options"]
 visible = false
@@ -65,6 +66,7 @@ text = "Hasło"
 layout_mode = 2
 secret = true
 secret_character = "*"
+vk_type_type = 0
 
 [node name="login_button" type="Button" parent="aspect_ration_container/login_margin/login_panel"]
 layout_mode = 2

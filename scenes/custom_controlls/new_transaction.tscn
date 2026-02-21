@@ -67,6 +67,7 @@ text = "Kwota przelewu"
 [node name="amount_input" parent="background/transaction_elements" instance=ExtResource("2_mi8gf")]
 layout_mode = 2
 virtual_keyboard_type = 2
+vk_type_type = 2
 
 [node name="transaction_actions" type="HBoxContainer" parent="background/transaction_elements"]
 layout_mode = 2

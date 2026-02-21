@@ -79,7 +79,7 @@ func load_saved_user_credentials() -> void:
 	
 	if all_credentials.is_empty():
 		return
-	
+		
 	show_saved_users_button.show()
 	for username in all_credentials:
 		saved_users_list.add_item(username)
@@ -100,7 +100,13 @@ func on_saved_users_list_item_clicked(index: int, _at_position: Vector2, _mouse_
 		UserManager.remove_user_credentails(username)
 		saved_users_list.remove_item(index)
 		update_user_list_size.call_deferred()
+		
+		if saved_users_list.item_count == 0:
+			show_saved_users_button.hide()
+			saved_users_list.hide()
+		
 		unlock_input()
+		return
 	
 	UserManager.save_as_last_used(username, token)
 	AppSessionState.set_username(username)
