@@ -28,8 +28,8 @@ jobs:
         mkdir -p ~/Library/Application\ Support/Godot/templates/4.5.stable
         cd ~/Library/Application\ Support/Godot/templates/4.5.stable
         wget https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_export_templates.tpz
-        tar -xzf Godot_v4.5-stable_export_templates.tpz -C ~/Library/Application\ Support/Godot/templates/4.5.stable
-        cd templates
+        tar -xzf Godot_v4.5-stable_export_templates.tpz -C ~/Library/Application\ Support/Godot/export_templates/4.5.stable
+        cd export_templates
         mv * ..
         cd ..
         ls
