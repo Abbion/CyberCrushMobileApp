@@ -33,6 +33,7 @@ jobs:
         mv * ..
         cd ..
         ls
+        pwd
 
     - name: Create build directory
       run: mkdir -p build
