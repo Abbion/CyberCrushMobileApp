@@ -12,8 +12,6 @@ func _process(_delta: float) -> void:
 		if vk_height > 0.0:
 			top_margin = panel_rect.position.y
 			bottom_margin = vis_rect.size.y - (panel_rect.size.y + top_margin)
-			
-		$Label.text = "vk: %s" % vk_height
 		
 		var viewport_vk = DisplayManager.base_to_viewport_point_converter(Vector2(0.0, float(vk_height)))
 		add_theme_constant_override("margin_bottom", viewport_vk.y - bottom_margin)
