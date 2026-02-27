@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bt5wtau8jm4ev"]
+[gd_scene format=3 uid="uid://bt5wtau8jm4ev"]
 
 [ext_resource type="Script" uid="uid://b45tryrl3k5w4" path="res://scripts/main_page_script.gd" id="1_x7tum"]
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
 [ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="8_b6xi4"]
 
-[node name="main_page" type="Control"]
+[node name="main_page" type="Control" unique_id=1415751702]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ chat_panel_scene = ExtResource("5_esk2p")
 id_panel_scene = ExtResource("3_xap5f")
 metadata/_edit_use_anchors_ = true
 
-[node name="main_page_container" type="VBoxContainer" parent="."]
+[node name="main_page_container" type="VBoxContainer" parent="." unique_id=800410914]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,21 +33,21 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="top_bar" parent="main_page_container" instance=ExtResource("2_ued0y")]
+[node name="top_bar" parent="main_page_container" unique_id=1606022701 instance=ExtResource("2_ued0y")]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="panel_margin" type="MarginContainer" parent="main_page_container"]
+[node name="panel_margin" type="MarginContainer" parent="main_page_container" unique_id=211838993]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="app_selector" parent="main_page_container" instance=ExtResource("2_7nifb")]
+[node name="app_selector" parent="main_page_container" unique_id=69784473 instance=ExtResource("2_7nifb")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 1
 color = Color(0, 0, 0, 1)
 
-[node name="popup_margin" type="MarginContainer" parent="."]
+[node name="popup_margin" type="MarginContainer" parent="." unique_id=617982853]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,7 +58,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 0
 
-[node name="information_popup" parent="popup_margin" instance=ExtResource("8_b6xi4")]
+[node name="information_popup" parent="popup_margin" unique_id=2066364619 instance=ExtResource("8_b6xi4")]
 layout_mode = 2
 mouse_filter = 2
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkqj6aswsuht5"]
+[gd_scene format=3 uid="uid://bkqj6aswsuht5"]
 
 [ext_resource type="PackedScene" uid="uid://ciim22jn3qi4d" path="res://scenes/custom_controlls/news_article_entry.tscn" id="1_b7gsk"]
 [ext_resource type="Script" uid="uid://n8fown1plprm" path="res://scripts/news_panel_script.gd" id="1_p00wx"]
@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://gn8f4wkuvip1" path="res://scenes/custom_controlls/long_text_input.tscn" id="3_ot28r"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="5_83qtp"]
 
-[node name="news_panel" type="Control"]
+[node name="news_panel" type="Control" unique_id=2069991095]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +16,7 @@ grow_vertical = 2
 script = ExtResource("1_p00wx")
 news_article_entry = ExtResource("1_b7gsk")
 
-[node name="news_container" type="VBoxContainer" parent="."]
+[node name="news_container" type="VBoxContainer" parent="." unique_id=1147342946]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,28 +25,28 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="post_box_margin" type="MarginContainer" parent="news_container"]
+[node name="post_box_margin" type="MarginContainer" parent="news_container" unique_id=1845093057]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 10
 
-[node name="post_box" type="VBoxContainer" parent="news_container/post_box_margin"]
+[node name="post_box" type="VBoxContainer" parent="news_container/post_box_margin" unique_id=1804500149]
 layout_mode = 2
 
-[node name="title_label" type="Label" parent="news_container/post_box_margin/post_box"]
+[node name="title_label" type="Label" parent="news_container/post_box_margin/post_box" unique_id=487421865]
 layout_mode = 2
 text = "Tytuł"
 
-[node name="title_input" parent="news_container/post_box_margin/post_box" instance=ExtResource("3_lwmmg")]
+[node name="title_input" parent="news_container/post_box_margin/post_box" unique_id=1538401117 instance=ExtResource("3_lwmmg")]
 layout_mode = 2
 
-[node name="content_label" type="Label" parent="news_container/post_box_margin/post_box"]
+[node name="content_label" type="Label" parent="news_container/post_box_margin/post_box" unique_id=1388728542]
 layout_mode = 2
 text = "Treść"
 
-[node name="content_input" parent="news_container/post_box_margin/post_box" instance=ExtResource("3_ot28r")]
+[node name="content_input" parent="news_container/post_box_margin/post_box" unique_id=140967762 instance=ExtResource("3_ot28r")]
 layout_mode = 2
 size_flags_vertical = 3
 max_visible_lines = 5
@@ -54,31 +54,31 @@ max_character_limit = 255
 over_character_limit_labal_color = Color(1, 0, 0, 1)
 under_character_limit_labal_color = Color(1, 1, 1, 1)
 
-[node name="post_actions" type="HBoxContainer" parent="news_container/post_box_margin/post_box"]
+[node name="post_actions" type="HBoxContainer" parent="news_container/post_box_margin/post_box" unique_id=1227876112]
 layout_mode = 2
 
-[node name="publish button" type="Button" parent="news_container/post_box_margin/post_box/post_actions"]
+[node name="publish button" type="Button" parent="news_container/post_box_margin/post_box/post_actions" unique_id=1337031330]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Publikuj"
 
-[node name="HSeparator" type="HSeparator" parent="news_container"]
+[node name="HSeparator" type="HSeparator" parent="news_container" unique_id=1895360378]
 layout_mode = 2
 
-[node name="spinner_container" type="CenterContainer" parent="news_container"]
+[node name="spinner_container" type="CenterContainer" parent="news_container" unique_id=787452688]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="spinner" parent="news_container/spinner_container" instance=ExtResource("5_83qtp")]
+[node name="spinner" parent="news_container/spinner_container" unique_id=680079468 instance=ExtResource("5_83qtp")]
 layout_mode = 2
 spinner_scale = 0.5
 
-[node name="scroll_feed" type="ScrollContainer" parent="news_container"]
+[node name="scroll_feed" type="ScrollContainer" parent="news_container" unique_id=1987400073]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="feed" type="VBoxContainer" parent="news_container/scroll_feed"]
+[node name="feed" type="VBoxContainer" parent="news_container/scroll_feed" unique_id=1926292555]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

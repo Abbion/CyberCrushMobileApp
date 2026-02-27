@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://d32k05xyh4brq"]
+[gd_scene format=3 uid="uid://d32k05xyh4brq"]
 
 [ext_resource type="Script" uid="uid://dvb7iwjxf7ec4" path="res://scripts/new_chat_script.gd" id="1_4ql5n"]
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="2_2dnud"]
 
-[node name="new_chat" type="Control"]
+[node name="new_chat" type="Control" unique_id=1700996825]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4ql5n")
 
-[node name="background" type="ColorRect" parent="."]
+[node name="background" type="ColorRect" parent="." unique_id=1587705445]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -29,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="new_chat_selector_layout" type="VBoxContainer" parent="background"]
+[node name="new_chat_selector_layout" type="VBoxContainer" parent="background" unique_id=1482884788]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
@@ -40,26 +40,26 @@ offset_bottom = 117.3
 grow_horizontal = 2
 theme_override_constants/separation = 12
 
-[node name="new_chat_label" type="Label" parent="background/new_chat_selector_layout"]
+[node name="new_chat_label" type="Label" parent="background/new_chat_selector_layout" unique_id=1513979303]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Utwóż nowy czat"
 horizontal_alignment = 1
 
-[node name="new_direct_chat_button" type="Button" parent="background/new_chat_selector_layout"]
+[node name="new_direct_chat_button" type="Button" parent="background/new_chat_selector_layout" unique_id=1331475455]
 layout_mode = 2
 text = "Now czat bezpośredni"
 
-[node name="new_group_chat_button" type="Button" parent="background/new_chat_selector_layout"]
+[node name="new_group_chat_button" type="Button" parent="background/new_chat_selector_layout" unique_id=1977570416]
 layout_mode = 2
 text = "Nowy czat grupowy"
 
-[node name="cancel_button" type="Button" parent="background/new_chat_selector_layout"]
+[node name="cancel_button" type="Button" parent="background/new_chat_selector_layout" unique_id=1375793853]
 layout_mode = 2
 text = "Anuluj"
 
-[node name="new_direct_chat_layout" type="Control" parent="background"]
+[node name="new_direct_chat_layout" type="Control" parent="background" unique_id=556393145]
 visible = false
 layout_mode = 1
 anchor_left = 0.1
@@ -67,7 +67,7 @@ anchor_top = 0.15
 anchor_right = 0.9
 anchor_bottom = 0.15
 
-[node name="new_direct_chat_options" type="VBoxContainer" parent="background/new_direct_chat_layout"]
+[node name="new_direct_chat_options" type="VBoxContainer" parent="background/new_direct_chat_layout" unique_id=1895653476]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -76,33 +76,33 @@ offset_right = -0.5
 offset_bottom = 118.0
 theme_override_constants/separation = 12
 
-[node name="card_title" type="Label" parent="background/new_direct_chat_layout/new_direct_chat_options"]
+[node name="card_title" type="Label" parent="background/new_direct_chat_layout/new_direct_chat_options" unique_id=205045748]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Nowy czat bezpośredni"
 horizontal_alignment = 1
 
-[node name="username_input_label" type="Label" parent="background/new_direct_chat_layout/new_direct_chat_options"]
+[node name="username_input_label" type="Label" parent="background/new_direct_chat_layout/new_direct_chat_options" unique_id=1375278405]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Nazwa użytkownika"
 
-[node name="recepiant_input_placeholder" type="Panel" parent="background/new_direct_chat_layout/new_direct_chat_options"]
+[node name="recepiant_input_placeholder" type="Panel" parent="background/new_direct_chat_layout/new_direct_chat_options" unique_id=981468477]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="begin_chat_button" type="Button" parent="background/new_direct_chat_layout/new_direct_chat_options"]
+[node name="begin_chat_button" type="Button" parent="background/new_direct_chat_layout/new_direct_chat_options" unique_id=1258756503]
 layout_mode = 2
 text = "Rozpocznij czat"
 
-[node name="cancel_button" type="Button" parent="background/new_direct_chat_layout/new_direct_chat_options"]
+[node name="cancel_button" type="Button" parent="background/new_direct_chat_layout/new_direct_chat_options" unique_id=994079151]
 layout_mode = 2
 text = "Anuluj"
 
-[node name="username_input" parent="background/new_direct_chat_layout" instance=ExtResource("2_2dnud")]
-layout_mode = 2
+[node name="username_input" parent="background/new_direct_chat_layout" unique_id=576811965 instance=ExtResource("2_2dnud")]
+layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -110,7 +110,7 @@ offset_top = 75.0
 offset_right = 238.0
 offset_bottom = 106.0
 
-[node name="new_group_chat_layout" type="Control" parent="background"]
+[node name="new_group_chat_layout" type="Control" parent="background" unique_id=1046549264]
 visible = false
 layout_mode = 1
 anchor_left = 0.1
@@ -118,7 +118,7 @@ anchor_top = 0.15
 anchor_right = 0.9
 anchor_bottom = 0.15
 
-[node name="new_group_chat_options" type="VBoxContainer" parent="background/new_group_chat_layout"]
+[node name="new_group_chat_options" type="VBoxContainer" parent="background/new_group_chat_layout" unique_id=1201088462]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -127,26 +127,26 @@ offset_right = -0.5
 offset_bottom = 198.0
 theme_override_constants/separation = 12
 
-[node name="card_title" type="Label" parent="background/new_group_chat_layout/new_group_chat_options"]
+[node name="card_title" type="Label" parent="background/new_group_chat_layout/new_group_chat_options" unique_id=627803792]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Nowy czat grupowy"
 horizontal_alignment = 1
 
-[node name="username_input_label" type="Label" parent="background/new_group_chat_layout/new_group_chat_options"]
+[node name="username_input_label" type="Label" parent="background/new_group_chat_layout/new_group_chat_options" unique_id=1431525383]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Nazwa czatu"
 
-[node name="chat_name_input" type="LineEdit" parent="background/new_group_chat_layout/new_group_chat_options"]
+[node name="chat_name_input" type="LineEdit" parent="background/new_group_chat_layout/new_group_chat_options" unique_id=1898641401]
 layout_mode = 2
 
-[node name="begin_chat_button" type="Button" parent="background/new_group_chat_layout/new_group_chat_options"]
+[node name="begin_chat_button" type="Button" parent="background/new_group_chat_layout/new_group_chat_options" unique_id=2080885889]
 layout_mode = 2
 text = "Rozpocznij czat"
 
-[node name="cancel_button" type="Button" parent="background/new_group_chat_layout/new_group_chat_options"]
+[node name="cancel_button" type="Button" parent="background/new_group_chat_layout/new_group_chat_options" unique_id=207072317]
 layout_mode = 2
 text = "Anuluj"
 

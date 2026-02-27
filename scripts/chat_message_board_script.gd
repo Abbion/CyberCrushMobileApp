@@ -279,6 +279,7 @@ func on_message_send_button_pressed() -> void:
 	message_input.text = ""
 	
 	anchor_message_log = true
+	message_input.grab_focus()
 
 func create_message_entry(index: int, message: String, sender: String, dateTime: GlobalTypes.DateTime):
 	var username := AppSessionState.get_username()

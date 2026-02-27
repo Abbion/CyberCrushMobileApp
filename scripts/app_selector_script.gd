@@ -15,21 +15,17 @@ signal messages_selected
 signal my_id_selected
 
 func on_socials_pressed() -> void:
-	if current_panel != AppPanels.SOCIAL:
-		current_panel = AppPanels.SOCIAL
-		socials_selected.emit()
+	current_panel = AppPanels.SOCIAL
+	socials_selected.emit()
 
 func on_bank_pressed() -> void:
-	if current_panel != AppPanels.BANK:
-		current_panel = AppPanels.BANK
-		bank_selected.emit()
+	current_panel = AppPanels.BANK
+	bank_selected.emit()
 	
 func on_chat_pressed() -> void:
-	if current_panel != AppPanels.CHAT:
-		current_panel = AppPanels.CHAT
-		messages_selected.emit()
+	current_panel = AppPanels.CHAT
+	messages_selected.emit()
 
 func on_my_id_pressed() -> void:
-	if current_panel != AppPanels.ID:
-		current_panel = AppPanels.ID
-		my_id_selected.emit()
+	current_panel = AppPanels.ID
+	my_id_selected.emit()

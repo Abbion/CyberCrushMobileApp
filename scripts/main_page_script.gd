@@ -22,7 +22,7 @@ func _ready() -> void:
 		var top_margin := DisplayManager.base_to_viewport_point_converter(safe_area.position)
 		
 		if top_margin.y < 1:
-			top_margin.y = get_viewport().size.y * 0.075
+			top_margin.y = 25
 		
 		var top_bar_height := top_margin.y * 1.25
 		top_bar.custom_minimum_size.y = top_bar_height

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://1m4opeh0nxo1"]
+[gd_scene format=3 uid="uid://1m4opeh0nxo1"]
 
 [ext_resource type="Texture2D" uid="uid://c385w3al0qbtp" path="res://assets/icons/fire-flame.svg" id="1_jhmka"]
 [ext_resource type="Script" uid="uid://c8pwjporhbij8" path="res://scripts/app_selector_script.gd" id="1_qxl34"]
@@ -23,7 +23,7 @@ shader_parameter/color = Vector3(1, 1, 1)
 shader = ExtResource("2_modrm")
 shader_parameter/color = Vector3(1, 1, 1)
 
-[node name="app_selector" type="ColorRect"]
+[node name="app_selector" type="ColorRect" unique_id=179221616]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -35,7 +35,7 @@ size_flags_horizontal = 0
 color = Color(0.28, 0.28, 0.28, 1)
 script = ExtResource("1_qxl34")
 
-[node name="app_selector_container" type="HBoxContainer" parent="."]
+[node name="app_selector_container" type="HBoxContainer" parent="." unique_id=1537564464]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +45,7 @@ grow_vertical = 2
 theme_override_constants/separation = 65
 alignment = 1
 
-[node name="socials" type="TextureButton" parent="app_selector_container"]
+[node name="socials" type="TextureButton" parent="app_selector_container" unique_id=1024598353]
 material = SubResource("ShaderMaterial_3wr1x")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -55,7 +55,7 @@ texture_normal = ExtResource("1_jhmka")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="bank" type="TextureButton" parent="app_selector_container"]
+[node name="bank" type="TextureButton" parent="app_selector_container" unique_id=788676358]
 material = SubResource("ShaderMaterial_modrm")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -65,7 +65,7 @@ texture_normal = ExtResource("2_qxl34")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="chat" type="TextureButton" parent="app_selector_container"]
+[node name="chat" type="TextureButton" parent="app_selector_container" unique_id=480944337]
 material = SubResource("ShaderMaterial_2kamf")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -75,7 +75,7 @@ texture_normal = ExtResource("3_modrm")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="my_id" type="TextureButton" parent="app_selector_container"]
+[node name="my_id" type="TextureButton" parent="app_selector_container" unique_id=952038588]
 material = SubResource("ShaderMaterial_wh21d")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2

@@ -98,6 +98,16 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
 
+[node name="version_label" type="Label" parent="." unique_id=1520357650]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+text = "Ver 0.1.1"
+
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/username_input_options/show_saved_users_button" to="." method="on_show_saved_users_button_pressed"]
 [connection signal="item_clicked" from="aspect_ration_container/login_margin/login_panel/saved_users_list" to="." method="on_saved_users_list_item_clicked"]

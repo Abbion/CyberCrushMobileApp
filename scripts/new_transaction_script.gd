@@ -51,8 +51,8 @@ func on_transer_action_pressed() -> void:
 		return
 	
 	var amount_value_int := int(amount_value)
-	if amount_value_int < 0:
-		PopupDisplayServer.push_error("Wartość pola przelewanych środków jest ujemna")
+	if amount_value_int <= 0:
+		PopupDisplayServer.push_error("Wartość pola przelewanych środków jest ujemna lub równa zeru")
 		## TODO Make input border red and send notification
 		amount_input.text = ""
 		return;

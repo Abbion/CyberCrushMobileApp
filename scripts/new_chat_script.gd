@@ -65,7 +65,7 @@ func on_begin_group_chat_button_pressed() -> void:
 	title = title.strip_edges()
 	
 	if title.length() < MIN_GROUP_CHAT_TITLE_LENGTH:
-		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za krótki. Wymagane minimum %s znaków" % MAX_GROUP_CHAT_TITLE_LENGHT)
+		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za krótki. Wymagane minimum %s znaków" % MIN_GROUP_CHAT_TITLE_LENGTH)
 		return
 	if title.length() > MAX_GROUP_CHAT_TITLE_LENGHT:
 		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za długi. Ograniczenie %s znaków" % MAX_GROUP_CHAT_TITLE_LENGHT)

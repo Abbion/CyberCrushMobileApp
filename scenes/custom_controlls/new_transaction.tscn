@@ -1,16 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://6vc5femhj1f6"]
+[gd_scene format=3 uid="uid://6vc5femhj1f6"]
 
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_6cxfc"]
 [ext_resource type="Script" uid="uid://dnhrersqcwcso" path="res://scripts/new_transaction_script.gd" id="1_svxld"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_mi8gf"]
 
-[node name="new_transaction" type="Control"]
+[node name="new_transaction" type="Control" unique_id=1155618817]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 4
 script = ExtResource("1_svxld")
 
-[node name="background" type="ColorRect" parent="."]
+[node name="background" type="ColorRect" parent="." unique_id=1535434141]
 custom_minimum_size = Vector2(300, 400)
 layout_mode = 1
 anchors_preset = 8
@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.59689, 0.806022, 0.980177, 1)
 
-[node name="transaction_elements" type="VBoxContainer" parent="background"]
+[node name="transaction_elements" type="VBoxContainer" parent="background" unique_id=93040307]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
@@ -34,55 +34,55 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 metadata/_edit_use_anchors_ = true
 
-[node name="info_label" type="Label" parent="background/transaction_elements"]
+[node name="info_label" type="Label" parent="background/transaction_elements" unique_id=1152322179]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Nowy przelew"
 horizontal_alignment = 1
 
-[node name="funds_label" type="Label" parent="background/transaction_elements"]
+[node name="funds_label" type="Label" parent="background/transaction_elements" unique_id=1693938772]
 layout_mode = 2
 text = "Dostępne środki:"
 
-[node name="recipient_label" type="Label" parent="background/transaction_elements"]
+[node name="recipient_label" type="Label" parent="background/transaction_elements" unique_id=1967909392]
 layout_mode = 2
 text = "Odbiorca przelewu"
 
-[node name="recepiant_input_placeholder" type="Panel" parent="background/transaction_elements"]
+[node name="recepiant_input_placeholder" type="Panel" parent="background/transaction_elements" unique_id=531441212]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="title_label" type="Label" parent="background/transaction_elements"]
+[node name="title_label" type="Label" parent="background/transaction_elements" unique_id=384419394]
 layout_mode = 2
 text = "Tytuł przelewu"
 
-[node name="title_input" parent="background/transaction_elements" instance=ExtResource("2_mi8gf")]
+[node name="title_input" parent="background/transaction_elements" unique_id=423484167 instance=ExtResource("2_mi8gf")]
 layout_mode = 2
 
-[node name="amount_label" type="Label" parent="background/transaction_elements"]
+[node name="amount_label" type="Label" parent="background/transaction_elements" unique_id=977856470]
 layout_mode = 2
 text = "Kwota przelewu"
 
-[node name="amount_input" parent="background/transaction_elements" instance=ExtResource("2_mi8gf")]
+[node name="amount_input" parent="background/transaction_elements" unique_id=464806549 instance=ExtResource("2_mi8gf")]
 layout_mode = 2
 virtual_keyboard_type = 2
 vk_type_type = 2
 
-[node name="transaction_actions" type="HBoxContainer" parent="background/transaction_elements"]
+[node name="transaction_actions" type="HBoxContainer" parent="background/transaction_elements" unique_id=1456828500]
 layout_mode = 2
 
-[node name="cancel_action" type="Button" parent="background/transaction_elements/transaction_actions"]
+[node name="cancel_action" type="Button" parent="background/transaction_elements/transaction_actions" unique_id=594035104]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Anuluj"
 
-[node name="transer_action" type="Button" parent="background/transaction_elements/transaction_actions"]
+[node name="transer_action" type="Button" parent="background/transaction_elements/transaction_actions" unique_id=353462259]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Wyślij"
 
-[node name="recepiant_input" parent="background" instance=ExtResource("1_6cxfc")]
+[node name="recepiant_input" parent="background" unique_id=471177856 instance=ExtResource("1_6cxfc")]
 layout_mode = 1
 anchor_left = 0.1
 anchor_top = 0.355
