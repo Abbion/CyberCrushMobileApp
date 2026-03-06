@@ -133,13 +133,13 @@ class DateTime:
 			match AppSessionState.get_language():
 				GlobalTypes.LANGUAGE.ENGLISH:
 					match minutes_elapsed:
-						1:
+						0, 1:
 							return "Now"
 						_:
 							return "%s minutes ago" % minutes_elapsed 
 				GlobalTypes.LANGUAGE.POLISH:
 					match minutes_elapsed:
-						1: 
+						0, 1:
 							return "Teraz"
 						2, 3, 4:
 							return "%s minuty temu" % minutes_elapsed
