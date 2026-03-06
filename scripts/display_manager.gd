@@ -18,7 +18,7 @@ func base_to_viewport_point_converter(value: Vector2) -> Vector2:
 	return value * scale
 
 func on_gui_focus_chaned(node: Node) -> void:
-	if GlobalConstants.os_is_mobile() == false:
+	if AppSessionState.os_is_mobile() == false:
 		return
 		
 	if node.has_meta("skip_vk_check") == true:

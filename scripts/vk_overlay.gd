@@ -2,7 +2,7 @@
 extends MarginContainer
 
 func _process(_delta: float) -> void:	
-	if GlobalConstants.os_is_mobile() == true:
+	if AppSessionState.os_is_mobile() == true:
 		var vk_height := DisplayServer.virtual_keyboard_get_height()
 		var vis_rect := get_viewport().get_visible_rect()
 		var panel_rect := get_global_rect()

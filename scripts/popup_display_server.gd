@@ -28,6 +28,10 @@ func set_ready_to_consume() -> void:
 	if popup_info_queue.size() > 0:
 		try_consume()
 
+func reset():
+	popup_info_queue.clear()
+	ready_to_consume = true
+
 func try_consume() -> void:
 	if ready_to_consume == false:
 		return

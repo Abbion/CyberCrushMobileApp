@@ -55,7 +55,7 @@ layout_mode = 2
 
 [node name="title_label" type="Label" parent="background/transaction_elements" unique_id=384419394]
 layout_mode = 2
-text = "TITLE"
+text = "TITLE_KEY"
 
 [node name="title_input" parent="background/transaction_elements" unique_id=423484167 instance=ExtResource("2_mi8gf")]
 layout_mode = 2

@@ -53,7 +53,7 @@ func on_app_selector_my_id_selected() -> void:
 func logout():
 	AppSessionState.clear()
 	UserManager.clear_last_used_credentials()
-	PopupDisplayServer.popup_list.clear()
+	PopupDisplayServer.reset()
 	get_tree().change_scene_to_file(GlobalConstants.LOGIN_PAGE_SCENE)
 
 func on_tree_entered() -> void:

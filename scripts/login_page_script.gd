@@ -9,6 +9,7 @@ extends Control
 @onready var login_margin: MarginContainer = $aspect_ration_container/login_margin
 @onready var login_spinner_margin: MarginContainer = $aspect_ration_container/login_margin/login_panel/spinner_margin
 @onready var popup_margin: MarginContainer = $popup_margin
+@onready var language_selector: OptionButton = $language_options/language_selector
 
 const MAX_VISIBLE_SAVED_USERS: int = 3
 
@@ -89,6 +90,7 @@ func setup_ui() -> void:
 	var safe_area := DisplayServer.get_display_safe_area()
 	var margin := DisplayManager.base_to_viewport_point_converter(safe_area.position)
 	popup_margin.add_theme_constant_override("margin_top", int(margin.y))
+	language_selector.select(AppSessionState.get_language())
 
 func on_saved_users_list_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
 	lock_input()
@@ -128,6 +130,6 @@ func update_user_list_size() -> void:
 func on_language_selector_item_selected(index: int) -> void:
 	match index:
 		0:
-			GlobalConstants.set_language(GlobalTypes.LANGUAGE.ENGLISH)
+			AppSessionState.set_language(GlobalTypes.LANGUAGE.ENGLISH)
 		1:
-			GlobalConstants.set_language(GlobalTypes.LANGUAGE.POLISH)
+			AppSessionState.set_language(GlobalTypes.LANGUAGE.POLISH)
