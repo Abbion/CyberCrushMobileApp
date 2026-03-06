@@ -37,16 +37,16 @@ metadata/_edit_use_anchors_ = true
 [node name="info_label" type="Label" parent="background/transaction_elements" unique_id=1152322179]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
-text = "Nowy przelew"
+text = "NEW_TRANSACTION_TITLE_KEY"
 horizontal_alignment = 1
 
 [node name="funds_label" type="Label" parent="background/transaction_elements" unique_id=1693938772]
 layout_mode = 2
-text = "Dostępne środki:"
+text = "AVAILABLE_FUNDS_KEY"
 
 [node name="recipient_label" type="Label" parent="background/transaction_elements" unique_id=1967909392]
 layout_mode = 2
-text = "Odbiorca przelewu"
+text = "RECIPIENT_KEY"
 
 [node name="recepiant_input_placeholder" type="Panel" parent="background/transaction_elements" unique_id=531441212]
 modulate = Color(1, 1, 1, 0)
@@ -55,14 +55,14 @@ layout_mode = 2
 
 [node name="title_label" type="Label" parent="background/transaction_elements" unique_id=384419394]
 layout_mode = 2
-text = "Tytuł przelewu"
+text = "TITLE"
 
 [node name="title_input" parent="background/transaction_elements" unique_id=423484167 instance=ExtResource("2_mi8gf")]
 layout_mode = 2
 
 [node name="amount_label" type="Label" parent="background/transaction_elements" unique_id=977856470]
 layout_mode = 2
-text = "Kwota przelewu"
+text = "TRANSACTION_AMOUNT_KEY"
 
 [node name="amount_input" parent="background/transaction_elements" unique_id=464806549 instance=ExtResource("2_mi8gf")]
 layout_mode = 2
@@ -75,12 +75,12 @@ layout_mode = 2
 [node name="cancel_action" type="Button" parent="background/transaction_elements/transaction_actions" unique_id=594035104]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Anuluj"
+text = "CANCEL_KEY"
 
 [node name="transer_action" type="Button" parent="background/transaction_elements/transaction_actions" unique_id=353462259]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Wyślij"
+text = "SEND_KEY"
 
 [node name="recepiant_input" parent="background" unique_id=471177856 instance=ExtResource("1_6cxfc")]
 layout_mode = 1

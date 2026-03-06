@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://0506af3w1mki"]
+[gd_scene format=3 uid="uid://0506af3w1mki"]
 
 [ext_resource type="Script" uid="uid://b0asa8oyf4u47" path="res://scripts/bank_panel_script.gd" id="1_0pdnh"]
 [ext_resource type="PackedScene" uid="uid://6vc5femhj1f6" path="res://scenes/custom_controlls/new_transaction.tscn" id="2_8ud3o"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yxmd7"]
 
-[node name="bank_panel" type="Control"]
+[node name="bank_panel" type="Control" unique_id=946086903]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,7 @@ grow_vertical = 2
 script = ExtResource("1_0pdnh")
 transaction_entry = ExtResource("2_25ivn")
 
-[node name="bank_container" type="VBoxContainer" parent="."]
+[node name="bank_container" type="VBoxContainer" parent="." unique_id=7416500]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,72 +26,72 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="card" type="ColorRect" parent="bank_container"]
+[node name="card" type="ColorRect" parent="bank_container" unique_id=454129110]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 color = Color(1, 0, 1, 0.117647)
 
-[node name="funds_label" type="Label" parent="bank_container/card"]
+[node name="funds_label" type="Label" parent="bank_container/card" unique_id=1269848168]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-text = "Funds: "
+text = "AVAILABLE_FUNDS_KEY"
 
-[node name="bank_actions" type="HBoxContainer" parent="bank_container"]
+[node name="bank_actions" type="HBoxContainer" parent="bank_container" unique_id=881205920]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="refresh" type="Button" parent="bank_container/bank_actions"]
+[node name="refresh" type="Button" parent="bank_container/bank_actions" unique_id=589940827]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Odśwież"
+text = "REFRESH_KEY"
 
-[node name="new_transaction" type="Button" parent="bank_container/bank_actions"]
+[node name="new_transaction" type="Button" parent="bank_container/bank_actions" unique_id=413259750]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Nowa transakcja"
+text = "NEW_TRANSACTION_KEY"
 
-[node name="spinner_container" type="CenterContainer" parent="bank_container"]
+[node name="spinner_container" type="CenterContainer" parent="bank_container" unique_id=1720853199]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="spinner" parent="bank_container/spinner_container" instance=ExtResource("2_yxmd7")]
+[node name="spinner" parent="bank_container/spinner_container" unique_id=1273655581 instance=ExtResource("2_yxmd7")]
 layout_mode = 2
 spinner_scale = 0.5
 
-[node name="transactions_scroll" type="ScrollContainer" parent="bank_container"]
+[node name="transactions_scroll" type="ScrollContainer" parent="bank_container" unique_id=743366698]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="transactions_list" type="VBoxContainer" parent="bank_container/transactions_scroll"]
+[node name="transactions_list" type="VBoxContainer" parent="bank_container/transactions_scroll" unique_id=2019065933]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="empty_transactions" type="CenterContainer" parent="bank_container"]
+[node name="empty_transactions" type="CenterContainer" parent="bank_container" unique_id=1777671124]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="empty_transaction_label" type="Label" parent="bank_container/empty_transactions"]
+[node name="empty_transaction_label" type="Label" parent="bank_container/empty_transactions" unique_id=1969643433]
 layout_mode = 2
-text = "Historia transakcji jest pusta"
+text = "EMPTY_TRANSACTION_HISTORY_KEY"
 
-[node name="overlay_margin" parent="." instance=ExtResource("2_mvofu")]
+[node name="overlay_margin" parent="." unique_id=139073899 instance=ExtResource("2_mvofu")]
 visible = false
 layout_mode = 1
 
-[node name="overlay_background" type="TextureRect" parent="overlay_margin"]
+[node name="overlay_background" type="TextureRect" parent="overlay_margin" unique_id=532044160]
 modulate = Color(1, 1, 1, 0.647059)
 layout_mode = 2
 texture = ExtResource("2_tn1ak")
 expand_mode = 4
 
-[node name="center_container" type="CenterContainer" parent="overlay_margin"]
+[node name="center_container" type="CenterContainer" parent="overlay_margin" unique_id=1235825893]
 clip_contents = true
 layout_mode = 2
 
-[node name="new_transaction" parent="overlay_margin/center_container" instance=ExtResource("2_8ud3o")]
+[node name="new_transaction" parent="overlay_margin/center_container" unique_id=1802104165 instance=ExtResource("2_8ud3o")]
 layout_mode = 2
 
 [connection signal="pressed" from="bank_container/bank_actions/refresh" to="." method="on_refresh_button_pressed"]

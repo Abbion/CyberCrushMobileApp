@@ -38,18 +38,18 @@ func refresh_news_feed():
 func send_article():
 	var title := title_input.text
 	if title.length() < 3:
-		PopupDisplayServer.push_warning("Tytuł posta jest za krótki. Wymagane minimum 3 znaki")
+		PopupDisplayServer.push_warning(tr("POST_TITLE_TOO_SHORT"))
 		return
 	if title.length() > 32:
-		PopupDisplayServer.push_warning("Tytuł posta jest za długi. Ograniczenie maksymalnie 32 zaków")
+		PopupDisplayServer.push_warning(tr("POST_TITLE_TOO_LONG"))
 		return
 	
 	var content: String = content_input.get_cleaned_text()
 	if content.length() < 3:
-		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Wymagane minimum 3 znaki")
+		PopupDisplayServer.push_warning(tr("POST_CONTENT_TOO_SHORT"))
 		return
 	if content.length() > 255:
-		PopupDisplayServer.push_warning("Zawartość posta jest za krótka. Ograniczenie maksymalnie 256 znaków")
+		PopupDisplayServer.push_warning(tr("POST_CONTENT_TOO_LONG"))
 		return
 	
 	await ServerRequest.post_news_article(title, content)

@@ -69,7 +69,7 @@ func remove_user_credentails(username: String) -> bool:
 		var new_section := "user_%s" % index
 		var old_section := "user_%s" % (index + 1)
 		if rename_user_section(old_section, new_section) == false:
-			PopupDisplayServer.push_error("Błąd podczas zwalniania danych uwierzytelniających użytkownika")
+			PopupDisplayServer.push_error(tr("USER_CREDENTIALS_RELEASE_FAILED"))
 			clear_db()
 			return false
 	
@@ -127,7 +127,7 @@ func save_db(caller: String) -> bool:
 	if err == OK:
 		return true
 		
-	PopupDisplayServer.push_error("Błąd zapisu danych użytkownika", "Error: %s. Origin: %s" % [err, caller])
+	PopupDisplayServer.push_error(tr("FAILED_TO_SAVE_USER_DATA"), "Error: %s. Origin: %s" % [err, caller])
 	return false
 
 func clear_db():

@@ -21,10 +21,16 @@ const dev_ip = "127.0.0.1"
 const local_ip = "192.168.50.162"
 const current_ip = web_ip
 
-const REQUEST_STATE_ERROR: String = "Nie znaleziono serwera"
-const RESPONSE_STATE_ERROR: String = "Błąd opowiedzi"
-const JSON_PARSE_ERROR: String = "Niepoprawny format danych"
-const RESPONSE_STATUS_ERROR: String = "Błąd dostępu do danych"
+var REQUEST_STATE_ERROR: String = tr("SERVER_NOT_FOUND")
+var RESPONSE_STATE_ERROR: String = tr("SERVER_RESPONSE_ERROR")
+var JSON_PARSE_ERROR: String = tr("INCORRECT_DATA_FORMAT")
+var RESPONSE_STATUS_ERROR: String = tr("DATA_ACCESS_ERROR")
+
+func app_language_changed(language: GlobalTypes.LANGUAGE):
+	REQUEST_STATE_ERROR = tr("SERVER_NOT_FOUND")
+	RESPONSE_STATE_ERROR = tr("SERVER_RESPONSE_ERROR")
+	JSON_PARSE_ERROR = tr("INCORRECT_DATA_FORMAT")
+	RESPONSE_STATUS_ERROR = tr("DATA_ACCESS_ERROR")
 
 func build_url(protocol_type: ProtocoloType, end_point: String, port: int = 0, service: String = "") -> String:
 	var url = ""
@@ -50,7 +56,7 @@ func build_url(protocol_type: ProtocoloType, end_point: String, port: int = 0, s
 		url += ":%s" % port
 	else:
 		if service.is_empty():
-			printerr("Error: serive on build url is empty!")
+			printerr("Error: service on build url is empty!")
 			return ""
 		url += "/%s" % service
 	
@@ -120,6 +126,8 @@ var post_news_article_url = build_url(ProtocoloType.HTTP, "post_news_article", 3
 var post_news_article_request: HTTPRequest
 
 func _ready() -> void:
+	GlobalSignals.app_language_changed.connect(app_language_changed)
+	
 	login_request = HTTPRequest.new()
 	add_child(login_request)
 	
@@ -167,7 +175,7 @@ func _ready() -> void:
 
 func login(username: String, password: String) -> String:
 	login_request.cancel_request()
-	const LOGIN_ERROR = "Błąd logowania"
+	var LOGIN_ERROR = tr("LOGIN_ERROR")
 	#=Request=============================================================
 	var payload = {
 		"username" : username,
@@ -209,7 +217,7 @@ func login(username: String, password: String) -> String:
 	var response_status = response_data["response_status"]
 	
 	if response_status["success"] == false:
-		var error_message = "%s. Nie rozpoznano nazwy użytkownika lub hasła" % LOGIN_ERROR
+		var error_message = "%s. %s" % [LOGIN_ERROR, tr("USERNAME_OR_PASSWORD_NOT_RECOGNIZED")]
 		var verbose = response_status["status_message"]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return ""
@@ -219,7 +227,7 @@ func login(username: String, password: String) -> String:
 
 func validate_token(token: String) -> bool:
 	validation_request.cancel_request()
-	const TOKEN_VALIDATION_ERROR = "Błąd uwierzytelniania"
+	var TOKEN_VALIDATION_ERROR = tr("AUTHENTICATION_ERROR")
 	#=Request=============================================================
 	var payload = {
 		"token" : token,
@@ -259,7 +267,7 @@ func validate_token(token: String) -> bool:
 	
 	var response_data = json_response.data
 	if response_data["success"] == false:
-		var error_message = "%s. Nie rozpoznano użytkownika" % TOKEN_VALIDATION_ERROR
+		var error_message = "%s. %s" % [TOKEN_VALIDATION_ERROR, tr("USER_NOT_RECOGNIZED")]
 		var verbose = response_data["status_message"]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return false
@@ -268,7 +276,7 @@ func validate_token(token: String) -> bool:
 
 func user_data() -> GlobalTypes.UserData:
 	user_data_request.cancel_request()
-	const USER_DATA_ERROR = "Bład dostępu do danych użytkownika"
+	var USER_DATA_ERROR = tr("FAILED_TO_ACCESS_USER_DATA")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -330,7 +338,7 @@ func user_data() -> GlobalTypes.UserData:
 
 func all_usernames(exclude_user: bool) -> PackedStringArray:
 	get_all_usernames_request.cancel_request()
-	const ALL_USERNAMES_ERROR = "Bład dostępu do użytkowników"
+	var ALL_USERNAMES_ERROR = tr("ALL_USERS_ACCESS_ERROR")
 	#=Request=============================================================
 	var request_state = get_all_usernames_request.request(get_all_usernames_url)
 	
@@ -380,7 +388,7 @@ func all_usernames(exclude_user: bool) -> PackedStringArray:
 
 func user_chats() -> Dictionary:
 	get_user_chats_request.cancel_request()
-	const USER_CHATS_ERROR = "Bład dostępu do czatów użytkownika"
+	var USER_CHATS_ERROR = tr("FAILED_TO_ACCESS_USER_CHATS")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token()
@@ -436,7 +444,7 @@ func user_chats() -> Dictionary:
 
 func chat_metadata(chat_id: int) -> Dictionary:
 	get_chat_metadata_request.cancel_request()
-	const USER_CHAT_METADATA_ERROR = "Bład dostępu do danych czatu"
+	var USER_CHAT_METADATA_ERROR = tr("FAILED_TO_ACCESS_CHAT_METADATA")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -490,7 +498,7 @@ func chat_metadata(chat_id: int) -> Dictionary:
 
 func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	get_chat_history_request.cancel_request()
-	const USER_CHAT_HISTORY_ERROR = "Bład dostępu do danych czatu"
+	var USER_CHAT_HISTORY_ERROR = tr("FAILED_TO_ACCESS_CHAT_HISTORY")
 	#=Request=============================================================
 	
 	var payload = {}
@@ -549,7 +557,7 @@ func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 
 func update_group_chat_member(chat_id: int, action: GroupChatUpdateAction, username: String) -> bool:
 	update_group_chat_member_request.cancel_request()
-	const GROUP_CHAT_UPDATE_ERROR = "Bład aktualizacji czatu grupowego"
+	var GROUP_CHAT_UPDATE_ERROR = tr("GROUP_CHAT_UPDATE_ERROR")
 	#=Request=============================================================
 	var action_string: String = "AddMember" if action == GroupChatUpdateAction.ADD_MEMBER else "DeleteMember"
 	
@@ -608,12 +616,12 @@ func update_group_chat_member(chat_id: int, action: GroupChatUpdateAction, usern
 
 func create_direct_chat(partner_username: String) -> int:
 	create_direct_chat_request.cancel_request()
-	const DIRECT_CHAT_CREATION_ERROR = "Bład tworzenia czatu bezpośredniego"
+	var DIRECT_CHAT_CREATION_ERROR = tr("FAILED_TO_CREATE_DIRECT_CHAT")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
 		"partner_username" : partner_username,
-		"creation_message" : AppSessionState.get_username() + " rozpoczął czat"
+		"creation_message" : AppSessionState.get_username() + (" %" % tr("START_CHAT_MESSAGE"))
 	}
 
 	var request_state = create_direct_chat_request.request(create_direct_chat_url,
@@ -655,7 +663,11 @@ func create_direct_chat(partner_username: String) -> int:
 	if response_status["success"] == false:
 		var verbose = response_status["status_message"]
 		if verbose.contains("Direct chat already exsits!"):
-			PopupDisplayServer.push_info("Czat z użytkownikiem %s już istnieje" % partner_username)
+			match AppSessionState.get_language():
+				GlobalTypes.LANGUAGE.ENGLISH:
+					PopupDisplayServer.push_info("A direct chat with user %s already exists" % partner_username)
+				GlobalTypes.LANGUAGE.POLISH:
+					PopupDisplayServer.push_info("Czat z użytkownikiem %s już istnieje" % partner_username)
 			return response_data["chat_id"]
 		
 		var error_message = "%s. %s" % [DIRECT_CHAT_CREATION_ERROR, RESPONSE_STATUS_ERROR]
@@ -666,7 +678,7 @@ func create_direct_chat(partner_username: String) -> int:
 
 func create_group_chat(title: String) -> int:
 	create_group_chat_request.cancel_request()
-	const GROUP_CHAT_CREATION_ERROR = "Bład tworzenia czatu grupowego"
+	var GROUP_CHAT_CREATION_ERROR = tr("FAILED_TO_CREATE_GROUP_CHAT")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -719,7 +731,7 @@ func create_group_chat(title: String) -> int:
 
 func bank_funds() -> int:
 	get_user_funds_request.cancel_request()
-	const BANK_FUNDS_ERROR = "Bład pozyksania danych o stanie konta bankowego"
+	var BANK_FUNDS_ERROR = tr("FAILED_TO_GET_BANK_BALANCE")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -770,7 +782,7 @@ func bank_funds() -> int:
 
 func transfer_funds(receiver: String, title: String, amount: int) -> bool:
 	transfer_funds_request.cancel_request()
-	const TRANSFER_FUNDS_ERROR = "Bład transferu środków bankowych"
+	var TRANSFER_FUNDS_ERROR = tr("FAILED_TO_TRANSFER_FUNDS")
 	#=Request=============================================================
 	var payload = {
 		"sender_token" : AppSessionState.get_server_token(),
@@ -823,7 +835,7 @@ func transfer_funds(receiver: String, title: String, amount: int) -> bool:
 
 func bank_transaction_history() -> Array:
 	get_user_transaction_history_request.cancel_request()
-	const BANK_TRANSACTION_HISTORY_ERROR = "Bład dostępu do histori transakcji bankowych"
+	var BANK_TRANSACTION_HISTORY_ERROR = tr("FAILED_TO_ACCESS_TRANSACTION_HISTORY")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
@@ -875,7 +887,7 @@ func bank_transaction_history() -> Array:
 
 func news_feed() -> Array:
 	get_news_feed_request.cancel_request()
-	const MEWS_FEED_ERROR = "Bład systemu informacji"
+	var MEWS_FEED_ERROR = tr("FAILED_TO_ACCESS_NEWS_FEED")
 	#=Request=============================================================
 	var request_state = get_news_feed_request.request(get_news_feed_url)
 	
@@ -919,7 +931,7 @@ func news_feed() -> Array:
 
 func post_news_article(title: String, content: String) -> bool:
 	post_news_article_request.cancel_request()
-	const POST_ARTICLE_ERROR = "Bład wysłania posta"
+	var POST_ARTICLE_ERROR = tr("FAILED_TO_POST_NEWS")
 	#=Request=============================================================
 	var payload = {
 		"token" : AppSessionState.get_server_token(),

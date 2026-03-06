@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhthbs3apue7x"]
+[gd_scene format=3 uid="uid://bhthbs3apue7x"]
 
 [ext_resource type="Script" uid="uid://brm5junmsma2t" path="res://scripts/chat_settings_script.gd" id="1_1my76"]
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_d7itt"]
 
-[node name="chat_settings" type="CenterContainer"]
+[node name="chat_settings" type="CenterContainer" unique_id=696422539]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,12 +11,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1my76")
 
-[node name="background" type="ColorRect" parent="."]
+[node name="background" type="ColorRect" parent="." unique_id=747508453]
 custom_minimum_size = Vector2(300, 400)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="selector_view" type="VBoxContainer" parent="background"]
+[node name="selector_view" type="VBoxContainer" parent="background" unique_id=190021753]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -31,29 +31,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="view_title" type="Label" parent="background/selector_view"]
+[node name="view_title" type="Label" parent="background/selector_view" unique_id=287426789]
 layout_mode = 2
-text = "Zarządzanie uczestnikami czatu"
+text = "MANAGE_CHAT_USERS_TITLE_KEY"
 horizontal_alignment = 1
 
-[node name="free_slots_label" type="Label" parent="background/selector_view"]
+[node name="free_slots_label" type="Label" parent="background/selector_view" unique_id=462478976]
 layout_mode = 2
-text = "Wolne miejsca: ?"
+text = "FREE_SLOTS_DOT_KEY"
 horizontal_alignment = 1
 
-[node name="add_user_button" type="Button" parent="background/selector_view"]
+[node name="add_user_button" type="Button" parent="background/selector_view" unique_id=1155661314]
 layout_mode = 2
-text = "Dodaj"
+text = "ADD_KEY"
 
-[node name="remove_user_button" type="Button" parent="background/selector_view"]
+[node name="remove_user_button" type="Button" parent="background/selector_view" unique_id=1943700888]
 layout_mode = 2
-text = "Usuń"
+text = "DELETE_KEY"
 
-[node name="back_button" type="Button" parent="background/selector_view"]
+[node name="back_button" type="Button" parent="background/selector_view" unique_id=893073086]
 layout_mode = 2
-text = "wróć"
+text = "BACK_KEY"
 
-[node name="add_user_view" type="Control" parent="background"]
+[node name="add_user_view" type="Control" parent="background" unique_id=939374277]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -68,7 +68,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="view" type="VBoxContainer" parent="background/add_user_view"]
+[node name="view" type="VBoxContainer" parent="background/add_user_view" unique_id=1480682698]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -83,30 +83,30 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="view_title" type="Label" parent="background/add_user_view/view"]
+[node name="view_title" type="Label" parent="background/add_user_view/view" unique_id=1615432592]
 layout_mode = 2
-text = "Dodaj użytkownika"
+text = "ADD_USER_KEY"
 horizontal_alignment = 1
 
-[node name="username_label" type="Label" parent="background/add_user_view/view"]
+[node name="username_label" type="Label" parent="background/add_user_view/view" unique_id=1804976975]
 layout_mode = 2
-text = "Nazwa użytkownika:"
+text = "USERNAME_KEY"
 
-[node name="find_control_placeholder" type="Panel" parent="background/add_user_view/view"]
+[node name="find_control_placeholder" type="Panel" parent="background/add_user_view/view" unique_id=195017969]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 26.58)
 layout_mode = 2
 
-[node name="add_button" type="Button" parent="background/add_user_view/view"]
+[node name="add_button" type="Button" parent="background/add_user_view/view" unique_id=1746437223]
 layout_mode = 2
-text = "Dodaj"
+text = "ADD_KEY"
 
-[node name="back_button" type="Button" parent="background/add_user_view/view"]
+[node name="back_button" type="Button" parent="background/add_user_view/view" unique_id=1958777013]
 layout_mode = 2
-text = "wróć"
+text = "BACK_KEY"
 
-[node name="find_control" parent="background/add_user_view" instance=ExtResource("1_d7itt")]
-layout_mode = 2
+[node name="find_control" parent="background/add_user_view" unique_id=1406289447 instance=ExtResource("1_d7itt")]
+layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -115,7 +115,7 @@ offset_top = -23.0
 offset_right = 119.0
 offset_bottom = 7.0
 
-[node name="remove_user_view" type="VBoxContainer" parent="background"]
+[node name="remove_user_view" type="VBoxContainer" parent="background" unique_id=1695767672]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -131,24 +131,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="view_title" type="Label" parent="background/remove_user_view"]
+[node name="view_title" type="Label" parent="background/remove_user_view" unique_id=126645252]
 layout_mode = 2
-text = "Usuń użytkownika"
+text = "REMOVE_USER_KEY"
 
-[node name="users_list_container" type="ScrollContainer" parent="background/remove_user_view"]
+[node name="users_list_container" type="ScrollContainer" parent="background/remove_user_view" unique_id=2096087392]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
-[node name="user_list" type="VBoxContainer" parent="background/remove_user_view/users_list_container"]
+[node name="user_list" type="VBoxContainer" parent="background/remove_user_view/users_list_container" unique_id=1770878485]
 layout_mode = 2
 
-[node name="remove_button" type="Button" parent="background/remove_user_view"]
+[node name="remove_button" type="Button" parent="background/remove_user_view" unique_id=793532294]
 layout_mode = 2
-text = "Usuń"
+text = "DELETE_KEY"
 
-[node name="back_button" type="Button" parent="background/remove_user_view"]
+[node name="back_button" type="Button" parent="background/remove_user_view" unique_id=163048799]
 layout_mode = 2
-text = "wróć"
+text = "BACK_KEY"
 
 [connection signal="pressed" from="background/selector_view/add_user_button" to="." method="go_to_add_user_view"]
 [connection signal="pressed" from="background/selector_view/remove_user_button" to="." method="go_to_remove_user_view"]

@@ -17,7 +17,7 @@ var current_panel: Control = null
 
 func _ready() -> void:
 	AppSessionState.app_selector_height = int(app_selector.size.y)
-	if GlobalConstants.os_is_mobile() == true:
+	if AppSessionState.os_is_mobile() == true:
 		var safe_area := DisplayServer.get_display_safe_area()
 		var top_margin := DisplayManager.base_to_viewport_point_converter(safe_area.position)
 		

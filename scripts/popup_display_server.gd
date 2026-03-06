@@ -78,12 +78,12 @@ func push_happy_info(content: String, verbose: String = "") -> void:
 func popup_type_to_string(popup_type: PopupType) -> String:
 	match popup_type:
 		PopupType.ERROR:
-			return "Błąd"
+			return tr("ERROR")
 		PopupType.WARNING:
-			return "Uwaga"
+			return tr("WARNING")
 		PopupType.INFO:
-			return "Informacja"
+			return tr("INFORMATION")
 		PopupType.HAPPY_INFO:
-			return "Szczęśliwa informacja"
+			return tr("HAPPY_INFORMATION")
 	
 	return "null"

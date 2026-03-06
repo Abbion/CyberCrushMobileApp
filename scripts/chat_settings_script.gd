@@ -37,7 +37,7 @@ func get_metadata():
 			free_slots = GlobalConstants.MAX_MEMBERS_IN_GROUP_CHAT - len(chat_members)
 
 func update_free_slots_label() -> void:
-	free_slots_label.text = ("Wolne miejsca: %s" % free_slots)
+	free_slots_label.text =  tr("FREE_SLOTS_KEY") + (": %s" % free_slots)
 
 func update_member_remove_list() -> void:
 	clear_remove_user_list()
@@ -93,7 +93,7 @@ func on_add_button_pressed() -> void:
 		return
 	
 	if add_user_input.is_in_suggestions() == false:
-		PopupDisplayServer.push_error("Użytkownik o podanej nazwie nie istnieje", "Panel ustawień czatu grupowego")
+		PopupDisplayServer.push_error(tr("USERNAME_DOES_NOT_EXIST"), tr("GROUP_CHAT_SETTINGS_PANEL"))
 		return
 		
 	var username = add_user_input.get_value()
@@ -102,7 +102,12 @@ func on_add_button_pressed() -> void:
 		chat_id, ServerRequest.GroupChatUpdateAction.ADD_MEMBER, username)
 		
 	if update_reult == true:
-		PopupDisplayServer.push_info("Dodano użytkownika %s do czatu" % username)
+		match AppSessionState.get_language():
+			GlobalTypes.LANGUAGE.ENGLISH:
+				PopupDisplayServer.push_info("User %s has beend added to the chat" % username)
+			GlobalTypes.LANGUAGE.POLISH:
+				PopupDisplayServer.push_info("Dodano użytkownika %s do czatu" % username)
+		
 		await get_metadata()
 		update_free_slots_label()
 		update_member_remove_list()

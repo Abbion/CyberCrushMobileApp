@@ -29,7 +29,7 @@ func _ready() -> void:
 	unlock_input()
 
 func _process(_delta: float) -> void:
-	if GlobalConstants.os_is_mobile() == true:
+	if AppSessionState.os_is_mobile() == true:
 		var vk_height := DisplayServer.virtual_keyboard_get_height()
 		var top_margin: float = 0.0
 		if vk_height > 0:
@@ -124,3 +124,10 @@ func update_user_list_size() -> void:
 	var item_height := saved_users_list.get_item_rect(0).size.y
 	var total_height = (item_height * MAX_VISIBLE_SAVED_USERS) + (v_sep * MAX_VISIBLE_SAVED_USERS - 1)
 	saved_users_list.custom_minimum_size.y = total_height
+
+func on_language_selector_item_selected(index: int) -> void:
+	match index:
+		0:
+			GlobalConstants.set_language(GlobalTypes.LANGUAGE.ENGLISH)
+		1:
+			GlobalConstants.set_language(GlobalTypes.LANGUAGE.POLISH)

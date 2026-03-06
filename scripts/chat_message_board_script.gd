@@ -45,7 +45,7 @@ func load_chat_at_id(id: int) -> void:
 	if connection_state == OK:
 		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CREATED
 	else:
-		PopupDisplayServer.push_error("Błąd podczas łączenia się z czatem")
+		PopupDisplayServer.push_error(tr("CHAT_LOADING_ERROR"))
 		close_chat()
 		return
 
@@ -90,7 +90,7 @@ func init_realtime_chat_connection() -> void:
 	if send_status == OK:
 		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.INITIALIZED
 	else:
-		PopupDisplayServer.push_error("Błąd inicjalizacji czatu")
+		PopupDisplayServer.push_error(tr("CHAT_INITIALIZATION_ERROR"))
 		close_chat()
 
 func confirm_realtime_chat_initialization() -> void:
@@ -103,12 +103,12 @@ func confirm_realtime_chat_initialization() -> void:
 		packed_read = true
 		
 		if json_packet.parse(packet) != OK:
-			PopupDisplayServer.push_error("Otrzymano wiadomość, której nie udało się przetworzyć", "Potwierdzenie inicjalizacji się nie powiodło")
+			PopupDisplayServer.push_error(tr("RECEIVED_MESSAGE_CANNOT_BE_PROCESSED"), tr("CONNECTION_CONFIRMATION_FAILED"))
 			continue
 				
 		var packet_data = json_packet.data
 		if packet_data["type"] != "info":
-			PopupDisplayServer.push_error("Połączenie z czatem się nie powiodło", "Typ pakietu: %s" % packet_data["type"])
+			PopupDisplayServer.push_error(tr("CHAT_CONNECTION_FAILED"), tr("PACKET_TYPE") + ": %s" % packet_data["type"])
 			continue
 		
 		var packet_content: String = packet_data["text"]
@@ -116,7 +116,7 @@ func confirm_realtime_chat_initialization() -> void:
 			initialization_confirmed = true
 			break
 		else:
-			PopupDisplayServer.push_error("Połączenie z czatem się nie powiodło", "Kod odpowiedzi: %s" % packet_data["response_code"])
+			PopupDisplayServer.push_error(tr("CHAT_CONNECTION_FAILED"), tr("RESPONSE_CODE") + ": %s" % packet_data["response_code"])
 	
 	if packed_read == false:
 		return
@@ -124,14 +124,14 @@ func confirm_realtime_chat_initialization() -> void:
 	if initialization_confirmed == true:
 		socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CONNECTED
 	else:
-		PopupDisplayServer.push_error("Nie rozopznano członka czatu")
+		PopupDisplayServer.push_error(tr("CHAT_MEMBER_NOT_RECOGNIZED"))
 		close_chat()
 
 func try_consume_new_messages() -> bool:
 	var first_chunk := get_first_chunk()
 	
 	if first_chunk == null:
-		PopupDisplayServer.push_error("Nie można odczytać nowych wiadomości", "First chunk was not found")
+		PopupDisplayServer.push_error(tr("UNABLE_TO_READ_NEW_MESSAGES"), tr("FIRST_CHUNK_NOT_FOUND"))
 		close_chat()
 		return false
 	
@@ -140,11 +140,14 @@ func try_consume_new_messages() -> bool:
 		var json_packet := JSON.new()
 	
 		if json_packet.parse(packet) != OK:
-			PopupDisplayServer.push_error("Otrzymano wiadomość, której nie udało się przetworzyć", "Odczytanie nowej wiadomości nie powiodło się")
+			PopupDisplayServer.push_error(tr("RECEIVED_MESSAGE_CANNOT_BE_PROCESSED"), tr("FAILED_TO_READ_NEW_MESSAGE"))
 			return false
 		
 		var packet_data = json_packet.data
-		PopupDisplayServer.push_info("Nowa wiadomość od %s" % packet_data["sender"])
+		
+		if anchor_message_log == false:
+			PopupDisplayServer.push_info(tr("NEW_MESSAGE_FROM") + " %s" % packet_data["sender"])
+		
 		var dateTime := GlobalTypes.DateTime.from_string(packet_data["time_stamp"])
 		var message_entry_object = create_message_entry(packet_data["in_chat_index"], packet_data["message"], packet_data["sender"], dateTime)
 		first_chunk.add_child(message_entry_object)
@@ -160,16 +163,22 @@ func try_send_queued_messages() -> bool:
 		var send_status := chat_socket.send_text(message_packet_stirng)
 		
 		if send_status != OK:
-			PopupDisplayServer.push_error("Błąd podczas wysyłania wiadomości", "Status %s" % send_status)
+			PopupDisplayServer.push_error(tr("SENDING_MESSAGE_FAILED"), tr("STATUS") + " %s" % send_status)
 			return false
 	return true
 
 func should_load_older_messages() -> bool:
+	if message_scroll_log.get_v_scroll_bar().visible == false:
+		return false
+	
 	var scroll_value := message_scroll_log.scroll_vertical
 	if scroll_value > 0:
 		return false
 		
 	var last_chat_chunk := message_log.get_child(0)
+	if last_chat_chunk == null:
+		return false
+	
 	var last_message := last_chat_chunk.get_child(0)
 	if last_message == null:
 		return false
@@ -252,6 +261,7 @@ func disconnect_from_chat() -> void:
 	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CLOSED
 	chat_id = -1
 	message_queue.clear()
+	chat_settings_button.hide()
 	title_label.text = "loading..."
 
 func on_back_button_pressed() -> void:
@@ -267,7 +277,7 @@ func on_message_send_button_pressed() -> void:
 	
 	var first_chunk := get_first_chunk()
 	if first_chunk == null:
-		PopupDisplayServer.push_error("Nie można wysłać waidomości", "First chunk was not found")
+		PopupDisplayServer.push_error(tr("SENDING_MESSAGE_FAILED"), tr("FIRST_CHUNK_NOT_FOUND"))
 		close_chat()
 		return
 	

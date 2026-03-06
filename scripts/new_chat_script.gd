@@ -50,7 +50,7 @@ func on_new_group_chat_button_pressed() -> void:
 
 func on_begin_direct_chat_button_pressed() -> void:
 	if direct_chat_username_input.is_in_suggestions() == false:
-		PopupDisplayServer.push_error("Użytkownik o podanej nazwie nie istnieje", "Panel tworzenia czatu bezpośredniego")
+		PopupDisplayServer.push_error(tr("USERNAME_DOES_NOT_EXIST"), tr("DIRECT_CHAT_CREATION_PANEL"))
 		return
 	
 	var partner_username: String = direct_chat_username_input.get_value()
@@ -65,10 +65,18 @@ func on_begin_group_chat_button_pressed() -> void:
 	title = title.strip_edges()
 	
 	if title.length() < MIN_GROUP_CHAT_TITLE_LENGTH:
-		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za krótki. Wymagane minimum %s znaków" % MIN_GROUP_CHAT_TITLE_LENGTH)
+		match AppSessionState.get_language():
+			GlobalTypes.LANGUAGE.ENGLISH:
+				PopupDisplayServer.push_error("Group chat title is too short. Has to have minumum %s characters" % MIN_GROUP_CHAT_TITLE_LENGTH)
+			GlobalTypes.LANGUAGE.POLISH:
+				PopupDisplayServer.push_error("Tytuł czatu grupowego jest za krótki. Wymagane minimum %s znaków" % MIN_GROUP_CHAT_TITLE_LENGTH)
 		return
 	if title.length() > MAX_GROUP_CHAT_TITLE_LENGHT:
-		PopupDisplayServer.push_error("Tytuł czatu grupowego jest za długi. Ograniczenie %s znaków" % MAX_GROUP_CHAT_TITLE_LENGHT)
+		match AppSessionState.get_language():
+			GlobalTypes.LANGUAGE.ENGLISH:
+				PopupDisplayServer.push_error("Group chat title is too long. %s character limit" % MIN_GROUP_CHAT_TITLE_LENGTH)
+			GlobalTypes.LANGUAGE.POLISH:
+				PopupDisplayServer.push_error("Tytuł czatu grupowego jest za długi. Ograniczenie %s znaków" % MAX_GROUP_CHAT_TITLE_LENGHT)
 		return
 	
 	var chat_id := await ServerRequest.create_group_chat(title)

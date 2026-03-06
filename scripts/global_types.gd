@@ -5,6 +5,7 @@ enum CHAT_MESSAGE_ALIGNMENT { LEFT, RIGHT }
 enum CHAT_TYPE{ DIRECT, GROUP }
 enum REALTIME_CHAT_SOCKET_STATE{ NULL, CREATED, INITIALIZED, CONNECTED, CLOSED }
 const BASE_YEAR = 2000
+enum LANGUAGE { ENGLISH, POLISH }
 
 class UserData:
 	var username: String = ""
@@ -109,19 +110,40 @@ class DateTime:
 		var hours_elapsed := int(floor(float(minutes_diff) / 60.0))
 		
 		if hours_elapsed >= 1:
-			if hours_elapsed >= 2:
-				return "%s godziny temu" % floor(hours_elapsed)
-			else:
-				return "godzinę temu"
+			match AppSessionState.get_language():
+				GlobalTypes.LANGUAGE.ENGLISH:
+					match hours_elapsed:
+						1:
+							return "hour ago"
+						_:
+							return "%s hours ago"
+				GlobalTypes.LANGUAGE.POLISH:
+					match hours_elapsed:
+						1:
+							return "godzinę temu"
+						2, 3, 4:
+							return "%s godziny temu" % hours_elapsed
+						_:
+							return "%s godzin temu" % hours_elapsed
 		
 		var minutes_elapsed_diff := minutes_diff - (hours_elapsed * 60)
 		
-		if minutes_elapsed_diff < 60:
-			if minutes_elapsed_diff <= 1:
-				return "teraz"
-			if minutes_elapsed_diff <= 4:
-				return "%s minuty temu" % floor(minutes_elapsed_diff)
-			else:
-				return "%s minut temu" % floor(minutes_elapsed_diff)
+		var minutes_elapsed := int(floor(minutes_elapsed_diff))
+		if minutes_elapsed < 60:
+			match AppSessionState.get_language():
+				GlobalTypes.LANGUAGE.ENGLISH:
+					match minutes_elapsed:
+						1:
+							return "Now"
+						_:
+							return "%s minutes ago" % minutes_elapsed 
+				GlobalTypes.LANGUAGE.POLISH:
+					match minutes_elapsed:
+						1: 
+							return "Teraz"
+						2, 3, 4:
+							return "%s minuty temu" % minutes_elapsed
+						_:
+							return "%s minut temu" % minutes_elapsed
 		
 		return default_format

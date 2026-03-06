@@ -1,0 +1,96 @@
+key,en,pl
+LOGIN_KEY,Login,Zaloguj
+USERNAME_KEY,Username,Nazwa użytkownika
+PASSWORD_KEY,Password,Hasło
+TITLE_KEY,Title,Tytuł
+CONTENT_KEY,Content,Treść
+POST_KEY,Post,Publikuj
+REFRESH_KEY,Refresh,Odśwież
+NEW_TRANSACTION_KEY,New transaction,Nowa transakcja
+NEW_TRANSACTION_TITLE_KEY,New transaction,Nowy przelew
+RECIPIENT_KEY,Recipient,Odbiorca
+TRANSACTION_AMOUNT_KEY,Transaction amount,Kwota
+CANCEL_KEY,Cancel,Anuluj
+SEND_KEY,Send,Wyślij
+CREATE_CHAT_TITLE_KEY,Create chat,Utwórz nowy czat
+CREATE_DIRECT_CHAT_KEY,New direct chat,Nowy czat bezpośredni
+CREATE_GROUP_CHAT_KEY,New group chat,Nowy czat grupowy
+BEGIN_CHAT_KEY,Begin chat,Rozpocznij czat
+ADD_KEY,Add,Dodaj
+DELETE_KEY,Remove,Usuń
+BACK_KEY,Back,Wróć
+MANAGE_CHAT_USERS_TITLE_KEY,Manage chat users,Zarządzanie uczestnikami czatu
+FREE_SLOTS_KEY,Free slots,Wolne miejsca
+FREE_SLOTS_DOT_KEY,Free slots...,Wolne miejsca...
+ADD_USER_KEY,Add user,Dodaj użytkownika
+REMOVE_USER_KEY,Remove users,Usuń użytkowników
+LOGOUT_KEY,Logout,Wyloguj
+EMPTY_TRANSACTION_HISTORY_KEY,Transaction history is empty,Historia transakcji jest pusta
+AVAILABLE_FUNDS_KEY,Available funds,Dostępne środki
+EMPTY_CHAT_LIST_KEY,Chat list is empty,Lista czatów jest pusta
+CHAT_NAME_KEY,Chat name,Nazwa czatu
+LOADING_DOT_KEY,Loading...,Wczytywanie...
+EVENT_LOG_TITLE_KYE,Current session event log,Dziennik zdarzeń obecnej sesji
+EMPTY_EVENT_LOG_KEY,Even log is empty,Dziennik zdarzeń jest pusty
+TYPE_KEY,Type,Typ
+DESCRIPTION_KEY,Description,Opis
+VERBOSE_DESCRIPTION_KEY,Verbose,Opis długi
+NO_DIRECT_CHAT_FOUND,No direct chat found,Nie odnaleziono czatu bezpośredniego
+NO_GROUP_CHAT_FOUND,No group chat found,Nie odnaleziono czatu grupowego
+CHAT_LOADING_ERROR,Chat loading error,Błąd podczas łączenia się z czatem
+CHAT_INITIALIZATION_ERROR,Chat initialization error,Błąd inicjalizacji czatu
+RECEIVED_MESSAGE_CANNOT_BE_PROCESSED,"Received a message that cannot be processed ","Otrzymano wiadomość, której nie udało się przetworzć",
+CONNECTION_CONFIRMATION_FAILED,Connection confirmation failed,Potwierdzenie inicjalizacji się nie powiodło
+CHAT_CONNECTION_FAILED,Chat connection failed,Połączenie z czatem się nie powiodło
+PACKET_TYPE,Packet type,Typ pakietu
+RESPONSE_CODE,Response code,Kod odpowiedzi
+CHAT_MEMBER_NOT_RECOGNIZED,Chat member not recognized,Nie rozpoznano członka czatu
+UNABLE_TO_READ_NEW_MESSAGES,Unable to read new messages,Nie można odczytać nowych wiadomości
+FIRST_CHUNK_NOT_FOUND,First chunk was not found,Nie odnaleziono pierwszego chunka
+FAILED_TO_READ_NEW_MESSAGE,Failed to read the new message,Odczytanie nowej wiadomości nie powiodło się
+NEW_MESSAGE_FROM,New message from,Nowa wiadomość
+SENDING_MESSAGE_FAILED,Sending message failed,Błąd podczas wysyłania wiadomości
+STATUS,Status,Status
+USERNAME_DOES_NOT_EXIST,The user with the given username does not exist,Użytkownik o podanej nazwie nie istnieje
+GROUP_CHAT_SETTINGS_PANEL,Group chat settings panel,Panel ustawień czatu grupowego
+USER_ADDED,User added,Dodano użytkownika
+ERROR,Error,Błąd
+WARNING,Warning,Uwaga
+INFORMATION,Information,Informacja
+POST_TITLE_TOO_SHORT,The post title is too short. Minimum 3 characters required,Tytuł posta jest za krótki. Wymagane minimum 3 znaki
+POST_TITLE_TOO_LONG,The post title is too long. 32 characters limit,Tytuł posta jest za długi. Ograniczenie maksymalnie 32 znaków
+POST_CONTENT_TOO_SHORT,The content of the post is too short. Minimum 3 characters required,Zawartość posta jest za krótka. Wymagane minimum 3 znaki
+POST_CONTENT_TOO_LONG,The content of the post is too short. 256 character limit,Zawartość posta jest za krótka. Ograniczenie maksymalnie 256 znaków
+DIRECT_CHAT_CREATION_PANEL,Direct chat creation panel,Panel tworzenia czatu bezpośredniego
+HAPPY_INFORMATION,Happy information,Szczęśliwa informacja
+FAILED_TO_SAVE_USER_DATA,Failed to save user data,Błąd zapisu danych użytkownika
+USER_CREDENTIALS_RELEASE_FAILED,Failed to release user credentials,Błąd podczas zwalniania danych uwierzytelniających użytkownika
+RECIPIENT_DOES_NOT_EXIST,The recipient does not exist,Odbiorca nie istnieje
+BANKING_TRANSACTION_PANEL,New banking transaction panel,Panel nowej transakcji bankowej
+EMPTY_TRANSFER_RECIPIENT,The transfer recipient field is empty,Pole odbiorcy przelewu jest puste
+EMPTY_TRANSACTION_TITLE,No transaction title,Pole tytułu przelewu jest puste
+INCORRECT_TRANSFER_VALUE,The value of the transferred funds is incorrect,Wartość pola przelewanych środków jest nieprawidłowa
+NEGATIVE_OR_ZERO_TRANSFER_VALUE,The value of the transferred funds is negative or equal to zero,Wartość pola przelewanych środków jest ujemna lub równa zeru
+NOT_AVAILABLE_FUNDS_AMOUNT,You are trying to transfer more funds than are currently available,Próbujesz przelewać więcej środków niż jest obecnie dostępnych
+SERVER_NOT_FOUND,Server was not found,Nie znaleziono serwera
+SERVER_RESPONSE_ERROR,Response error,Błąd opowiedzi
+INCORRECT_DATA_FORMAT,Incorrect data format,Niepoprawny format danych
+DATA_ACCESS_ERROR,Data access error,Błąd dostępu do danych
+LOGIN_ERROR,Login error,Błąd logowania
+USERNAME_OR_PASSWORD_NOT_RECOGNIZED,Username or password not recognized,Nie rozpoznano nazwy użytkownika lub hasła
+AUTHENTICATION_ERROR,Authentication error,Błąd uwierzytelniania
+USER_NOT_RECOGNIZED,User not recognized,Nie rozpoznano użytkownika
+FAILED_TO_ACCESS_USER_DATA,Accessing user data failed,Bład dostępu do danych użytkownika
+ALL_USERS_ACCESS_ERROR,Users access error,Bład dostępu do użytkowników
+FAILED_TO_ACCESS_USER_CHATS,Accessing user chats failed,Bład dostępu do czatów użytkownika
+FAILED_TO_ACCESS_CHAT_METADATA,Accessing chat metadata failed,Bład dostępu do danych czatu
+FAILED_TO_ACCESS_CHAT_HISTORY,Accessing chat history failed,Błąd dostępu do historii czatu
+GROUP_CHAT_UPDATE_ERROR,Group chat update error,Bład aktualizacji czatu grupowego
+FAILED_TO_CREATE_DIRECT_CHAT,Creating direct chat failed,Bład tworzenia czatu bezpośredniego
+START_CHAT_MESSAGE,started the chat,rozpoczął czat
+FAILED_TO_CREATE_GROUP_CHAT,Creating group chat failed,Bład tworzenia czatu grupowego
+FAILED_TO_GET_BANK_BALANCE,Collecting bank account balance failed,Bład pozyskania danych o stanie konta bankowego
+FAILED_TO_TRANSFER_FUNDS,Transfering funds failed,Bład transferu środków bankowych
+FAILED_TO_ACCESS_TRANSACTION_HISTORY,Accessing transaction history failed,Bład dostępu do historii transakcji bankowych
+FAILED_TO_ACCESS_NEWS_FEED,Accessing news feed failed,Bład systemu informacji
+FAILED_TO_POST_NEWS,Failed to post news,Bład wysłania posta

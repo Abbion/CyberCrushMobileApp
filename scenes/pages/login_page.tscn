@@ -36,7 +36,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="username_label" type="Label" parent="aspect_ration_container/login_margin/login_panel" unique_id=990697690]
 layout_mode = 2
-text = "Nazwa użytkownika"
+text = "LOGIN_KEY"
 
 [node name="username_input_options" type="HBoxContainer" parent="aspect_ration_container/login_margin/login_panel" unique_id=1698075160]
 layout_mode = 2
@@ -60,7 +60,7 @@ auto_height = true
 
 [node name="password_label" type="Label" parent="aspect_ration_container/login_margin/login_panel" unique_id=950478630]
 layout_mode = 2
-text = "Hasło"
+text = "PASSWORD_KEY"
 
 [node name="password_input" parent="aspect_ration_container/login_margin/login_panel" unique_id=1561401347 instance=ExtResource("2_dmx6h")]
 layout_mode = 2
@@ -70,7 +70,7 @@ vk_type_type = 0
 
 [node name="login_button" type="Button" parent="aspect_ration_container/login_margin/login_panel" unique_id=546174834]
 layout_mode = 2
-text = "Zaloguj"
+text = "LOGIN_KEY"
 
 [node name="spinner_margin" type="MarginContainer" parent="aspect_ration_container/login_margin/login_panel" unique_id=381411670]
 layout_mode = 2
@@ -82,6 +82,30 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 spinner_scale = 0.25
+
+[node name="language_options" type="HBoxContainer" parent="." unique_id=1170940440]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -133.0
+offset_top = 15.0
+offset_right = -20.0
+offset_bottom = 55.0
+grow_horizontal = 0
+
+[node name="globe_label" type="Label" parent="language_options" unique_id=2133482459]
+layout_mode = 2
+text = "🌐"
+
+[node name="language_selector" type="OptionButton" parent="language_options" unique_id=761163970]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "Polski"
+popup/item_1/id = 1
 
 [node name="popup_margin" type="MarginContainer" parent="." unique_id=1675028818]
 layout_mode = 1
@@ -103,8 +127,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 40.0
+offset_left = 18.0
+offset_top = -33.0
+offset_right = 85.0
+offset_bottom = -10.0
 grow_vertical = 0
 text = "Ver 0.1.1"
 
@@ -112,3 +138,4 @@ text = "Ver 0.1.1"
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/username_input_options/show_saved_users_button" to="." method="on_show_saved_users_button_pressed"]
 [connection signal="item_clicked" from="aspect_ration_container/login_margin/login_panel/saved_users_list" to="." method="on_saved_users_list_item_clicked"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/login_button" to="." method="on_login_button_pressed"]
+[connection signal="item_selected" from="language_options/language_selector" to="." method="on_language_selector_item_selected"]

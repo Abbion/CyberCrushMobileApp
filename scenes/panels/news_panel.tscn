@@ -37,14 +37,14 @@ layout_mode = 2
 
 [node name="title_label" type="Label" parent="news_container/post_box_margin/post_box" unique_id=487421865]
 layout_mode = 2
-text = "Tytuł"
+text = "TITLE_KEY"
 
 [node name="title_input" parent="news_container/post_box_margin/post_box" unique_id=1538401117 instance=ExtResource("3_lwmmg")]
 layout_mode = 2
 
 [node name="content_label" type="Label" parent="news_container/post_box_margin/post_box" unique_id=1388728542]
 layout_mode = 2
-text = "Treść"
+text = "CONTENT_KEY"
 
 [node name="content_input" parent="news_container/post_box_margin/post_box" unique_id=140967762 instance=ExtResource("3_ot28r")]
 layout_mode = 2
@@ -60,7 +60,7 @@ layout_mode = 2
 [node name="publish button" type="Button" parent="news_container/post_box_margin/post_box/post_actions" unique_id=1337031330]
 layout_mode = 2
 size_flags_horizontal = 10
-text = "Publikuj"
+text = "POST_KEY"
 
 [node name="HSeparator" type="HSeparator" parent="news_container" unique_id=1895360378]
 layout_mode = 2

@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnpm7vyhf2ftt"]
+[gd_scene format=3 uid="uid://dnpm7vyhf2ftt"]
 
 [ext_resource type="Script" uid="uid://drrs6k6mnga27" path="res://scripts/my_id_panel_script.gd" id="1_yk5dp"]
 [ext_resource type="PackedScene" uid="uid://cag4bqdhpycwf" path="res://scenes/custom_controlls/id_page_entry.tscn" id="2_ieadh"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yk5dp"]
 [ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/bug_log_entry.tscn" id="3_l1b6j"]
 
-[node name="my_id_panel" type="Control"]
+[node name="my_id_panel" type="Control" unique_id=905157010]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +16,7 @@ script = ExtResource("1_yk5dp")
 id_page_entry = ExtResource("2_ieadh")
 popup_log_entry = ExtResource("3_l1b6j")
 
-[node name="spinner_container" type="CenterContainer" parent="."]
+[node name="spinner_container" type="CenterContainer" parent="." unique_id=1223006473]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,11 +24,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="spinner" parent="spinner_container" instance=ExtResource("2_yk5dp")]
+[node name="spinner" parent="spinner_container" unique_id=1801390252 instance=ExtResource("2_yk5dp")]
 layout_mode = 2
 spinner_scale = 0.5
 
-[node name="attributes_margin" type="MarginContainer" parent="."]
+[node name="attributes_margin" type="MarginContainer" parent="." unique_id=657049782]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -40,11 +40,11 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="attributes" type="VBoxContainer" parent="attributes_margin"]
+[node name="attributes" type="VBoxContainer" parent="attributes_margin" unique_id=1638261496]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="logout_button" type="Button" parent="."]
+[node name="logout_button" type="Button" parent="." unique_id=2123535275]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -57,10 +57,10 @@ offset_top = -0.0400391
 offset_right = -0.130035
 size_flags_horizontal = 4
 size_flags_vertical = 10
-text = "Wyloguj"
+text = "LOGOUT_KEY"
 metadata/_edit_use_anchors_ = true
 
-[node name="popup_log_button" type="Button" parent="."]
+[node name="popup_log_button" type="Button" parent="." unique_id=1529614323]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.911
@@ -73,7 +73,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "🐛"
 
-[node name="overlay" type="ColorRect" parent="."]
+[node name="overlay" type="ColorRect" parent="." unique_id=444272905]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -83,7 +83,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.12, 0.12, 0.12, 0.431373)
 
-[node name="popup_log_container" type="ColorRect" parent="overlay"]
+[node name="popup_log_container" type="ColorRect" parent="overlay" unique_id=1241278363]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
@@ -92,7 +92,7 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 color = Color(0, 0, 0, 1)
 
-[node name="popup_data" type="VBoxContainer" parent="overlay/popup_log_container"]
+[node name="popup_data" type="VBoxContainer" parent="overlay/popup_log_container" unique_id=1064791025]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -100,37 +100,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="data_label_margin" type="MarginContainer" parent="overlay/popup_log_container/popup_data"]
+[node name="data_label_margin" type="MarginContainer" parent="overlay/popup_log_container/popup_data" unique_id=1775713647]
 layout_mode = 2
 theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 55
 theme_override_constants/margin_bottom = 14
 
-[node name="data_label" type="Label" parent="overlay/popup_log_container/popup_data/data_label_margin"]
+[node name="data_label" type="Label" parent="overlay/popup_log_container/popup_data/data_label_margin" unique_id=532498090]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Dziennik zdarzeń obecnej sesji"
+text = "EVENT_LOG_TITLE_KYE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="log_scroll_container" type="ScrollContainer" parent="overlay/popup_log_container/popup_data"]
+[node name="log_scroll_container" type="ScrollContainer" parent="overlay/popup_log_container/popup_data" unique_id=958081711]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="log_stack" type="VBoxContainer" parent="overlay/popup_log_container/popup_data/log_scroll_container"]
+[node name="log_stack" type="VBoxContainer" parent="overlay/popup_log_container/popup_data/log_scroll_container" unique_id=493283005]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="empty_log_container" type="CenterContainer" parent="overlay/popup_log_container/popup_data/log_scroll_container/log_stack"]
+[node name="empty_log_container" type="CenterContainer" parent="overlay/popup_log_container/popup_data/log_scroll_container/log_stack" unique_id=1501402883]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="empty_log_label" type="Label" parent="overlay/popup_log_container/popup_data/log_scroll_container/log_stack/empty_log_container"]
+[node name="empty_log_label" type="Label" parent="overlay/popup_log_container/popup_data/log_scroll_container/log_stack/empty_log_container" unique_id=114893489]
 layout_mode = 2
-text = "Dziennik zdarzeń jest pusty"
+text = "EMPTY_EVENT_LOG_KEY"
 
-[node name="popup_log_exit_button" type="Button" parent="overlay/popup_log_container"]
+[node name="popup_log_exit_button" type="Button" parent="overlay/popup_log_container" unique_id=1787561240]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

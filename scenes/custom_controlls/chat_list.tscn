@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cshv3dqh1nyxj"]
+[gd_scene format=3 uid="uid://cshv3dqh1nyxj"]
 
 [ext_resource type="Script" uid="uid://cp5rmln1itjl1" path="res://scripts/chat_list_script.gd" id="1_rjbdb"]
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_5pg7g"]
@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dki03uh4xyao2" path="res://scenes/custom_controlls/chat_entry.tscn" id="2_fquwj"]
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_q8thl"]
 
-[node name="chat_list" type="Control"]
+[node name="chat_list" type="Control" unique_id=1847172188]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,7 @@ grow_vertical = 2
 script = ExtResource("1_rjbdb")
 chat_entry = ExtResource("2_fquwj")
 
-[node name="spinner_container" type="CenterContainer" parent="."]
+[node name="spinner_container" type="CenterContainer" parent="." unique_id=1667768623]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,11 +26,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 
-[node name="spinner" parent="spinner_container" instance=ExtResource("2_fcj2p")]
+[node name="spinner" parent="spinner_container" unique_id=838533099 instance=ExtResource("2_fcj2p")]
 layout_mode = 2
 spinner_scale = 0.5
 
-[node name="chat_list_container" type="ScrollContainer" parent="."]
+[node name="chat_list_container" type="ScrollContainer" parent="." unique_id=1519019498]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -40,11 +40,11 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="chat_list" type="VBoxContainer" parent="chat_list_container"]
+[node name="chat_list" type="VBoxContainer" parent="chat_list_container" unique_id=920724699]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="empty_chat_list_container" type="CenterContainer" parent="."]
+[node name="empty_chat_list_container" type="CenterContainer" parent="." unique_id=1578700587]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -54,11 +54,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 
-[node name="empty_chat_list_label" type="Label" parent="empty_chat_list_container"]
+[node name="empty_chat_list_label" type="Label" parent="empty_chat_list_container" unique_id=1001112226]
 layout_mode = 2
-text = "Lista czatów jest pusta"
+text = "EMPTY_CHAT_LIST_KEY"
 
-[node name="add_chat" type="Button" parent="."]
+[node name="add_chat" type="Button" parent="." unique_id=1219177757]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.911111
@@ -73,20 +73,20 @@ theme_override_font_sizes/font_size = 32
 text = "  +  "
 metadata/_edit_use_anchors_ = true
 
-[node name="overlay_margin" parent="." instance=ExtResource("2_q8thl")]
+[node name="overlay_margin" parent="." unique_id=367356048 instance=ExtResource("2_q8thl")]
 visible = false
 layout_mode = 1
 
-[node name="overlay_background" type="TextureRect" parent="overlay_margin"]
+[node name="overlay_background" type="TextureRect" parent="overlay_margin" unique_id=1835173633]
 modulate = Color(1, 1, 1, 0.729412)
 layout_mode = 2
 texture = ExtResource("2_5pg7g")
 expand_mode = 4
 
-[node name="center_container" type="CenterContainer" parent="overlay_margin"]
+[node name="center_container" type="CenterContainer" parent="overlay_margin" unique_id=686108645]
 layout_mode = 2
 
-[node name="new_chat" parent="overlay_margin/center_container" instance=ExtResource("2_6j0wu")]
+[node name="new_chat" parent="overlay_margin/center_container" unique_id=1864139874 instance=ExtResource("2_6j0wu")]
 layout_mode = 2
 
 [connection signal="pressed" from="add_chat" to="." method="on_add_chat_pressed"]

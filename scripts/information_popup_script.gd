@@ -25,22 +25,22 @@ func on_consume_request(popup_info: PopupDisplayServer.PopupInfo) -> void:
 	popup_timer.start()
 
 func error_popup(content: String) -> void:
-	popup_type_label.text = "Błąd"
+	popup_type_label.text = tr("ERROR")
 	popup_type_label.add_theme_color_override("font_color", Color.RED)
 	content_label.text = content
 
 func warning_popup(content: String) -> void:
-	popup_type_label.text = "Uwaga"
+	popup_type_label.text = tr("WARNING")
 	popup_type_label.add_theme_color_override("font_color", Color.YELLOW)
 	content_label.text = content
 
 func info_popup(content: String) -> void:
-	popup_type_label.text = "Informacja"
+	popup_type_label.text = tr("INFORMATION")
 	popup_type_label.add_theme_color_override("font_color", Color.WHITE)
 	content_label.text = content
 
 func happy_info_popup(content: String) -> void:
-	popup_type_label.text = "Informacja"
+	popup_type_label.text = tr("INFORMATION")
 	popup_type_label.add_theme_color_override("font_color", Color.GREEN_YELLOW)
 	content_label.text = content
 

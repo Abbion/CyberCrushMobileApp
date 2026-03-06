@@ -9,16 +9,16 @@ extends PanelContainer
 @onready var long_description_label: Label = $data_margin/data_stack_container/long_description_label
 
 func _ready() -> void:
-	type_label.text = "Typ: " + PopupDisplayServer.popup_type_to_string(type)
+	type_label.text = tr("TYPE_KEY") + ": " + PopupDisplayServer.popup_type_to_string(type)
 	type_label.add_theme_color_override("font_color", get_type_color())
 	
-	short_description_label.text = "Opis: %s" % short_description
+	short_description_label.text = tr("DESCRIPTION_KEY") + ": %s" % short_description
 	
 	if long_description.is_empty():
 		long_description_label.hide()
 		return
 	
-	long_description_label.text = "Opis długi: %s" % long_description
+	long_description_label.text = tr("VERBOSE_DESCRIPTION_KEY") + ": %s" % long_description
 
 func get_type_color() -> Color:
 	match type:

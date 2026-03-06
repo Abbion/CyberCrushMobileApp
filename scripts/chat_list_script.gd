@@ -74,7 +74,7 @@ func update_chats_list():
 			)
 			
 			if direct_chat_index < 0:
-				PopupDisplayServer.push_warning("Nie odnaleziono czatu bezpośredniego")
+				PopupDisplayServer.push_warning(tr("NO_DIRECT_CHAT_FOUND"))
 				continue
 			
 			var direct_chat = direct_chats[direct_chat_index]
@@ -93,7 +93,7 @@ func update_chats_list():
 			)
 			
 			if group_chat_index < 0:
-				PopupDisplayServer.push_warning("Nie odnaleziono czatu grupowego")
+				PopupDisplayServer.push_warning(tr("NO_GROUP_CHAT_FOUND"))
 				continue
 			
 			var group_chat = group_chats[group_chat_index]
