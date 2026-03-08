@@ -69,7 +69,6 @@ text = "V"
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
-mouse_behavior_recursive = 2
 theme = ExtResource("3_2fks1")
 allow_search = false
 auto_height = true
@@ -94,12 +93,11 @@ theme = ExtResource("3_2fks1")
 text = "LOGIN_KEY"
 
 [node name="spinner" parent="aspect_ration_container/login_margin/login_panel" unique_id=694695298 instance=ExtResource("3_xbu75")]
-visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-spinner_size = 80.0
+spinner_size = 60.0
 
 [node name="language_panel" type="Panel" parent="." unique_id=1750548254]
 layout_mode = 1

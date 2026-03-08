@@ -190,4 +190,3 @@ theme = ExtResource("2_1ctx4")
 [node name="spinner_animation" type="AnimationPlayer" parent="." unique_id=2037216530]
 libraries/ = SubResource("AnimationLibrary_4e1rt")
 autoplay = &"spinner"
-speed_scale = 1.4

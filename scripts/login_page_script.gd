@@ -1,15 +1,15 @@
 #Refactor 1
 extends Control
 
-@onready var username_input: LineEdit = $aspect_ration_container/login_margin/login_panel/username_input_options/username_input
+@onready var username_input: LineEdit = $aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/username_input
 @onready var password_input: LineEdit = $aspect_ration_container/login_margin/login_panel/password_input
-@onready var show_saved_users_button: Button = $aspect_ration_container/login_margin/login_panel/username_input_options/show_saved_users_button
-@onready var saved_users_list: ItemList = $aspect_ration_container/login_margin/login_panel/saved_users_list
+@onready var show_saved_users_button: Button = $aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/show_saved_users_button
+@onready var saved_users_list: ItemList = $aspect_ration_container/login_margin/login_panel/username_settings/saved_users_list
 @onready var login_button: Button = $aspect_ration_container/login_margin/login_panel/login_button
 @onready var login_margin: MarginContainer = $aspect_ration_container/login_margin
-@onready var login_spinner_margin: MarginContainer = $aspect_ration_container/login_margin/login_panel/spinner_margin
 @onready var popup_margin: MarginContainer = $popup_margin
-@onready var language_selector: OptionButton = $language_options/language_selector
+@onready var language_selector: OptionButton = $language_panel/language_options/language_selector
+@onready var spinner: Control = $aspect_ration_container/login_margin/login_panel/spinner
 
 const MAX_VISIBLE_SAVED_USERS: int = 3
 
@@ -44,33 +44,34 @@ func load_main_page():
 
 func on_login_button_pressed() -> void:
 	lock_input()
-	var username = username_input.text
-	var token := await ServerRequest.login(username, password_input.text)
+	saved_users_list.hide()
+	#var username = username_input.text
+	#var token := await ServerRequest.login(username, password_input.text)
 	
-	if token.is_empty():
-		unlock_input()
-		return
+	#if token.is_empty():
+	#	unlock_input()
+	#	return
 	
-	UserManager.save_user_credentails(username, token)
-	UserManager.save_as_last_used(username, token)
-	AppSessionState.set_username(username)
-	AppSessionState.set_server_token(token)
+	#UserManager.save_user_credentails(username, token)
+	#UserManager.save_as_last_used(username, token)
+	#AppSessionState.set_username(username)
+	#AppSessionState.set_server_token(token)
 	
-	load_main_page()
+	#load_main_page()
 
 func lock_input():
 	username_input.editable = false
 	password_input.editable = false
 	login_button.disabled = true
 	show_saved_users_button.disabled = true
-	login_spinner_margin.show()
+	spinner.show()
 	
 func unlock_input():
 	username_input.editable = true
 	password_input.editable = true
 	login_button.disabled = false
 	show_saved_users_button.disabled = false
-	login_spinner_margin.hide()
+	spinner.hide()
 
 func on_show_saved_users_button_pressed() -> void:
 	saved_users_list.visible = !saved_users_list.visible
@@ -84,6 +85,8 @@ func load_saved_user_credentials() -> void:
 	show_saved_users_button.show()
 	for username in all_credentials:
 		saved_users_list.add_item(username)
+		saved_users_list.set_item_tooltip_enabled(saved_users_list.item_count - 1, false)
+		
 	update_user_list_size.call_deferred()
 
 func setup_ui() -> void:
@@ -126,6 +129,7 @@ func update_user_list_size() -> void:
 	var item_height := saved_users_list.get_item_rect(0).size.y
 	var total_height = (item_height * MAX_VISIBLE_SAVED_USERS) + (v_sep * MAX_VISIBLE_SAVED_USERS - 1)
 	saved_users_list.custom_minimum_size.y = total_height
+	saved_users_list.hide()
 
 func on_language_selector_item_selected(index: int) -> void:
 	match index:
