@@ -45,19 +45,19 @@ func load_main_page():
 func on_login_button_pressed() -> void:
 	lock_input()
 	saved_users_list.hide()
-	#var username = username_input.text
-	#var token := await ServerRequest.login(username, password_input.text)
+	var username = username_input.text
+	var token := await ServerRequest.login(username, password_input.text)
 	
-	#if token.is_empty():
-	#	unlock_input()
-	#	return
+	if token.is_empty():
+		unlock_input()
+		return
 	
-	#UserManager.save_user_credentails(username, token)
-	#UserManager.save_as_last_used(username, token)
-	#AppSessionState.set_username(username)
-	#AppSessionState.set_server_token(token)
+	UserManager.save_user_credentails(username, token)
+	UserManager.save_as_last_used(username, token)
+	AppSessionState.set_username(username)
+	AppSessionState.set_server_token(token)
 	
-	#load_main_page()
+	load_main_page()
 
 func lock_input():
 	username_input.editable = false
@@ -137,3 +137,14 @@ func on_language_selector_item_selected(index: int) -> void:
 			AppSessionState.set_language(GlobalTypes.LANGUAGE.ENGLISH)
 		1:
 			AppSessionState.set_language(GlobalTypes.LANGUAGE.POLISH)
+
+
+func on_password_input_focus_entered() -> void:
+	saved_users_list.hide()
+
+func on_username_input_focus_entered() -> void:
+	saved_users_list.hide()
+
+func on_language_panel_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		language_selector.show_popup()

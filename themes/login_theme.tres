@@ -4,6 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://chowvjampeqx1" path="res://themes/box_styles/base_color_style.tres" id="2_ff3fb"]
 [ext_resource type="StyleBox" uid="uid://dye2gn1r8alvy" path="res://themes/box_styles/light_style.tres" id="3_w7s3e"]
 [ext_resource type="Texture2D" uid="uid://b8dte0gm1ff1d" path="res://assets/icons/checkbox_icon.svg" id="4_ff3fb"]
+[ext_resource type="Texture2D" uid="uid://dkrs2460bbw63" path="res://assets/icons/checked_checkbox_icon.svg" id="4_w7s3e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyiqi"]
 bg_color = Color(1, 1, 1, 1)
@@ -73,12 +74,8 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff3fb"]
-bg_color = Color(1, 0, 0.6156863, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7s3e"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2und"]
 content_margin_left = 5.0
@@ -147,14 +144,15 @@ OptionButton/styles/normal = SubResource("StyleBoxFlat_pjgpt")
 OptionButton/styles/pressed = SubResource("StyleBoxFlat_llyy0")
 Panel/styles/panel = SubResource("StyleBoxFlat_72hlq")
 PopupMenu/colors/font_color = Color(1, 0, 0.6156863, 1)
-PopupMenu/colors/font_hover_color = Color(1, 1, 1, 1)
+PopupMenu/colors/font_hover_color = Color(1, 0, 0.6156863, 1)
 PopupMenu/constants/item_start_padding = 5
 PopupMenu/constants/v_separation = 18
 PopupMenu/font_sizes/font_separator_size = 20
 PopupMenu/font_sizes/font_size = 20
 PopupMenu/font_sizes/title_font_size = 20
+PopupMenu/icons/radio_checked = ExtResource("4_w7s3e")
 PopupMenu/icons/radio_unchecked = ExtResource("4_ff3fb")
-PopupMenu/styles/hover = SubResource("StyleBoxFlat_ff3fb")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_w7s3e")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_l2und")
 VScrollBar/constants/padding_left = 0
 VScrollBar/constants/padding_right = 0

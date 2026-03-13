@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://5fw8mfjch4we"
-path="res://.godot/imported/PixelifySans-Regular.ttf-c88f2ece69e4b1dab08f6e52b1ee018c.fontdata"
+uid="uid://b7ui1pg3g66r5"
+path="res://.godot/imported/VT323-Regular.ttf-fc3781f5235ceff7fbc465ccf3078d1e.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/PixelifySans-Regular.ttf"
-dest_files=["res://.godot/imported/PixelifySans-Regular.ttf-c88f2ece69e4b1dab08f6e52b1ee018c.fontdata"]
+source_file="res://assets/fonts/VT323-Regular.ttf"
+dest_files=["res://.godot/imported/VT323-Regular.ttf-fc3781f5235ceff7fbc465ccf3078d1e.fontdata"]
 
 [params]
 
@@ -25,7 +25,7 @@ modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true
-oversampling=2.0
+oversampling=0.0
 Fallbacks=null
 fallbacks=[]
 Compress=null

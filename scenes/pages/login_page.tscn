@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="3_xbu75"]
 [ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="4_sbehe"]
 [ext_resource type="Texture2D" uid="uid://di4kmdco6jf80" path="res://assets/icons/language_icon.svg" id="5_4ug7m"]
+[ext_resource type="Texture2D" uid="uid://s0b81mghn2kv" path="res://assets/login_logo.svg" id="7_wbb5q"]
 
 [node name="login_page" type="Control" unique_id=505686283]
 layout_mode = 3
@@ -38,13 +39,25 @@ ratio = 0.5625
 [node name="login_margin" type="MarginContainer" parent="aspect_ration_container" unique_id=1551747901]
 layout_mode = 2
 theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 0
 
 [node name="login_panel" type="VBoxContainer" parent="aspect_ration_container/login_margin" unique_id=1745351147]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 15
 metadata/_edit_use_anchors_ = true
+
+[node name="logo" type="TextureRect" parent="aspect_ration_container/login_margin/login_panel" unique_id=1234281530]
+layout_mode = 2
+texture = ExtResource("7_wbb5q")
+expand_mode = 5
+
+[node name="Panel" type="Panel" parent="aspect_ration_container/login_margin/login_panel" unique_id=1975816729]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="username_settings" type="VBoxContainer" parent="aspect_ration_container/login_margin/login_panel" unique_id=906228629]
 layout_mode = 2
@@ -107,10 +120,11 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -151.0
-offset_top = 15.0
+offset_top = 35.0
 offset_right = -21.0
-offset_bottom = 55.0
+offset_bottom = 75.0
 grow_horizontal = 0
+mouse_filter = 1
 theme = ExtResource("3_2fks1")
 
 [node name="language_options" type="HBoxContainer" parent="language_panel" unique_id=1170940440]
@@ -144,7 +158,6 @@ popup/item_1/text = "Polski"
 popup/item_1/id = 1
 
 [node name="popup_margin" type="MarginContainer" parent="." unique_id=1675028818]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -172,7 +185,10 @@ grow_vertical = 0
 text = "Ver 0.2.0"
 
 [connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/username_input" to="." method="on_username_input_focus_entered"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/show_saved_users_button" to="." method="on_show_saved_users_button_pressed"]
 [connection signal="item_clicked" from="aspect_ration_container/login_margin/login_panel/username_settings/saved_users_list" to="." method="on_saved_users_list_item_clicked"]
+[connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/password_input" to="." method="on_password_input_focus_entered"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/login_button" to="." method="on_login_button_pressed"]
+[connection signal="gui_input" from="language_panel" to="." method="on_language_panel_gui_input"]
 [connection signal="item_selected" from="language_panel/language_options/language_selector" to="." method="on_language_selector_item_selected"]
