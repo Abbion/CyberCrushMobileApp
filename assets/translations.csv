@@ -94,3 +94,5 @@ FAILED_TO_TRANSFER_FUNDS,Transfering funds failed,Bład transferu środków bank
 FAILED_TO_ACCESS_TRANSACTION_HISTORY,Accessing transaction history failed,Bład dostępu do historii transakcji bankowych
 FAILED_TO_ACCESS_NEWS_FEED,Accessing news feed failed,Bład systemu informacji
 FAILED_TO_POST_NEWS,Failed to post news,Bład wysłania posta
+ADD_POST,Create post,Dodaj post
+CLEAR_KEY,Clear,Wyczyść

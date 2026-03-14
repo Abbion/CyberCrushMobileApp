@@ -2,14 +2,16 @@
 extends Control
 
 @onready var background: ColorRect = $background
+@onready var shadow: ColorRect = $shadow
 @onready var timer_progress: ColorRect = $timer_progress
 @onready var margin: MarginContainer =$background/margin
 @onready var popup_type_label: Label = $background/margin/data/popup_type_label
 @onready var content_label: Label = $background/margin/data/content
 @onready var popup_timer: Timer = $timer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 const error_red: Color = Color("d70909ff")
-const warning_yellow: Color = Color("8a8500ff")
+const warning_yellow: Color = Color("6288ffff")
 
 func _ready() -> void:
 	hide()
@@ -30,6 +32,7 @@ func on_consume_request(popup_info: PopupDisplayServer.PopupInfo) -> void:
 	
 	show()
 	popup_timer.start()
+	animation_player.play("pop_in")
 
 func error_popup(content: String) -> void:
 	popup_type_label.text = tr("ERROR")
@@ -52,7 +55,7 @@ func happy_info_popup(content: String) -> void:
 	content_label.text = content
 
 func on_timer_timeout() -> void:
-	hide()
+	animation_player.play("pop_out")
 	GlobalSignals.popup_closed.emit()
 
 func on_tree_entered() -> void:
@@ -64,10 +67,12 @@ func on_tree_exited() -> void:
 func on_margin_resized() -> void:
 	if margin == null or background == null:
 		return
+	
 	background.size.y = margin.size.y
 	timer_progress.position.y = background.position.y + background.size.y
+	shadow.size.y = background.size.y + timer_progress.size.y + 15
 
 func on_close_button_pressed() -> void:
 	popup_timer.stop()
-	hide()
+	animation_player.play("pop_out")
 	GlobalSignals.popup_closed.emit()

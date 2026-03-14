@@ -79,6 +79,7 @@ theme = ExtResource("3_2fks1")
 text = "V"
 
 [node name="saved_users_list" type="ItemList" parent="aspect_ration_container/login_margin/login_panel/username_settings" unique_id=369826948]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
@@ -86,11 +87,6 @@ mouse_behavior_recursive = 2
 theme = ExtResource("3_2fks1")
 allow_search = false
 auto_height = true
-item_count = 4
-item_0/text = "1111"
-item_1/text = "22222"
-item_2/text = "3333"
-item_3/text = "4444"
 
 [node name="password_input" parent="aspect_ration_container/login_margin/login_panel" unique_id=1561401347 instance=ExtResource("2_dmx6h")]
 layout_mode = 2

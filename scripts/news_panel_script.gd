@@ -4,9 +4,10 @@ extends Control
 @export var news_article_entry: PackedScene
 
 @onready var feed: VBoxContainer = $news_container/scroll_feed/feed
-@onready var title_input: LineEdit = $news_container/post_box_margin/post_box/title_input
-@onready var content_input: TextEdit = $news_container/post_box_margin/post_box/content_input
-@onready var publish_button: Button = $"news_container/post_box_margin/post_box/post_actions/publish button"
+@onready var title_input: LineEdit = $news_container/post_box_margin/inner_margin/post_box/title_input
+@onready var content_input: TextEdit = $news_container/post_box_margin/inner_margin/post_box/content_input
+@onready var publish_button: Button = $news_container/post_box_margin/inner_margin/post_box/post_actions/publish_button
+@onready var clear_buttton: Button = $news_container/post_box_margin/inner_margin/post_box/post_actions/clear_button
 
 @onready var scroll_feed: ScrollContainer = $news_container/scroll_feed
 @onready var spinner_container: CenterContainer = $news_container/spinner_container
@@ -68,5 +69,11 @@ func send_article():
 
 func on_publish_button_pressed() -> void:
 	publish_button.disabled = true
+	clear_buttton.disabled = true
 	send_article()
 	publish_button.disabled = false
+	clear_buttton.disabled = false
+
+func on_clear_button_pressed() -> void:
+	title_input.clear()
+	content_input.clear()

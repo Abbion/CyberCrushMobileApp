@@ -1,15 +1,15 @@
 #Refactor 1
-extends PanelContainer
+extends MarginContainer
 
 @export var author: String
 @export var date: String
 @export var title: String
 @export var content: String
 
-@onready var author_label: Label = $article_margin/article/publish_data/author_label
-@onready var date_label: Label = $article_margin/article/publish_data/date_label
-@onready var title_label: Label = $article_margin/article/title_label
-@onready var content_label: Label = $article_margin/article/content_label
+@onready var author_label: Label = $autor_label_anchor/author_label
+@onready var date_label: Label = $article_margin/inner_margin/article/publish_data/date_label
+@onready var title_label: Label = $article_margin/inner_margin/article/title_label
+@onready var content_label: Label = $article_margin/inner_margin/article/content_label
 
 func _ready() -> void:
 	author_label.text = author
