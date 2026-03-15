@@ -5,18 +5,6 @@
 
 [sub_resource type="Animation" id="Animation_4ccaa"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-315, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_kgwy5"]
 resource_name = "pop_in"
@@ -25,7 +13,7 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("shadow:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -42,8 +30,8 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
+tracks/0/path = NodePath("shadow:position")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.33333334),
@@ -63,25 +51,23 @@ _data = {
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = -315.0
-offset_right = -315.0
 grow_horizontal = 2
 script = ExtResource("1_7dqi6")
 
 [node name="shadow" type="ColorRect" parent="." unique_id=338359931]
 layout_mode = 0
-offset_right = 315.0
+offset_left = -315.0
 offset_bottom = 80.0
 color = Color(0, 0, 0, 1)
 
-[node name="background" type="ColorRect" parent="." unique_id=1147156293]
+[node name="background" type="ColorRect" parent="shadow" unique_id=1147156293]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="margin" type="MarginContainer" parent="background" unique_id=1593705019]
+[node name="margin" type="MarginContainer" parent="shadow/background" unique_id=1593705019]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -92,15 +78,15 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="data" type="VBoxContainer" parent="background/margin" unique_id=2032401858]
+[node name="data" type="VBoxContainer" parent="shadow/background/margin" unique_id=2032401858]
 layout_mode = 2
 
-[node name="popup_type_label" type="Label" parent="background/margin/data" unique_id=1892456124]
+[node name="popup_type_label" type="Label" parent="shadow/background/margin/data" unique_id=1892456124]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Info"
 
-[node name="content" type="Label" parent="background/margin/data" unique_id=556718500]
+[node name="content" type="Label" parent="shadow/background/margin/data" unique_id=556718500]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -108,7 +94,7 @@ theme_override_font_sizes/font_size = 18
 text = "Null "
 autowrap_mode = 3
 
-[node name="close_button" type="TextureButton" parent="background" unique_id=152165023]
+[node name="close_button" type="TextureButton" parent="shadow/background" unique_id=152165023]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 1
@@ -122,7 +108,7 @@ grow_horizontal = 0
 scale = Vector2(0.125, 0.125)
 texture_normal = ExtResource("2_4ccaa")
 
-[node name="timer_progress" type="ColorRect" parent="." unique_id=1841904698]
+[node name="timer_progress" type="ColorRect" parent="shadow" unique_id=1841904698]
 layout_mode = 0
 offset_top = 70.0
 offset_right = 300.0
@@ -138,6 +124,6 @@ libraries/ = SubResource("AnimationLibrary_14obd")
 
 [connection signal="tree_entered" from="." to="." method="on_tree_entered"]
 [connection signal="tree_exited" from="." to="." method="on_tree_exited"]
-[connection signal="resized" from="background/margin" to="." method="on_margin_resized"]
-[connection signal="pressed" from="background/close_button" to="." method="on_close_button_pressed"]
+[connection signal="resized" from="shadow/background/margin" to="." method="on_margin_resized"]
+[connection signal="pressed" from="shadow/background/close_button" to="." method="on_close_button_pressed"]
 [connection signal="timeout" from="timer" to="." method="on_timer_timeout"]

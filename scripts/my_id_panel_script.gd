@@ -1,50 +1,50 @@
 #Refactor 1
 extends Control
 
-@export var id_page_entry: PackedScene
+@export var user_attribute_entry: PackedScene
 @export var popup_log_entry: PackedScene
 
-@onready var attributes: VBoxContainer = $attributes_margin/attributes
-@onready var spinner_container: CenterContainer = $spinner_container
+@onready var data_container: VBoxContainer = $main_margin/main_v_box/data_container
+@onready var attributes: VBoxContainer = $main_margin/main_v_box/data_container/attributes_margin/attributes_scroll/attributes
+@onready var username_label: Label = $main_margin/main_v_box/data_container/username_label
+@onready var user_code_label: Label = $main_margin/main_v_box/data_container/user_code_label
+
+@onready var spinner_container: CenterContainer = $main_margin/main_v_box/spinner_container
 @onready var overlay: ColorRect = $overlay
-@onready var popup_log: VBoxContainer = $overlay/popup_log_container/popup_data/log_scroll_container/log_stack
+@onready var empty_log_label: Label = $overlay/popup_log_container/popup_data/MarginContainer/empty_log_label
+@onready var popup_log: VBoxContainer = $overlay/popup_log_container/popup_data/MarginContainer/log_scroll_container/log_stack
+@onready var log_button_icon: TextureRect = $popup_log_button/log_button_icon
 
 func _ready() -> void:
-	var user_data := await ServerRequest.user_data()
 	spinner_container.show()
-	
-	attributes.hide()
-	
+	data_container.hide()
+	var user_data := await ServerRequest.user_data()
 	build_data_entires(user_data)
 	spinner_container.hide()
-	attributes.show()
+	data_container.show()
 
-func build_data_entires(user_data: GlobalTypes.UserData) -> void:
-	var id_page_entry_username_instance = id_page_entry.instantiate()
-	id_page_entry_username_instance.key = "username"
-	id_page_entry_username_instance.value = user_data.username
-	attributes.add_child(id_page_entry_username_instance)
-	
-	var id_page_entry_personal_number_instance = id_page_entry.instantiate()
-	id_page_entry_personal_number_instance.key = "personal number"
-	id_page_entry_personal_number_instance.value = str(user_data.personal_number)
-	attributes.add_child(id_page_entry_personal_number_instance)
+func build_data_entires(user_data: GlobalTypes.UserData) -> void:	
+	username_label.text = user_data.username
+	user_code_label.text = str(user_data.personal_number)
 	
 	for key in user_data.extra_data:
-		var id_page_entry_extra_data_instance = id_page_entry.instantiate()
-		id_page_entry_extra_data_instance.key = key
+		var user_attribute_instance = user_attribute_entry.instantiate()
+		user_attribute_instance.key = key
 		#TODO check the type of extra_data[key] and convert float, int, bool into str
-		id_page_entry_extra_data_instance.value = str(user_data.extra_data[key])
-		attributes.add_child(id_page_entry_extra_data_instance)
+		user_attribute_instance.value = str(user_data.extra_data[key])
+		attributes.add_child(user_attribute_instance)
 
 func _on_logout_button_button_down() -> void:
 	GlobalSignals.logout.emit()
 
 func build_bug_log() -> void:
 	var popup_list := PopupDisplayServer.popup_list
+	empty_log_label.show()
 	
 	if popup_list.is_empty():
 		return
+	
+	empty_log_label.hide()
 	
 	for entry in popup_log.get_children():
 		popup_log.remove_child(entry)
@@ -64,3 +64,9 @@ func on_popup_log_button_pressed() -> void:
 
 func on_popup_log_exit_button_pressed() -> void:
 	overlay.hide()
+
+func on_popup_log_button_mouse_entered() -> void:
+	log_button_icon.modulate = Color.BLACK
+
+func on_popup_log_button_mouse_exited() -> void:
+	log_button_icon.modulate = Color.WHITE

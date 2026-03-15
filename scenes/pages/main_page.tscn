@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://1m4opeh0nxo1" path="res://scenes/custom_controlls/app_selector.tscn" id="2_7nifb"]
 [ext_resource type="PackedScene" uid="uid://cc7if8n618gcj" path="res://scenes/custom_controlls/top_bar.tscn" id="2_ued0y"]
 [ext_resource type="PackedScene" uid="uid://0506af3w1mki" path="res://scenes/panels/bank_panel.tscn" id="3_6lmqk"]
-[ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/my_id_panel.tscn" id="3_xap5f"]
+[ext_resource type="PackedScene" uid="uid://dnpm7vyhf2ftt" path="res://scenes/panels/id_panel.tscn" id="3_xap5f"]
 [ext_resource type="PackedScene" uid="uid://dfie8i6cij8t7" path="res://scenes/panels/chat_panel.tscn" id="5_esk2p"]
 [ext_resource type="PackedScene" uid="uid://bkqj6aswsuht5" path="res://scenes/panels/news_panel.tscn" id="6_3vdiw"]
 [ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="8_b6xi4"]
@@ -45,7 +45,6 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 1
-color = Color(0, 0, 0, 1)
 
 [node name="popup_margin" type="MarginContainer" parent="." unique_id=617982853]
 layout_mode = 1
@@ -55,8 +54,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_right = 0
 
 [node name="information_popup" parent="popup_margin" unique_id=2066364619 instance=ExtResource("8_b6xi4")]
 layout_mode = 2

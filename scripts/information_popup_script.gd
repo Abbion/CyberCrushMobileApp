@@ -1,12 +1,12 @@
 #Refactor 1
 extends Control
 
-@onready var background: ColorRect = $background
 @onready var shadow: ColorRect = $shadow
-@onready var timer_progress: ColorRect = $timer_progress
-@onready var margin: MarginContainer =$background/margin
-@onready var popup_type_label: Label = $background/margin/data/popup_type_label
-@onready var content_label: Label = $background/margin/data/content
+@onready var background: ColorRect = $shadow/background
+@onready var timer_progress: ColorRect = $shadow/timer_progress
+@onready var margin: MarginContainer = $shadow/background/margin
+@onready var popup_type_label: Label = $shadow/background/margin/data/popup_type_label
+@onready var content_label: Label = $shadow/background/margin/data/content
 @onready var popup_timer: Timer = $timer
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 

@@ -57,7 +57,6 @@ size_flags_vertical = 3
 
 [node name="spinner" parent="bank_container/spinner_container" unique_id=1273655581 instance=ExtResource("2_yxmd7")]
 layout_mode = 2
-spinner_scale = 0.5
 
 [node name="transactions_scroll" type="ScrollContainer" parent="bank_container" unique_id=743366698]
 visible = false
