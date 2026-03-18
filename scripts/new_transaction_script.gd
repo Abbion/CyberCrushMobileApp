@@ -3,10 +3,12 @@ extends Control
 
 const MAX_TITLE_LENGTH = 32
 
-@onready var funds_label: Label = $background/transaction_elements/funds_label
-@onready var title_input: LineEdit = $background/transaction_elements/title_input
-@onready var amount_input: LineEdit = $background/transaction_elements/amount_input
-@onready var recepiant_input = $background/recepiant_input
+@onready var funds_label: Label = $margin/transaction_elements/top_info_v_box/funds_label
+@onready var title_input: LineEdit = $margin/transaction_elements/title_input
+@onready var amount_input: LineEdit = $margin/transaction_elements/amount_input
+@onready var recepiant_input = $margin/transaction_elements/recepiant_input
+
+@onready var suggestion_margin: MarginContainer = $margin/transaction_elements/recepiant_input/v_box/layout_override/suggestion_margin
 
 signal transaction_completed(bool)
 signal transaction_canceled()
@@ -78,3 +80,11 @@ func clear_inputs() -> void:
 func on_cancel_action_pressed() -> void:
 	clear_inputs()
 	transaction_canceled.emit()
+
+func on_suggestion_margin_visibility_changed() -> void:
+	if suggestion_margin.visible == true:
+		title_input.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		amount_input.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		title_input.mouse_filter = Control.MOUSE_FILTER_STOP
+		amount_input.mouse_filter = Control.MOUSE_FILTER_STOP

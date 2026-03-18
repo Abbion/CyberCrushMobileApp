@@ -1,7 +1,7 @@
 #Refactor 1
 extends Node
 
-func fuzzy_string(str_1: String, str_2: String) -> float:
+func fuzzy_string(str_1: String, str_2: String) -> float:	
 	if str_1.is_empty() and str_2.is_empty():
 		return 1.0
 	if str_1.is_empty() or str_2.is_empty():

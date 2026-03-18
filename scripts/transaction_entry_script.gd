@@ -18,9 +18,9 @@ func _ready() -> void:
 	setAmount(founds_trsfered)
 
 func setAmount(amount: int) -> void:
-	amount_label.text = str(amount)
+	amount_label.text = "%s¥" % str(amount)
 	
 	if amount < 0:
-		amount_label.modulate = Color(1, 0, 0, 1)
+		amount_label.add_theme_color_override("font_color", GlobalConstants.RED_COLOR_1)
 	else:
-		amount_label.modulate = Color(0, 1, 0, 1)
+		amount_label.add_theme_color_override("font_color", GlobalConstants.GREEN_COLOR_1)

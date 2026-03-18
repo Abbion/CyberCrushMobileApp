@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://du3o6e82qrxja"]
+[gd_scene format=3 uid="uid://du3o6e82qrxja"]
 
 [ext_resource type="Script" uid="uid://d1m2u1nv0ek1j" path="res://scripts/transaction_entry_script.gd" id="1_7gjj6"]
 
-[node name="transaction_entry" type="MarginContainer"]
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_7gjj6"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
+
+[node name="transaction_entry" type="MarginContainer" unique_id=335989989]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 104.0
@@ -13,26 +19,31 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_7gjj6")
 
-[node name="data_container" type="VBoxContainer" parent="."]
+[node name="data_container" type="VBoxContainer" parent="." unique_id=944183083]
 layout_mode = 2
 
-[node name="title" type="Label" parent="data_container"]
+[node name="title" type="Label" parent="data_container" unique_id=1289706872]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "title"
 clip_text = true
 
-[node name="amount" type="Label" parent="data_container"]
+[node name="amount" type="Label" parent="data_container" unique_id=2115680584]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "amount"
 
-[node name="peer" type="Label" parent="data_container"]
+[node name="peer" type="Label" parent="data_container" unique_id=275904203]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "who"
+theme_override_font_sizes/font_size = 18
+text = "peer"
 
-[node name="date" type="Label" parent="data_container"]
+[node name="date" type="Label" parent="data_container" unique_id=1076192094]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "date"
 
-[node name="separator" type="HSeparator" parent="data_container"]
+[node name="separator" type="HSeparator" parent="data_container" unique_id=957607095]
 layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_7gjj6")

@@ -6,6 +6,22 @@
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_mvofu"]
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yxmd7"]
+[ext_resource type="Texture2D" uid="uid://s8jkagtec1et" path="res://assets/bank_card_logo.svg" id="3_jf2tv"]
+[ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="4_tq0mc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tq0mc"]
+bg_color = Color(1, 0, 0.6156863, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0a24"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="bank_panel" type="Control" unique_id=946086903]
 layout_mode = 3
@@ -17,63 +33,127 @@ grow_vertical = 2
 script = ExtResource("1_0pdnh")
 transaction_entry = ExtResource("2_25ivn")
 
-[node name="bank_container" type="VBoxContainer" parent="." unique_id=7416500]
+[node name="background" type="ColorRect" parent="." unique_id=141282220]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="main_margin" type="MarginContainer" parent="." unique_id=1150857721]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+
+[node name="bank_container" type="VBoxContainer" parent="main_margin" unique_id=7416500]
+layout_mode = 2
+theme_override_constants/separation = 16
 metadata/_edit_use_anchors_ = true
 
-[node name="card" type="ColorRect" parent="bank_container" unique_id=454129110]
-custom_minimum_size = Vector2(0, 150)
+[node name="card_panel" type="Panel" parent="main_margin/bank_container" unique_id=1417612316]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-color = Color(1, 0, 1, 0.117647)
+theme_override_styles/panel = SubResource("StyleBoxFlat_tq0mc")
 
-[node name="funds_label" type="Label" parent="bank_container/card" unique_id=1269848168]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "AVAILABLE_FUNDS_KEY"
+[node name="card_margin" type="MarginContainer" parent="main_margin/bank_container/card_panel" unique_id=2022001063]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
 
-[node name="bank_actions" type="HBoxContainer" parent="bank_container" unique_id=881205920]
+[node name="card_v_box" type="VBoxContainer" parent="main_margin/bank_container/card_panel/card_margin" unique_id=265629592]
+layout_mode = 2
+theme_override_constants/separation = 36
+
+[node name="top_data_h_box" type="HBoxContainer" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=1398764409]
+layout_mode = 2
+
+[node name="v_box" type="VBoxContainer" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box" unique_id=498468086]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="username_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box/v_box" unique_id=1619653918]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "username"
+
+[node name="funds_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box/v_box" unique_id=614232439]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="chip" type="Panel" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box" unique_id=509892480]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o0a24")
+
+[node name="bank_logo" type="TextureRect" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=363018433]
+layout_mode = 2
+texture = ExtResource("3_jf2tv")
+expand_mode = 5
+
+[node name="card_code_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=2080284021]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "************0000"
+
+[node name="bank_actions" type="HBoxContainer" parent="main_margin/bank_container" unique_id=881205920]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="refresh" type="Button" parent="bank_container/bank_actions" unique_id=589940827]
+[node name="refresh" type="Button" parent="main_margin/bank_container/bank_actions" unique_id=589940827]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_tq0mc")
 text = "REFRESH_KEY"
 
-[node name="new_transaction" type="Button" parent="bank_container/bank_actions" unique_id=413259750]
+[node name="new_transaction" type="Button" parent="main_margin/bank_container/bank_actions" unique_id=413259750]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_tq0mc")
 text = "NEW_TRANSACTION_KEY"
 
-[node name="spinner_container" type="CenterContainer" parent="bank_container" unique_id=1720853199]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="spinner" parent="bank_container/spinner_container" unique_id=1273655581 instance=ExtResource("2_yxmd7")]
-layout_mode = 2
-
-[node name="transactions_scroll" type="ScrollContainer" parent="bank_container" unique_id=743366698]
+[node name="spinner_container" type="CenterContainer" parent="main_margin/bank_container" unique_id=1720853199]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="transactions_list" type="VBoxContainer" parent="bank_container/transactions_scroll" unique_id=2019065933]
+[node name="spinner" parent="main_margin/bank_container/spinner_container" unique_id=1273655581 instance=ExtResource("2_yxmd7")]
+layout_mode = 2
+
+[node name="transactions_scroll" type="ScrollContainer" parent="main_margin/bank_container" unique_id=743366698]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="transactions_list" type="VBoxContainer" parent="main_margin/bank_container/transactions_scroll" unique_id=2019065933]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="empty_transactions" type="CenterContainer" parent="bank_container" unique_id=1777671124]
+[node name="empty_transactions" type="CenterContainer" parent="main_margin/bank_container" unique_id=1777671124]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="empty_transaction_label" type="Label" parent="bank_container/empty_transactions" unique_id=1969643433]
+[node name="empty_transaction_label" type="Label" parent="main_margin/bank_container/empty_transactions" unique_id=1969643433]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "EMPTY_TRANSACTION_HISTORY_KEY"
 
 [node name="overlay_margin" parent="." unique_id=139073899 instance=ExtResource("2_mvofu")]
@@ -93,7 +173,7 @@ layout_mode = 2
 [node name="new_transaction" parent="overlay_margin/center_container" unique_id=1802104165 instance=ExtResource("2_8ud3o")]
 layout_mode = 2
 
-[connection signal="pressed" from="bank_container/bank_actions/refresh" to="." method="on_refresh_button_pressed"]
-[connection signal="pressed" from="bank_container/bank_actions/new_transaction" to="." method="on_new_transaction_pressed"]
+[connection signal="pressed" from="main_margin/bank_container/bank_actions/refresh" to="." method="on_refresh_button_pressed"]
+[connection signal="pressed" from="main_margin/bank_container/bank_actions/new_transaction" to="." method="on_new_transaction_pressed"]
 [connection signal="transaction_canceled" from="overlay_margin/center_container/new_transaction" to="." method="on_new_transaction_transaction_canceled"]
 [connection signal="transaction_completed" from="overlay_margin/center_container/new_transaction" to="." method="on_new_transaction_transaction_completed"]
