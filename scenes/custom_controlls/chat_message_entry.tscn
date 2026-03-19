@@ -1,49 +1,81 @@
-[gd_scene load_steps=2 format=3 uid="uid://5damwlt2tv6e"]
+[gd_scene format=3 uid="uid://5damwlt2tv6e"]
 
 [ext_resource type="Script" uid="uid://brnrfuo3a4xlg" path="res://scripts/chat_message_entry_script.gd" id="1_7xolx"]
+[ext_resource type="StyleBox" uid="uid://d15v4jy70ncp3" path="res://themes/box_styles/panel_container_light_outline.tres" id="2_pjk6y"]
 
-[node name="chat_message_entry" type="PanelContainer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xolx"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uj6q6"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0, 0.6156863, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="chat_message_entry" type="PanelContainer" unique_id=72175842]
+custom_minimum_size = Vector2(120, 0)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 61.0
+offset_bottom = 56.0
 grow_horizontal = 2
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_7xolx")
 script = ExtResource("1_7xolx")
 message_text = "Null"
 sender_username = "null"
-metadata/_edit_use_anchors_ = true
 
-[node name="message_background" type="ColorRect" parent="."]
-clip_contents = true
+[node name="inner_message_margin" type="MarginContainer" parent="." unique_id=1882154233]
 layout_mode = 2
-color = Color(0.487756, 1.02879e-06, 3.36915e-07, 1)
+theme_override_constants/margin_top = 10
 
-[node name="message_margin" type="MarginContainer" parent="."]
+[node name="inner_message_v_box" type="VBoxContainer" parent="inner_message_margin" unique_id=2067576775]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_right = 10
 
-[node name="message_data" type="VBoxContainer" parent="message_margin"]
+[node name="message_panel" type="PanelContainer" parent="inner_message_margin/inner_message_v_box" unique_id=1537380971]
 layout_mode = 2
-size_flags_horizontal = 9
-theme_override_constants/separation = 5
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_pjk6y")
 
-[node name="sender_username_label" type="Label" parent="message_margin/message_data"]
+[node name="message_margin" type="MarginContainer" parent="inner_message_margin/inner_message_v_box/message_panel" unique_id=1283954507]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
-text = "null"
-ellipsis_char = ""
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="message_label" type="Label" parent="message_margin/message_data"]
-custom_minimum_size = Vector2(1, 0)
+[node name="message_label" type="Label" parent="inner_message_margin/inner_message_v_box/message_panel/message_margin" unique_id=1886095913]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 18
 text = "Null"
 
-[node name="timestamp_label" type="Label" parent="message_margin/message_data"]
+[node name="timestamp_margin" type="MarginContainer" parent="inner_message_margin/inner_message_v_box" unique_id=1790600533]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
-text = "null"
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
 
-[connection signal="resized" from="message_margin/message_data/message_label" to="." method="on_message_label_resized"]
+[node name="timestamp_label" type="Label" parent="inner_message_margin/inner_message_v_box/timestamp_margin" unique_id=1819042245]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.6156863, 1)
+theme_override_font_sizes/font_size = 14
+text = "00-00-0000T00:00"
+
+[node name="username_float" type="Control" parent="." unique_id=1092592172]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="username_label" type="Label" parent="username_float" unique_id=658123850]
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_uj6q6")
+text = "username"
+vertical_alignment = 1
+
+[connection signal="resized" from="inner_message_margin/inner_message_v_box/message_panel/message_margin/message_label" to="." method="on_message_label_resized"]

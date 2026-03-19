@@ -10,10 +10,10 @@ extends Control
 @onready var user_code_label: Label = $main_margin/main_v_box/data_container/user_code_label
 
 @onready var spinner_container: CenterContainer = $main_margin/main_v_box/spinner_container
-@onready var overlay: ColorRect = $overlay
-@onready var empty_log_label: Label = $overlay/popup_log_container/popup_data/MarginContainer/empty_log_label
-@onready var popup_log: VBoxContainer = $overlay/popup_log_container/popup_data/MarginContainer/log_scroll_container/log_stack
-@onready var log_button_icon: TextureRect = $popup_log_button/log_button_icon
+@onready var overlay: MarginContainer = $overlay
+@onready var empty_log_label: Label = $overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/empty_log_label
+@onready var popup_log_scroll: ScrollContainer = $overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/log_scroll_container
+@onready var popup_log: VBoxContainer = $overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/log_scroll_container/log_stack
 
 func _ready() -> void:
 	spinner_container.show()
@@ -45,6 +45,7 @@ func build_bug_log() -> void:
 		return
 	
 	empty_log_label.hide()
+	popup_log_scroll.show()
 	
 	for entry in popup_log.get_children():
 		popup_log.remove_child(entry)
@@ -62,11 +63,5 @@ func on_popup_log_button_pressed() -> void:
 	build_bug_log()
 	overlay.show()
 
-func on_popup_log_exit_button_pressed() -> void:
+func on_back_button_pressed() -> void:
 	overlay.hide()
-
-func on_popup_log_button_mouse_entered() -> void:
-	log_button_icon.modulate = Color.BLACK
-
-func on_popup_log_button_mouse_exited() -> void:
-	log_button_icon.modulate = Color.WHITE

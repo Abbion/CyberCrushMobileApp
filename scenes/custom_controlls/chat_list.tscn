@@ -6,6 +6,24 @@
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_fcj2p"]
 [ext_resource type="PackedScene" uid="uid://dki03uh4xyao2" path="res://scenes/custom_controlls/chat_entry.tscn" id="2_fquwj"]
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_q8thl"]
+[ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="3_fsupx"]
+[ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="4_7266e"]
+[ext_resource type="Theme" uid="uid://ecitmfn33g6t" path="res://themes/news_theme.tres" id="4_ar2n3"]
+
+[sub_resource type="DPITexture" id="DPITexture_p5o0c"]
+_source = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width=\"128\" height=\"128\" version=\"1.1\" viewBox=\"0 0 33.867 33.867\" xmlns=\"http://www.w3.org/2000/svg\">
+ <g fill=\"none\" stroke=\"#fff\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6458\">
+  <path d=\"m7.5147 8.6827h12.72\"/>
+  <path d=\"m18.72 13.81h7.7137\"/>
+  <path d=\"m7.5533 19.566h5.6588\"/>
+  <path d=\"m16.831 26.632-6.3761 3.8256v-4.7701h-3.1801c-4.0463 0-4.7701-0.77776-4.7701-4.7701v-12.72c0-4.0272 0.7429-4.7701 4.7701-4.7701h19.08c4.0272 0 4.7701 0.65157 4.7701 4.7701v8.7452\"/>
+  <path d=\"m21.561 25.534h9.5402\"/>
+  <path d=\"m26.331 20.764v9.5402\"/>
+ </g>
+</svg>
+"
 
 [node name="chat_list" type="Control" unique_id=1847172188]
 layout_mode = 3
@@ -17,71 +35,107 @@ grow_vertical = 2
 script = ExtResource("1_rjbdb")
 chat_entry = ExtResource("2_fquwj")
 
-[node name="spinner_container" type="CenterContainer" parent="." unique_id=1667768623]
+[node name="main_v_box" type="VBoxContainer" parent="." unique_id=1248969859]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="top_decoration_margin" type="MarginContainer" parent="main_v_box" unique_id=1134560542]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 0
+
+[node name="top_decoration" type="TextureRect" parent="main_v_box/top_decoration_margin" unique_id=1676263774]
+layout_mode = 2
+texture = ExtResource("3_fsupx")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="decoration_separator" type="HSeparator" parent="main_v_box" unique_id=515714821]
+layout_mode = 2
+theme = ExtResource("4_ar2n3")
+
+[node name="spinner_container" type="CenterContainer" parent="main_v_box" unique_id=1667768623]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 0
 
-[node name="spinner" parent="spinner_container" unique_id=838533099 instance=ExtResource("2_fcj2p")]
+[node name="spinner" parent="main_v_box/spinner_container" unique_id=838533099 instance=ExtResource("2_fcj2p")]
 layout_mode = 2
-spinner_scale = 0.5
 
-[node name="chat_list_container" type="ScrollContainer" parent="." unique_id=1519019498]
+[node name="chat_list_margin" type="MarginContainer" parent="main_v_box" unique_id=1627616822]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="chat_list_scroll" type="ScrollContainer" parent="main_v_box/chat_list_margin" unique_id=1519019498]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="chat_list" type="VBoxContainer" parent="chat_list_container" unique_id=920724699]
+[node name="chat_list" type="VBoxContainer" parent="main_v_box/chat_list_margin/chat_list_scroll" unique_id=920724699]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 16
 
-[node name="empty_chat_list_container" type="CenterContainer" parent="." unique_id=1578700587]
+[node name="empty_chat_list_container" type="CenterContainer" parent="main_v_box" unique_id=1578700587]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 0
 
-[node name="empty_chat_list_label" type="Label" parent="empty_chat_list_container" unique_id=1001112226]
+[node name="empty_chat_list_label" type="Label" parent="main_v_box/empty_chat_list_container" unique_id=1001112226]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "EMPTY_CHAT_LIST_KEY"
 
 [node name="add_chat" type="Button" parent="." unique_id=1219177757]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.911111
+anchor_left = 0.92
 anchor_top = 0.95
-anchor_right = 0.911111
+anchor_right = 0.92
 anchor_bottom = 0.95
-offset_left = -34.0
-offset_top = -31.0
+offset_left = -64.10501
+offset_top = -64.20001
+offset_right = -0.10501099
+offset_bottom = -0.2000122
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("4_7266e")
+theme_override_constants/icon_max_width = 36
 theme_override_font_sizes/font_size = 32
-text = "  +  "
+text = " "
+icon = SubResource("DPITexture_p5o0c")
+icon_alignment = 1
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="overlay_margin" parent="." unique_id=367356048 instance=ExtResource("2_q8thl")]
 visible = false
 layout_mode = 1
 
-[node name="overlay_background" type="TextureRect" parent="overlay_margin" unique_id=1835173633]
+[node name="background_debug" type="TextureRect" parent="overlay_margin" unique_id=1835173633]
+visible = false
 modulate = Color(1, 1, 1, 0.729412)
 layout_mode = 2
 texture = ExtResource("2_5pg7g")
 expand_mode = 4
+
+[node name="background" type="ColorRect" parent="overlay_margin" unique_id=1164057670]
+layout_mode = 2
+color = Color(0, 0, 0, 0.78431374)
 
 [node name="center_container" type="CenterContainer" parent="overlay_margin" unique_id=686108645]
 layout_mode = 2

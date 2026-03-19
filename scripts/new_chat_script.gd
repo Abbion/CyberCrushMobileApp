@@ -12,17 +12,17 @@ enum { SELECTOR, DIRECT_CHAT, GROUP_CHAT }
 var current_state: int = SELECTOR
 var transition_in_progress: bool = false
 var selector_visible: bool = true
-var initial_background_bottom_offset: int = 0
 
-@onready var background = $background
-@onready var new_chat_selector_layout: VBoxContainer = $background/new_chat_selector_layout
-@onready var new_direct_chat_layout: Control = $background/new_direct_chat_layout
-@onready var new_group_chat_layout: Control = $background/new_group_chat_layout
-@onready var direct_chat_username_input = $background/new_direct_chat_layout/username_input
-@onready var group_chat_title_input: LineEdit = $background/new_group_chat_layout/new_group_chat_options/chat_name_input
+@onready var new_chat_selector_layout: VBoxContainer = $layouts_margin/new_chat_selector_layout
+@onready var new_direct_chat_layout: VBoxContainer = $layouts_margin/new_direct_chat_layout
+@onready var new_group_chat_layout: VBoxContainer = $layouts_margin/new_group_chat_layout
+@onready var direct_chat_username_input = $layouts_margin/new_direct_chat_layout/username_input
+@onready var group_chat_title_input: LineEdit = $layouts_margin/new_group_chat_layout/chat_name_input
+
+@onready var suggestion_margin: MarginContainer = $layouts_margin/new_direct_chat_layout/username_input/v_box/layout_override/suggestion_margin
+@onready var new_direct_chat_actions: HBoxContainer = $layouts_margin/new_direct_chat_layout/new_direct_chat_actions
 
 func _ready() -> void:
-	initial_background_bottom_offset = background.offset_bottom
 	direct_chat_username_input.all_suggestions = await ServerRequest.all_usernames(true)
 
 func reset_state() -> void:
@@ -85,3 +85,13 @@ func on_begin_group_chat_button_pressed() -> void:
 	
 	GlobalSignals.new_chat_created.emit(chat_id)
 	reset_state()
+
+func on_suggestion_margin_visibility_changed() -> void:
+	if suggestion_margin.visible == true:
+		new_direct_chat_actions.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for actions in new_direct_chat_actions.get_children():
+			actions.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		new_direct_chat_actions.mouse_filter = Control.MOUSE_FILTER_PASS
+		for actions in new_direct_chat_actions.get_children():
+			actions.mouse_filter = Control.MOUSE_FILTER_STOP

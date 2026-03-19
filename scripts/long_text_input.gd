@@ -18,7 +18,8 @@ enum CHARACTER_LIMIT_ANCHOR {
 var outside_text_input_style: StyleBoxFlat = preload("res://themes/box_styles/character_limit_style_box.tres")
 
 const min_visible_lines: int = 1
-var vertical_margins = 0.0
+var vertical_margins: float = 0.0
+var initial_character_limit_right_margin: int = 0
 
 func _ready() -> void:
 	character_limit_counter_label.text = "0/%s" % max_character_limit
@@ -28,6 +29,8 @@ func _ready() -> void:
 	var margin_top = stylebox.content_margin_top if stylebox.content_margin_top > 0 else 0
 	
 	vertical_margins = margin_bottom + margin_top
+	initial_character_limit_right_margin = character_limit_margin.get_theme_constant("margin_right")
+	
 	check_for_resize_text_input()
 	update_text_length()
 	update_character_limit_anchor()
@@ -73,7 +76,7 @@ func update_limit_counter_label() -> void:
 	if v_scroll.visible == true:
 		character_limit_margin.add_theme_constant_override("margin_right", int(v_scroll.size.x * 2.0))
 	else:
-		character_limit_margin.add_theme_constant_override("margin_right", 0)
+		character_limit_margin.add_theme_constant_override("margin_right", initial_character_limit_right_margin)
 
 func on_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
@@ -95,3 +98,7 @@ func update_character_limit_anchor() -> void:
 		var margins = outside_text_input_style.content_margin_bottom + outside_text_input_style.content_margin_top
 		character_limit_margin.add_theme_constant_override("margin_bottom", -(font_size + margins + 1))
 		character_limit_counter_label.add_theme_stylebox_override("normal", outside_text_input_style)
+
+func clear_text_box():
+	text = ""
+	update_text_length()

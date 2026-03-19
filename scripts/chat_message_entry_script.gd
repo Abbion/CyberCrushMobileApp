@@ -8,12 +8,14 @@ extends PanelContainer
 @export var in_chat_index: int
 var timestamp: GlobalTypes.DateTime
 
-@onready var message_container: VBoxContainer = $message_margin/message_data
-@onready var sender_username_label: Label = $message_margin/message_data/sender_username_label
-@onready var message_label: Label = $message_margin/message_data/message_label
-@onready var timestamp_label: Label = $message_margin/message_data/timestamp_label
+@onready var sender_username_label: Label = $username_float/username_label
+@onready var message_label: Label = $inner_message_margin/inner_message_v_box/message_panel/message_margin/message_label
+@onready var timestamp_label: Label = $inner_message_margin/inner_message_v_box/timestamp_margin/timestamp_label
+@onready var message_panel: PanelContainer = $inner_message_margin/inner_message_v_box/message_panel
 
-const message_container_separator := 5
+var outline_style: StyleBox = preload("res://themes/box_styles/panel_container_light_outline.tres")
+var fill_style: StyleBox = preload("res://themes/box_styles/panel_container_light_fill.tres")
+
 const max_message_width_ratio := 0.7
 var text_resized := false
 var base_time_stamp
@@ -27,11 +29,11 @@ func _ready() -> void:
 	sender_username_label.text = sender_username
 	
 	if message_alignment == GlobalTypes.CHAT_MESSAGE_ALIGNMENT.LEFT:
-		sender_username_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	else:
-		sender_username_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	else:
+		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		message_panel.add_theme_stylebox_override("panel", fill_style)
+		message_label.add_theme_color_override("font_color", Color.BLACK)
 
 func _process(delta: float) -> void:
 	elapsed_time += delta

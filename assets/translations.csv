@@ -96,3 +96,5 @@ FAILED_TO_ACCESS_NEWS_FEED,Accessing news feed failed,Bład systemu informacji
 FAILED_TO_POST_NEWS,Failed to post news,Bład wysłania posta
 ADD_POST,Create post,Dodaj post
 CLEAR_KEY,Clear,Wyczyść
+GROUP_CHAT_TITLE,Group chat title,Tytuł czatu grupowego
+WRITE_YOUR_MESSAGE,Write your message...,Napisz wiadomość...

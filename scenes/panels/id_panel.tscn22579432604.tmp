@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://drrs6k6mnga27" path="res://scripts/my_id_panel_script.gd" id="1_yk5dp"]
 [ext_resource type="PackedScene" uid="uid://cag4bqdhpycwf" path="res://scenes/custom_controlls/user_attribute_entry.tscn" id="2_ieadh"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yk5dp"]
-[ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/popup_log_entry.tscn" id="3_l1b6j"]
+[ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/bug_log_entry.tscn" id="3_l1b6j"]
 [ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="4_q8jwa"]
 [ext_resource type="Texture2D" uid="uid://bacofsfgjijf5" path="res://assets/icons/user_icon.svg" id="5_rb2qo"]
 [ext_resource type="Theme" uid="uid://1mdmdxaqh6y3" path="res://themes/login_theme.tres" id="7_sa2o2"]
@@ -165,7 +165,6 @@ texture = ExtResource("8_nw7ie")
 expand_mode = 1
 
 [node name="overlay" type="MarginContainer" parent="." unique_id=1660805636]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -193,25 +192,16 @@ theme_override_constants/margin_bottom = 16
 
 [node name="popup_data" type="VBoxContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin" unique_id=1064791025]
 layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="title_label" type="Label" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=1598363976]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "EVENT_LOG_TITLE_KYE"
 
 [node name="empty_log_label" type="Label" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=114893489]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "EMPTY_EVENT_LOG_KEY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="log_scroll_container" type="ScrollContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=958081711]
-visible = false
-custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -221,13 +211,9 @@ vertical_scroll_mode = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 10
 
-[node name="back_button_margin" type="MarginContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=376031360]
-layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_right = 32
-
-[node name="back_button" type="Button" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/back_button_margin" unique_id=1467475929]
+[node name="back_button" type="Button" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=1467475929]
 layout_mode = 2
 theme = ExtResource("10_ooid4")
 text = "BACK_KEY"
@@ -236,4 +222,3 @@ text = "BACK_KEY"
 [connection signal="mouse_entered" from="popup_log_button" to="." method="on_popup_log_button_mouse_entered"]
 [connection signal="mouse_exited" from="popup_log_button" to="." method="on_popup_log_button_mouse_exited"]
 [connection signal="pressed" from="popup_log_button" to="." method="on_popup_log_button_pressed"]
-[connection signal="pressed" from="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/back_button_margin/back_button" to="." method="on_back_button_pressed"]

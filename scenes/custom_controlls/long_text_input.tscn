@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gn8f4wkuvip1"]
 
 [ext_resource type="Script" uid="uid://qd4sea1drih0" path="res://scripts/long_text_input.gd" id="1_77yd6"]
+[ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="1_s06oq"]
 
 [node name="long_text_input" type="TextEdit" unique_id=714521716]
 anchors_preset = 15
@@ -8,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_s06oq")
 context_menu_enabled = false
 drag_and_drop_selection_enabled = false
 wrap_mode = 1
@@ -24,11 +26,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
 
 [node name="character_limit_counter" type="Label" parent="character_limit_margin" unique_id=415946249]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "23/255"
 horizontal_alignment = 2

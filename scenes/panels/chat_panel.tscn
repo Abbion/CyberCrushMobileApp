@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfie8i6cij8t7"]
+[gd_scene format=3 uid="uid://dfie8i6cij8t7"]
 
 [ext_resource type="PackedScene" uid="uid://keq3vr862823" path="res://scenes/custom_controlls/chat_message_board.tscn" id="1_nvn48"]
 [ext_resource type="PackedScene" uid="uid://cshv3dqh1nyxj" path="res://scenes/custom_controlls/chat_list.tscn" id="2_ke17o"]
@@ -20,6 +20,7 @@ func _on_chat_list_open_chat(chat_id: int) -> void:
 
 func on_chat_closed() -> void:
 	chat_list.refresh_chat_list()
+	chat_list.reset_layout()
 	chat_list.show()
 	message_board.hide()
 
@@ -37,7 +38,7 @@ func on_tree_exited() -> void:
 	GlobalSignals.close_chat_board.disconnect(on_chat_closed)
 "
 
-[node name="chat_panel" type="Control"]
+[node name="chat_panel" type="Control" unique_id=1666523681]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,10 +47,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_nvn48")
 
-[node name="chat_list" parent="." instance=ExtResource("2_ke17o")]
+[node name="background" type="ColorRect" parent="." unique_id=1965633225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="chat_list" parent="." unique_id=2016909719 instance=ExtResource("2_ke17o")]
 layout_mode = 1
 
-[node name="chat_message_board" parent="." instance=ExtResource("1_nvn48")]
+[node name="chat_message_board" parent="." unique_id=939790455 instance=ExtResource("1_nvn48")]
 visible = false
 layout_mode = 1
 

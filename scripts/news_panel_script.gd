@@ -65,7 +65,7 @@ func send_article():
 	feed.move_child(article_entry, 0)
 	
 	title_input.clear()
-	content_input.clear()
+	content_input.clear_text_box()
 
 func on_publish_button_pressed() -> void:
 	publish_button.disabled = true

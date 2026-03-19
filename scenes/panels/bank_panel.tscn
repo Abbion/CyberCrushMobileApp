@@ -160,11 +160,16 @@ text = "EMPTY_TRANSACTION_HISTORY_KEY"
 visible = false
 layout_mode = 1
 
-[node name="overlay_background" type="TextureRect" parent="overlay_margin" unique_id=532044160]
+[node name="background_debug" type="TextureRect" parent="overlay_margin" unique_id=532044160]
+visible = false
 modulate = Color(1, 1, 1, 0.647059)
 layout_mode = 2
 texture = ExtResource("2_tn1ak")
 expand_mode = 4
+
+[node name="background" type="ColorRect" parent="overlay_margin" unique_id=1253966699]
+layout_mode = 2
+color = Color(0, 0, 0, 0.78431374)
 
 [node name="center_container" type="CenterContainer" parent="overlay_margin" unique_id=1235825893]
 clip_contents = true

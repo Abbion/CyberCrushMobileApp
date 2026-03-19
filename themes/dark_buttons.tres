@@ -1,5 +1,19 @@
 [gd_resource type="Theme" format=3 uid="uid://bsnl3lopwxg71"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mphjk"]
+bg_color = Color(1, 0, 0.6156863, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2swy"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hhk13"]
 bg_color = Color(1, 0, 0.6156863, 1)
 border_width_top = 2
@@ -40,6 +54,13 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 1
+Button/styles/hover = SubResource("StyleBoxFlat_mphjk")
+Button/styles/normal = SubResource("StyleBoxFlat_m2swy")
+Button/styles/pressed = SubResource("StyleBoxFlat_mphjk")
 ItemList/colors/font_color = Color(1, 1, 1, 1)
 ItemList/colors/font_hovered_color = Color(1, 1, 1, 1)
 ItemList/colors/font_selected_color = Color(1, 0, 0.6156863, 1)

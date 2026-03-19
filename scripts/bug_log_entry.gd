@@ -23,8 +23,8 @@ func _ready() -> void:
 func get_type_color() -> Color:
 	match type:
 		PopupDisplayServer.PopupType.ERROR:
-			return Color.RED
+			return GlobalConstants.RED_COLOR_1
 		PopupDisplayServer.PopupType.WARNING:
-			return Color.YELLOW
+			return GlobalConstants.BLUE_COLOR_1
 	
-	return Color.WHITE
+	return Color.BLACK

@@ -12,13 +12,13 @@ var locketd_message_input_height: int = 0
 var chunk_counter: int = 0
 var scroll_to_new_chunk: bool = false
 
-@onready var message_scroll_log: ScrollContainer = $board_margin/board/scroll_message_log
-@onready var message_log: VBoxContainer  = $board_margin/board/scroll_message_log/message_log
-@onready var title_label: Label = $board_margin/board/top_panel/top_bar_container/title_margin/title
-@onready var message_input: TextEdit = $board_margin/board/message_panel/message_input
-@onready var chat_settings_button: Button = $board_margin/board/top_panel/top_bar_container/chat_settings_button
+@onready var message_scroll_log: ScrollContainer = $board_margin/board/message_log_margin/scroll_message_log
+@onready var message_log: VBoxContainer  = $board_margin/board/message_log_margin/scroll_message_log/message_log
+@onready var title_label: Label = $board_margin/board/top_panel/top_bar_container/title
+@onready var message_input: TextEdit = $board_margin/board/message_input_margin/message_input_panel/message_input
+@onready var chat_settings_button: Button = $board_margin/board/top_panel/top_bar_container/chat_settings_margin/chat_settings_button
 @onready var settings_overlay: MarginContainer = $settings_overlay
-@onready var chat_settings = $settings_overlay/chat_settings
+@onready var chat_settings = $settings_overlay/CenterContainer/chat_settings
 @onready var spinner_container = $board_margin/spinner_container
 
 @export var message_entry: PackedScene
@@ -272,7 +272,7 @@ func on_message_send_button_pressed() -> void:
 	message_to_send = message_to_send.strip_edges()
 	
 	if message_to_send.is_empty():
-		message_input.text = ""
+		message_input.clear_text_box()
 		return
 	
 	var first_chunk := get_first_chunk()
@@ -286,7 +286,7 @@ func on_message_send_button_pressed() -> void:
 	var message_entry_object = create_message_entry(-1, message_to_send, username, date_time)
 	first_chunk.add_child(message_entry_object)
 	message_queue.push_back(message_to_send)
-	message_input.text = ""
+	message_input.clear_text_box()
 	
 	anchor_message_log = true
 	message_input.grab_focus()
