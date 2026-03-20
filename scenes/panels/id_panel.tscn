@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/popup_log_entry.tscn" id="3_l1b6j"]
 [ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="4_q8jwa"]
 [ext_resource type="Texture2D" uid="uid://bacofsfgjijf5" path="res://assets/icons/user_icon.svg" id="5_rb2qo"]
-[ext_resource type="Theme" uid="uid://1mdmdxaqh6y3" path="res://themes/login_theme.tres" id="7_sa2o2"]
+[ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="7_ooid4"]
 [ext_resource type="Texture2D" uid="uid://ca45ypw6q5p1b" path="res://assets/icons/log_book_icon.svg" id="8_nw7ie"]
 [ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="9_43p8p"]
 [ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="10_ooid4"]
@@ -45,10 +45,10 @@ anchor_bottom = 1.0
 offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
 
 [node name="main_v_box" type="VBoxContainer" parent="main_margin" unique_id=1228694736]
 layout_mode = 2
@@ -60,7 +60,7 @@ expand_mode = 5
 
 [node name="HSeparator" type="HSeparator" parent="main_margin/main_v_box" unique_id=1841926784]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxLine_q8jwa")
 
 [node name="spinner_container" type="CenterContainer" parent="main_margin/main_v_box" unique_id=1223006473]
@@ -96,7 +96,7 @@ horizontal_alignment = 1
 
 [node name="user_code_label" type="Label" parent="main_margin/main_v_box/data_container" unique_id=1630646647]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "0000"
 horizontal_alignment = 1
 
@@ -132,7 +132,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 10
-theme = ExtResource("7_sa2o2")
+theme = ExtResource("7_ooid4")
 text = "LOGOUT_KEY"
 
 [node name="popup_log_button" type="Button" parent="." unique_id=1529614323]
@@ -146,7 +146,7 @@ offset_left = -40.0
 offset_top = -35.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = ExtResource("7_sa2o2")
+theme = ExtResource("7_ooid4")
 
 [node name="log_button_icon" type="TextureRect" parent="popup_log_button" unique_id=521605287]
 layout_mode = 1
@@ -204,7 +204,7 @@ text = "EVENT_LOG_TITLE_KYE"
 [node name="empty_log_label" type="Label" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=114893489]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "EMPTY_EVENT_LOG_KEY"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -1,18 +1,7 @@
 [gd_scene format=3 uid="uid://ciim22jn3qi4d"]
 
 [ext_resource type="Script" uid="uid://6myg17qx0kd2" path="res://scripts/news_article_entry_script.gd" id="1_m7ei6"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2d6s"]
-bg_color = Color(0, 0, 0, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[ext_resource type="StyleBox" uid="uid://d15v4jy70ncp3" path="res://themes/box_styles/panel_container_light_outline.tres" id="2_b2d6s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7ei6"]
 content_margin_left = 5.0
@@ -37,23 +26,20 @@ script = ExtResource("1_m7ei6")
 [node name="article_margin" type="MarginContainer" parent="." unique_id=1912667634]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_top = 12
 
-[node name="outline" type="Panel" parent="article_margin" unique_id=250875873]
+[node name="outline" type="PanelContainer" parent="article_margin" unique_id=2110709906]
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_b2d6s")
+theme_override_styles/panel = ExtResource("2_b2d6s")
 
 [node name="inner_margin" type="MarginContainer" parent="article_margin" unique_id=355492715]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 15
+theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_bottom = 12
 
 [node name="article" type="VBoxContainer" parent="article_margin/inner_margin" unique_id=1849202621]
 layout_mode = 2
@@ -81,7 +67,7 @@ autowrap_mode = 3
 [node name="content_label" type="Label" parent="article_margin/inner_margin/article" unique_id=371311764]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "Content null"
 autowrap_mode = 3
 
@@ -92,8 +78,7 @@ mouse_filter = 2
 [node name="author_label" type="Label" parent="autor_label_anchor" unique_id=755066656]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 0
-offset_left = 10.0
-offset_right = 96.0
+offset_right = 86.0
 offset_bottom = 27.0
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 16

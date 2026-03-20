@@ -11,20 +11,12 @@ extends PanelContainer
 @onready var last_timestamp_label: Label = $margin_container/data_container/meta_data_container/last_timestamp_label
 
 signal chat_opened(chat_id: int)
-var _is_drag = false
 
 func _ready() -> void:
 	chat_title_label.text = chat_title
 	last_message_label.text = last_message
 	var timestamp := GlobalTypes.DateTime.from_string(last_timestamp)
 	last_timestamp_label.text = timestamp.get_string()
-
-func on_gui_input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch:
-		if event.is_released():
-			if _is_drag == false:
-				chat_opened.emit(chat_id)
-			_is_drag = false
 	
-	if event is InputEventScreenDrag:
-		_is_drag = true
+func on_action_pressed() -> void:
+	chat_opened.emit(chat_id)

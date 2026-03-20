@@ -26,7 +26,7 @@ var RESPONSE_STATE_ERROR: String = tr("SERVER_RESPONSE_ERROR")
 var JSON_PARSE_ERROR: String = tr("INCORRECT_DATA_FORMAT")
 var RESPONSE_STATUS_ERROR: String = tr("DATA_ACCESS_ERROR")
 
-func app_language_changed(language: GlobalTypes.LANGUAGE):
+func app_language_changed(_language: GlobalTypes.LANGUAGE):
 	REQUEST_STATE_ERROR = tr("SERVER_NOT_FOUND")
 	RESPONSE_STATE_ERROR = tr("SERVER_RESPONSE_ERROR")
 	JSON_PARSE_ERROR = tr("INCORRECT_DATA_FORMAT")
@@ -323,9 +323,9 @@ func user_data() -> GlobalTypes.UserData:
 		PopupDisplayServer.push_error(error_message, verbose)
 		return null
 	
-	var user_data = GlobalTypes.UserData.new()
-	user_data.username = response_data["username"]
-	user_data.personal_number = response_data["personal_number"]
+	var user_data_instance = GlobalTypes.UserData.new()
+	user_data_instance.username = response_data["username"]
+	user_data_instance.personal_number = response_data["personal_number"]
 	
 	var json_extra_data = JSON.new()
 	if json_extra_data.parse(response_data["extra_data"]) != OK:
@@ -333,8 +333,8 @@ func user_data() -> GlobalTypes.UserData:
 		var verbose = "Getting user data failed. Json cannot parse extra data"
 		PopupDisplayServer.push_error(error_message, verbose)
 	
-	user_data.extra_data = json_extra_data.data
-	return user_data
+	user_data_instance.extra_data = json_extra_data.data
+	return user_data_instance
 
 func all_usernames(exclude_user: bool) -> PackedStringArray:
 	get_all_usernames_request.cancel_request()
@@ -436,11 +436,11 @@ func user_chats() -> Dictionary:
 		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	
-	var user_chats: Dictionary = Dictionary()
-	user_chats.set("direct", response_data["direct_chats"])
-	user_chats.set("group", response_data["group_chats"])
+	var user_chats_dir: Dictionary = Dictionary()
+	user_chats_dir.set("direct", response_data["direct_chats"])
+	user_chats_dir.set("group", response_data["group_chats"])
 	
-	return user_chats
+	return user_chats_dir
 
 func chat_metadata(chat_id: int) -> Dictionary:
 	get_chat_metadata_request.cancel_request()
@@ -502,6 +502,7 @@ func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	#=Request=============================================================
 	
 	var payload = {}
+	@warning_ignore("incompatible_ternary")
 	var history_last_index: Variant = null if start_from_index < 0 else start_from_index
 	
 	payload = {

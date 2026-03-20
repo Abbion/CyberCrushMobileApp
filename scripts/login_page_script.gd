@@ -1,6 +1,9 @@
 #Refactor 1
 extends Control
 
+@export var up_arrow_icon: DPITexture
+@export var down_arrow_icon: DPITexture
+
 @onready var username_input: LineEdit = $aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/username_input
 @onready var password_input: LineEdit = $aspect_ration_container/login_margin/login_panel/password_input
 @onready var show_saved_users_button: Button = $aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/show_saved_users_button
@@ -8,7 +11,7 @@ extends Control
 @onready var login_button: Button = $aspect_ration_container/login_margin/login_panel/login_button
 @onready var login_margin: MarginContainer = $aspect_ration_container/login_margin
 @onready var popup_margin: MarginContainer = $popup_margin
-@onready var language_selector: OptionButton = $language_panel/language_options/language_selector
+@onready var language_selector: OptionButton = $language_panel/language_panel_margin/language_options/language_selector
 @onready var spinner: Control = $aspect_ration_container/login_margin/login_panel/spinner
 
 const MAX_VISIBLE_SAVED_USERS: int = 3
@@ -75,6 +78,11 @@ func unlock_input():
 
 func on_show_saved_users_button_pressed() -> void:
 	saved_users_list.visible = !saved_users_list.visible
+	
+	if saved_users_list.visible == true:
+		show_saved_users_button.icon = up_arrow_icon
+	else:
+		show_saved_users_button.icon = down_arrow_icon
 
 func load_saved_user_credentials() -> void:
 	var all_credentials := UserManager.get_all_saved_credentials()

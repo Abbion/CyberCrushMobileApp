@@ -24,24 +24,24 @@ layout_mode = 2
 
 [node name="title" type="Label" parent="data_container" unique_id=1289706872]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "title"
 clip_text = true
 
 [node name="amount" type="Label" parent="data_container" unique_id=2115680584]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "amount"
 
 [node name="peer" type="Label" parent="data_container" unique_id=275904203]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "peer"
 
 [node name="date" type="Label" parent="data_container" unique_id=1076192094]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "date"
 
 [node name="separator" type="HSeparator" parent="data_container" unique_id=957607095]

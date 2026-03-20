@@ -3,14 +3,8 @@
 [ext_resource type="Script" uid="uid://dvb7iwjxf7ec4" path="res://scripts/new_chat_script.gd" id="1_4ql5n"]
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="2_2dnud"]
 [ext_resource type="Theme" uid="uid://bsnl3lopwxg71" path="res://themes/dark_buttons.tres" id="2_gmt4s"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="2_lhmu4"]
 [ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="4_oftjk"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2dnud"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [node name="new_chat" type="MarginContainer" unique_id=530941141]
 anchors_preset = 15
@@ -23,7 +17,7 @@ script = ExtResource("1_4ql5n")
 [node name="background" type="Panel" parent="." unique_id=1853118387]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2dnud")
+theme_override_styles/panel = ExtResource("2_lhmu4")
 
 [node name="layouts_margin" type="MarginContainer" parent="." unique_id=847872463]
 layout_mode = 2
@@ -46,13 +40,11 @@ horizontal_alignment = 1
 [node name="new_direct_chat_button" type="Button" parent="layouts_margin/new_chat_selector_layout" unique_id=1331475455]
 layout_mode = 2
 theme = ExtResource("2_gmt4s")
-theme_override_font_sizes/font_size = 18
 text = "CREATE_DIRECT_CHAT_KEY"
 
 [node name="new_group_chat_button" type="Button" parent="layouts_margin/new_chat_selector_layout" unique_id=1977570416]
 layout_mode = 2
 theme = ExtResource("2_gmt4s")
-theme_override_font_sizes/font_size = 18
 text = "CREATE_GROUP_CHAT_KEY"
 
 [node name="cancel_button" type="Button" parent="layouts_margin/new_chat_selector_layout" unique_id=1375793853]

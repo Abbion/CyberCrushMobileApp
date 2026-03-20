@@ -26,7 +26,7 @@ theme_override_constants/separation = 8
 [node name="chat_title_label" type="Label" parent="margin_container/data_container" unique_id=1849764289]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0.6156863, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "Username"
 
 [node name="meta_data_container" type="HBoxContainer" parent="margin_container/data_container" unique_id=55042255]
@@ -35,7 +35,7 @@ layout_mode = 2
 [node name="last_message_label" type="Label" parent="margin_container/data_container/meta_data_container" unique_id=1958790511]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "Last_message"
 clip_text = true
 text_overrun_behavior = 3
@@ -45,7 +45,12 @@ max_lines_visible = 1
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "12:12:12:12"
 
-[connection signal="gui_input" from="." to="." method="on_gui_input"]
+[node name="action" type="Button" parent="." unique_id=1490924014]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 1
+
+[connection signal="pressed" from="action" to="." method="on_action_pressed"]

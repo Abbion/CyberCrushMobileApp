@@ -19,6 +19,7 @@ caret_multiple = false
 script = ExtResource("1_77yd6")
 
 [node name="character_limit_margin" type="MarginContainer" parent="." unique_id=1295531407]
+z_index = 999
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 2
 
@@ -37,7 +39,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "23/255"
 horizontal_alignment = 2
-vertical_alignment = 2
+vertical_alignment = 1
 
 [connection signal="gui_input" from="." to="." method="on_gui_input"]
 [connection signal="text_changed" from="." to="." method="on_text_changed"]

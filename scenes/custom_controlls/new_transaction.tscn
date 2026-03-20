@@ -3,15 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_6cxfc"]
 [ext_resource type="Script" uid="uid://dnhrersqcwcso" path="res://scripts/new_transaction_script.gd" id="1_svxld"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_mi8gf"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="2_q7w7a"]
 [ext_resource type="Theme" uid="uid://bsnl3lopwxg71" path="res://themes/dark_buttons.tres" id="4_onfic"]
 [ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="5_f2ci6"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mi8gf"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [node name="new_transaction" type="MarginContainer" unique_id=1961354464]
 anchors_preset = 15
@@ -25,7 +19,7 @@ script = ExtResource("1_svxld")
 [node name="background" type="Panel" parent="." unique_id=116189284]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_mi8gf")
+theme_override_styles/panel = ExtResource("2_q7w7a")
 
 [node name="margin" type="MarginContainer" parent="." unique_id=1521883690]
 layout_mode = 2
@@ -45,14 +39,14 @@ layout_mode = 2
 [node name="info_label" type="Label" parent="margin/transaction_elements/top_info_v_box" unique_id=1152322179]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 text = "NEW_TRANSACTION_TITLE_KEY"
 horizontal_alignment = 1
 
 [node name="funds_label" type="Label" parent="margin/transaction_elements/top_info_v_box" unique_id=1693938772]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "AVAILABLE_FUNDS_KEY"
 horizontal_alignment = 1
 

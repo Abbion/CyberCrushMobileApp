@@ -3,14 +3,13 @@ extends Control
 
 @export var news_article_entry: PackedScene
 
-@onready var feed: VBoxContainer = $news_container/scroll_feed/feed
-@onready var title_input: LineEdit = $news_container/post_box_margin/inner_margin/post_box/title_input
-@onready var content_input: TextEdit = $news_container/post_box_margin/inner_margin/post_box/content_input
-@onready var publish_button: Button = $news_container/post_box_margin/inner_margin/post_box/post_actions/publish_button
-@onready var clear_buttton: Button = $news_container/post_box_margin/inner_margin/post_box/post_actions/clear_button
-
-@onready var scroll_feed: ScrollContainer = $news_container/scroll_feed
-@onready var spinner_container: CenterContainer = $news_container/spinner_container
+@onready var title_input: LineEdit = $main_margin/news_container/post_background/inner_margin/post_box/title_input
+@onready var content_input: TextEdit = $main_margin/news_container/post_background/inner_margin/post_box/content_input
+@onready var clear_buttton: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/clear_button
+@onready var publish_button: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/publish_button
+@onready var scroll_feed: ScrollContainer = $main_margin/news_container/scroll_feed
+@onready var feed: VBoxContainer = $main_margin/news_container/scroll_feed/feed
+@onready var spinner_container: CenterContainer = $main_margin/news_container/spinner_container
 
 func _ready() -> void:
 	refresh_news_feed()
@@ -76,4 +75,4 @@ func on_publish_button_pressed() -> void:
 
 func on_clear_button_pressed() -> void:
 	title_input.clear()
-	content_input.clear()
+	content_input.clear_text_box()

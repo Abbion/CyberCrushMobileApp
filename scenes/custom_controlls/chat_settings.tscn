@@ -48,30 +48,26 @@ horizontal_alignment = 1
 [node name="free_slots_label" type="Label" parent="layouts_margin/actions_layout" unique_id=462478976]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "FREE_SLOTS_DOT_KEY"
 horizontal_alignment = 1
 
-[node name="actions_margin" type="MarginContainer" parent="layouts_margin/actions_layout" unique_id=199259795]
-layout_mode = 2
-theme_override_constants/margin_left = 48
-theme_override_constants/margin_right = 48
-
-[node name="actions_v_box" type="VBoxContainer" parent="layouts_margin/actions_layout/actions_margin" unique_id=1853484876]
+[node name="actions_v_box" type="VBoxContainer" parent="layouts_margin/actions_layout" unique_id=1853484876]
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="add_user_button" type="Button" parent="layouts_margin/actions_layout/actions_margin/actions_v_box" unique_id=1155661314]
+[node name="add_user_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=1155661314]
 layout_mode = 2
 theme = ExtResource("3_bacik")
 text = "ADD_KEY"
 
-[node name="remove_user_button" type="Button" parent="layouts_margin/actions_layout/actions_margin/actions_v_box" unique_id=1943700888]
+[node name="remove_user_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=1943700888]
 layout_mode = 2
 theme = ExtResource("3_bacik")
 text = "DELETE_KEY"
 
-[node name="back_button" type="Button" parent="layouts_margin/actions_layout/actions_margin/actions_v_box" unique_id=893073086]
+[node name="back_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=893073086]
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
@@ -151,9 +147,9 @@ layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
 
-[connection signal="pressed" from="layouts_margin/actions_layout/actions_margin/actions_v_box/add_user_button" to="." method="go_to_add_user_layout"]
-[connection signal="pressed" from="layouts_margin/actions_layout/actions_margin/actions_v_box/remove_user_button" to="." method="go_to_remove_user_layout"]
-[connection signal="pressed" from="layouts_margin/actions_layout/actions_margin/actions_v_box/back_button" to="." method="close_chat_settings"]
+[connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/add_user_button" to="." method="go_to_add_user_layout"]
+[connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/remove_user_button" to="." method="go_to_remove_user_layout"]
+[connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/back_button" to="." method="close_chat_settings"]
 [connection signal="pressed" from="layouts_margin/add_user_layout/add_user_actions/back_button" to="." method="go_to_selector_layout"]
 [connection signal="pressed" from="layouts_margin/add_user_layout/add_user_actions/add_button" to="." method="on_add_button_pressed"]
 [connection signal="pressed" from="layouts_margin/remove_user_layout/remove_user_actions/remove_button" to="." method="on_remove_button_pressed"]

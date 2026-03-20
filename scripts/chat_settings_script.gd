@@ -52,13 +52,6 @@ func update_member_remove_list() -> void:
 		member_checkbox.mouse_filter = Control.MOUSE_FILTER_PASS
 		remove_user_list.add_child(member_checkbox)
 
-	for i in range(12):
-		var member_checkbox := CheckBox.new()
-		member_checkbox.text = str(i)
-		member_checkbox.theme = checkbox_theme
-		member_checkbox.mouse_filter = Control.MOUSE_FILTER_PASS
-		remove_user_list.add_child(member_checkbox)
-
 func clear_remove_user_list() -> void:
 	for user in remove_user_list.get_children():
 		remove_user_list.remove_child(user)

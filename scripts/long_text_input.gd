@@ -15,7 +15,7 @@ enum CHARACTER_LIMIT_ANCHOR {
 @onready var character_limit_counter_label: Label = $character_limit_margin/character_limit_counter
 @onready var character_limit_margin: MarginContainer = $character_limit_margin
 
-var outside_text_input_style: StyleBoxFlat = preload("res://themes/box_styles/character_limit_style_box.tres")
+var outside_text_input_style: StyleBoxFlat = preload("res://themes/box_styles/character_limit.tres")
 
 const min_visible_lines: int = 1
 var vertical_margins: float = 0.0
@@ -74,7 +74,8 @@ func update_limit_counter_label() -> void:
 	
 	var v_scroll := get_v_scroll_bar()
 	if v_scroll.visible == true:
-		character_limit_margin.add_theme_constant_override("margin_right", int(v_scroll.size.x * 2.0))
+		var l_padding := v_scroll.get_theme_constant("padding_left");
+		character_limit_margin.add_theme_constant_override("margin_right", -int(v_scroll.size.x - l_padding / 2.0))
 	else:
 		character_limit_margin.add_theme_constant_override("margin_right", initial_character_limit_right_margin)
 
@@ -101,4 +102,4 @@ func update_character_limit_anchor() -> void:
 
 func clear_text_box():
 	text = ""
-	update_text_length()
+	on_text_changed()

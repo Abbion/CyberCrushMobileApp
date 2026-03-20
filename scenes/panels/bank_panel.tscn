@@ -7,21 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yxmd7"]
 [ext_resource type="Texture2D" uid="uid://s8jkagtec1et" path="res://assets/bank_card_logo.svg" id="3_jf2tv"]
+[ext_resource type="StyleBox" uid="uid://cbqnuw56ksc3p" path="res://themes/box_styles/panel_conteiner_base_fill.tres" id="3_xhxt6"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="4_ddv88"]
 [ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="4_tq0mc"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tq0mc"]
-bg_color = Color(1, 0, 0.6156863, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0a24"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [node name="bank_panel" type="Control" unique_id=946086903]
 layout_mode = 3
@@ -61,7 +49,7 @@ metadata/_edit_use_anchors_ = true
 [node name="card_panel" type="Panel" parent="main_margin/bank_container" unique_id=1417612316]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_tq0mc")
+theme_override_styles/panel = ExtResource("3_xhxt6")
 
 [node name="card_margin" type="MarginContainer" parent="main_margin/bank_container/card_panel" unique_id=2022001063]
 layout_mode = 1
@@ -88,17 +76,17 @@ size_flags_horizontal = 3
 
 [node name="username_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box/v_box" unique_id=1619653918]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "username"
 
 [node name="funds_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box/v_box" unique_id=614232439]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 
 [node name="chip" type="Panel" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box" unique_id=509892480]
-custom_minimum_size = Vector2(42, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_o0a24")
+theme_override_styles/panel = ExtResource("4_ddv88")
 
 [node name="bank_logo" type="TextureRect" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=363018433]
 layout_mode = 2

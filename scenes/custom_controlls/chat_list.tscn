@@ -8,7 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_q8thl"]
 [ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="3_fsupx"]
 [ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="4_7266e"]
-[ext_resource type="Theme" uid="uid://ecitmfn33g6t" path="res://themes/news_theme.tres" id="4_ar2n3"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_p5o0c"]
+color = Color(1, 1, 1, 1)
+grow_begin = -16.0
+grow_end = -16.0
+thickness = 2
 
 [sub_resource type="DPITexture" id="DPITexture_p5o0c"]
 _source = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -45,9 +50,9 @@ grow_vertical = 2
 
 [node name="top_decoration_margin" type="MarginContainer" parent="main_v_box" unique_id=1134560542]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 15
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 0
 
 [node name="top_decoration" type="TextureRect" parent="main_v_box/top_decoration_margin" unique_id=1676263774]
@@ -58,7 +63,8 @@ stretch_mode = 5
 
 [node name="decoration_separator" type="HSeparator" parent="main_v_box" unique_id=515714821]
 layout_mode = 2
-theme = ExtResource("4_ar2n3")
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxLine_p5o0c")
 
 [node name="spinner_container" type="CenterContainer" parent="main_v_box" unique_id=1667768623]
 visible = false
@@ -70,15 +76,15 @@ mouse_filter = 0
 layout_mode = 2
 
 [node name="chat_list_margin" type="MarginContainer" parent="main_v_box" unique_id=1627616822]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 8
 
 [node name="chat_list_scroll" type="ScrollContainer" parent="main_v_box/chat_list_margin" unique_id=1519019498]
-visible = false
 layout_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3

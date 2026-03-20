@@ -31,7 +31,7 @@ EMPTY_CHAT_LIST_KEY,Chat list is empty,Lista czatów jest pusta
 CHAT_NAME_KEY,Chat name,Nazwa czatu
 LOADING_DOT_KEY,Loading...,Wczytywanie...
 EVENT_LOG_TITLE_KYE,Current session event log,Dziennik zdarzeń obecnej sesji
-EMPTY_EVENT_LOG_KEY,Even log is empty,Dziennik zdarzeń jest pusty
+EMPTY_EVENT_LOG_KEY,Event log is empty,Dziennik zdarzeń jest pusty
 TYPE_KEY,Type,Typ
 DESCRIPTION_KEY,Description,Opis
 VERBOSE_DESCRIPTION_KEY,Verbose,Opis długi

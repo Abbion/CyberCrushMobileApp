@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b4wkvulppy6fa"]
 
-[ext_resource type="Theme" uid="uid://dxj2ldwlxw0ry" path="res://themes/spinner_theme.tres" id="2_1ctx4"]
+[ext_resource type="Theme" uid="uid://dxj2ldwlxw0ry" path="res://themes/spinner.tres" id="2_1ctx4"]
 [ext_resource type="Script" uid="uid://dcoln2e2e1jjl" path="res://scripts/spinner.gd" id="2_wkk1r"]
 
 [sub_resource type="Animation" id="Animation_1ctx4"]

@@ -24,7 +24,7 @@ func _ready() -> void:
 		if top_margin.y < 1:
 			top_margin.y = 25
 		
-		var top_bar_height := top_margin.y * 1.25
+		var top_bar_height := top_margin.y * 1.15
 		top_bar.custom_minimum_size.y = top_bar_height
 		popup_margin.add_theme_constant_override("margin_top", int(top_bar_height))
 	else:
