@@ -14,10 +14,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="cyber_crush_mobile_app (4.4)"
+config/name="cyber_crush_mobile_app"
 run/main_scene="res://scenes/pages/login_page.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
-config/icon="res://icon.svg"
+run/low_processor_mode=true
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="uid://b3qqggpir2at7"
+config/icon="uid://c18ho2klj0thd"
 
 [autoload]
 
@@ -35,6 +38,7 @@ UserManager="*res://scripts/user_manager.gd"
 
 window/size/viewport_width=405
 window/size/viewport_height=720
+window/energy_saving/keep_screen_on=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1

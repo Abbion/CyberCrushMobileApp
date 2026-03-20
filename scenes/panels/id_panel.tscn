@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yk5dp"]
 [ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/popup_log_entry.tscn" id="3_l1b6j"]
 [ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="4_q8jwa"]
-[ext_resource type="Texture2D" uid="uid://bacofsfgjijf5" path="res://assets/icons/user_icon.svg" id="5_rb2qo"]
 [ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="7_ooid4"]
 [ext_resource type="Texture2D" uid="uid://ca45ypw6q5p1b" path="res://assets/icons/log_book_icon.svg" id="8_nw7ie"]
 [ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="9_43p8p"]
@@ -16,6 +15,13 @@ color = Color(1, 1, 1, 1)
 grow_begin = 0.0
 grow_end = 0.0
 thickness = 2
+
+[sub_resource type="DPITexture" id="DPITexture_43p8p"]
+_source = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width=\"256\" height=\"256\" version=\"1.1\" viewBox=\"0 0 67.733 67.733\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"#fff\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"7.119\"><path d=\"m34.278 5.4204a28.219 28.219 0 0 0-28.219 28.218 28.219 28.219 0 0 0 9.8332 21.397 28.568 28.568 0 0 1 19.639-7.9079 28.568 28.568 0 0 1 18.369 6.6954 28.219 28.219 0 0 0 8.5975-20.184 28.219 28.219 0 0 0-28.219-28.218z\"/><circle cx=\"34.288\" cy=\"33.629\" r=\"28.219\"/><circle cx=\"34.278\" cy=\"26.457\" r=\"8.1088\"/></g></svg>
+"
+base_scale = 0.65
 
 [node name="my_id_panel" type="Control" unique_id=905157010]
 layout_mode = 3
@@ -85,8 +91,8 @@ theme_override_constants/margin_right = 100
 [node name="user_avatar" type="TextureRect" parent="main_margin/main_v_box/data_container/avatar_margin" unique_id=727270700]
 modulate = Color(1, 0, 0.6156863, 1)
 layout_mode = 2
-texture = ExtResource("5_rb2qo")
-expand_mode = 4
+texture = SubResource("DPITexture_43p8p")
+stretch_mode = 5
 
 [node name="username_label" type="Label" parent="main_margin/main_v_box/data_container" unique_id=188129723]
 layout_mode = 2
