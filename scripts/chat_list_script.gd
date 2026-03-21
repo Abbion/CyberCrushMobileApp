@@ -120,7 +120,8 @@ func refresh_chat_list() -> void:
 	chat_list_margin.show()
 	
 	if chat_list.get_child_count() == 0:
-		chat_list.hide()
+		chat_list_margin.hide()
+		spinner_container.hide()
 		empty_chat_list_container.show()
 
 func reset_layout() -> void:

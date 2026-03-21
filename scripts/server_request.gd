@@ -326,6 +326,8 @@ func user_data() -> GlobalTypes.UserData:
 	var user_data_instance = GlobalTypes.UserData.new()
 	user_data_instance.username = response_data["username"]
 	user_data_instance.personal_number = response_data["personal_number"]
+	user_data_instance.can_publish_posts = response_data["can_publish_posts"]
+	user_data_instance.cyber_defence_level = response_data["cyber_defence_level"]
 	
 	var json_extra_data = JSON.new()
 	if json_extra_data.parse(response_data["extra_data"]) != OK:

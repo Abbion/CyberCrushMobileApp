@@ -49,9 +49,7 @@ _data = {
 
 [node name="information_popup" type="Control" unique_id=374682869]
 layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
+anchors_preset = 0
 script = ExtResource("1_7dqi6")
 
 [node name="shadow" type="ColorRect" parent="." unique_id=338359931]

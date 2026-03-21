@@ -19,6 +19,7 @@ const MAX_VISIBLE_SAVED_USERS: int = 3
 func _ready() -> void:
 	setup_ui()
 	lock_input()
+	load_saved_user_credentials()
 	
 	var last_used_credentials := UserManager.get_last_used_credentials()
 	if last_used_credentials.is_empty() == false:
@@ -26,10 +27,10 @@ func _ready() -> void:
 		if is_token_validated == true:
 			AppSessionState.set_username(last_used_credentials["username"])
 			AppSessionState.set_server_token(last_used_credentials["token"])
+			await request_app_state_variables()
 			load_main_page();
 			return
-		
-	load_saved_user_credentials()
+	
 	unlock_input()
 
 func _process(_delta: float) -> void:
@@ -47,7 +48,6 @@ func load_main_page():
 
 func on_login_button_pressed() -> void:
 	lock_input()
-	saved_users_list.hide()
 	var username = username_input.text
 	var token := await ServerRequest.login(username, password_input.text)
 	
@@ -59,8 +59,14 @@ func on_login_button_pressed() -> void:
 	UserManager.save_as_last_used(username, token)
 	AppSessionState.set_username(username)
 	AppSessionState.set_server_token(token)
-	
+	await request_app_state_variables()
+
 	load_main_page()
+
+func request_app_state_variables() -> void:
+	var user_data := await  ServerRequest.user_data()
+	AppSessionState.set_can_publish_posts(user_data.can_publish_posts)
+	AppSessionState.set_cyber_defence_level(user_data.cyber_defence_level)
 
 func lock_input():
 	username_input.editable = false
@@ -105,6 +111,7 @@ func setup_ui() -> void:
 
 func on_saved_users_list_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
 	lock_input()
+	saved_users_list.hide()
 	var username := saved_users_list.get_item_text(index)
 	var token := UserManager.get_token(username)
 	var validation_success := await ServerRequest.validate_token(token)
@@ -124,20 +131,22 @@ func on_saved_users_list_item_clicked(index: int, _at_position: Vector2, _mouse_
 	UserManager.save_as_last_used(username, token)
 	AppSessionState.set_username(username)
 	AppSessionState.set_server_token(token)
+	await request_app_state_variables()
 	load_main_page()
 
 func update_user_list_size() -> void:
 	var item_count := saved_users_list.item_count
-	if item_count <= MAX_VISIBLE_SAVED_USERS:
-		saved_users_list.auto_height = true
-		return
+	var visible_items = min(item_count, MAX_VISIBLE_SAVED_USERS)
 	
-	saved_users_list.auto_height = false
-	var v_sep := saved_users_list.get_theme_constant("v_separation")
+	saved_users_list.auto_height = true
+	var v_sep := saved_users_list.get_theme_constant("v_separation") / 2.0
 	var item_height := saved_users_list.get_item_rect(0).size.y
-	var total_height = (item_height * MAX_VISIBLE_SAVED_USERS) + (v_sep * MAX_VISIBLE_SAVED_USERS - 1)
+	var total_height = (item_height * visible_items) + v_sep
 	saved_users_list.custom_minimum_size.y = total_height
 	saved_users_list.hide()
+	
+	if item_count > MAX_VISIBLE_SAVED_USERS:
+		saved_users_list.auto_height = false
 
 func on_language_selector_item_selected(index: int) -> void:
 	match index:

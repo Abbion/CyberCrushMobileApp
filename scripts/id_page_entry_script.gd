@@ -1,5 +1,5 @@
 #Refactor 1
-extends Panel
+extends PanelContainer
 
 @export var key := "Default key";
 @export var value := "Default value";

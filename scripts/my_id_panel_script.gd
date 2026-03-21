@@ -23,9 +23,17 @@ func _ready() -> void:
 	spinner_container.hide()
 	data_container.show()
 
-func build_data_entires(user_data: GlobalTypes.UserData) -> void:	
+func build_data_entires(user_data: GlobalTypes.UserData) -> void:
+	AppSessionState.set_can_publish_posts(user_data.can_publish_posts)
+	AppSessionState.set_cyber_defence_level(user_data.cyber_defence_level)
+	
 	username_label.text = user_data.username
 	user_code_label.text = str(user_data.personal_number)
+	
+	var cyber_defence_attribute_instance = user_attribute_entry.instantiate()
+	cyber_defence_attribute_instance.key = "Cyber defence pack"
+	cyber_defence_attribute_instance.value = GlobalConstants.CYBER_DEFENCE_PACK_NAME[user_data.cyber_defence_level]
+	attributes.add_child(cyber_defence_attribute_instance)
 	
 	for key in user_data.extra_data:
 		var user_attribute_instance = user_attribute_entry.instantiate()

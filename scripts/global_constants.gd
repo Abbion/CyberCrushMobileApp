@@ -5,6 +5,12 @@ const JSON_HTTP_HEADER = [
 		"Content-Type: application/json"
 	]
 
+const CYBER_DEFENCE_PACK_NAME = {
+	1: "Base",
+	2: "Plus",
+	3: "Platinum"
+}
+
 const HTTP_SUCCESS_CODE: int = 200
 const MAIN_PAGE_SCENE: String = "res://scenes/pages/main_page.tscn"
 const LOGIN_PAGE_SCENE: String = "res://scenes/pages/login_page.tscn"

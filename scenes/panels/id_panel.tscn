@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yk5dp"]
 [ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/popup_log_entry.tscn" id="3_l1b6j"]
 [ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="4_q8jwa"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="7_f61hf"]
 [ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="7_ooid4"]
 [ext_resource type="Texture2D" uid="uid://ca45ypw6q5p1b" path="res://assets/icons/log_book_icon.svg" id="8_nw7ie"]
 [ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="9_43p8p"]
@@ -153,6 +154,7 @@ offset_top = -35.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("7_ooid4")
+script = ExtResource("7_f61hf")
 
 [node name="log_button_icon" type="TextureRect" parent="popup_log_button" unique_id=521605287]
 layout_mode = 1

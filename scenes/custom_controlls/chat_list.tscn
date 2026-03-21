@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_q8thl"]
 [ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="3_fsupx"]
 [ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="4_7266e"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="6_fsupx"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_p5o0c"]
 color = Color(1, 1, 1, 1)
@@ -126,6 +127,7 @@ text = " "
 icon = SubResource("DPITexture_p5o0c")
 icon_alignment = 1
 expand_icon = true
+script = ExtResource("6_fsupx")
 metadata/_edit_use_anchors_ = true
 
 [node name="overlay_margin" parent="." unique_id=367356048 instance=ExtResource("2_q8thl")]

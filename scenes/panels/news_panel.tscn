@@ -9,6 +9,7 @@
 [ext_resource type="StyleBox" uid="uid://cbqnuw56ksc3p" path="res://themes/box_styles/panel_conteiner_base_fill.tres" id="5_y701t"]
 [ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="6_c5omm"]
 [ext_resource type="Theme" uid="uid://deo0fpvdfl3f3" path="res://themes/dark_high_contrast.tres" id="8_c5omm"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="9_y701t"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_y701t"]
 color = Color(1, 1, 1, 1)
@@ -64,11 +65,13 @@ expand_mode = 5
 stretch_mode = 5
 
 [node name="decoration_separator" type="HSeparator" parent="main_margin/news_container" unique_id=537467368]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxLine_y701t")
 
 [node name="post_background" type="PanelContainer" parent="main_margin/news_container" unique_id=1093134259]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("5_y701t")
 
@@ -119,6 +122,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("8_c5omm")
 text = "CLEAR_KEY"
+script = ExtResource("9_y701t")
 
 [node name="publish_button" type="Button" parent="main_margin/news_container/post_background/inner_margin/post_box/post_actions" unique_id=1337031330]
 custom_minimum_size = Vector2(80, 0)
@@ -126,6 +130,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("8_c5omm")
 text = "POST_KEY"
+script = ExtResource("9_y701t")
 
 [node name="feed_separator" type="HSeparator" parent="main_margin/news_container" unique_id=1895360378]
 layout_mode = 2

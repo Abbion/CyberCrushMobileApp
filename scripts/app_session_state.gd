@@ -9,6 +9,8 @@ var app_selector_height: int = 0
 
 var _token: String = ""
 var _username: String = ""
+var _can_publish_posts: bool = false
+var _cyber_defence_level: int = 1
 var _language := GlobalTypes.LANGUAGE.ENGLISH
 var _is_mobile := false
 
@@ -36,9 +38,24 @@ func get_username() -> String:
 func set_username(new_username: String) -> void:
 	_username = new_username
 
+func set_can_publish_posts(can_publish: bool) -> void:
+	_can_publish_posts = can_publish
+
+func can_publish_posts() -> bool:
+	return _can_publish_posts
+
+func set_cyber_defence_level(level: int) -> void:
+	_cyber_defence_level = level
+	GlobalSignals.cyber_defence_pack_changed.emit(_cyber_defence_level)
+	
+func get_cyber_defence_level() -> int:
+	return _cyber_defence_level
+
 func clear() -> void:
 	_token = ""
 	_username = ""
+	_can_publish_posts = false
+	_cyber_defence_level = 1
 
 func set_language(language: GlobalTypes.LANGUAGE):
 	_language = language

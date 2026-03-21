@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4besegrkdauw"
-path="res://.godot/imported/bank.svg-6f131588f9b9d79c8f408b50fcf0c3ac.ctex"
+uid="uid://o0kco7rumhhp"
+path="res://.godot/imported/bank_chip.svg-c2dd197e5d6ddad42d745d357d6a9403.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/bank.svg"
-dest_files=["res://.godot/imported/bank.svg-6f131588f9b9d79c8f408b50fcf0c3ac.ctex"]
+source_file="res://assets/icons/bank_chip.svg"
+dest_files=["res://.godot/imported/bank_chip.svg-c2dd197e5d6ddad42d745d357d6a9403.ctex"]
 
 [params]
 

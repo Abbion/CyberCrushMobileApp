@@ -19,7 +19,7 @@ run/main_scene="res://scenes/pages/login_page.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="uid://b3qqggpir2at7"
+boot_splash/image="uid://dmlildlmdl75v"
 config/icon="uid://c18ho2klj0thd"
 
 [autoload]

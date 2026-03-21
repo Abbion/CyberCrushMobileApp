@@ -3,6 +3,8 @@ extends Control
 
 @export var news_article_entry: PackedScene
 
+@onready var decoration_separator: HSeparator = $main_margin/news_container/decoration_separator
+@onready var post_background: PanelContainer = $main_margin/news_container/post_background
 @onready var title_input: LineEdit = $main_margin/news_container/post_background/inner_margin/post_box/title_input
 @onready var content_input: TextEdit = $main_margin/news_container/post_background/inner_margin/post_box/content_input
 @onready var clear_buttton: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/clear_button
@@ -12,6 +14,10 @@ extends Control
 @onready var spinner_container: CenterContainer = $main_margin/news_container/spinner_container
 
 func _ready() -> void:
+	if AppSessionState.can_publish_posts():
+		decoration_separator.show()
+		post_background.show()
+	
 	refresh_news_feed()
 
 func refresh_news_feed():
@@ -36,6 +42,9 @@ func refresh_news_feed():
 	scroll_feed.show()
 
 func send_article():
+	if !AppSessionState.can_publish_posts():
+		return
+	
 	var title := title_input.text
 	if title.length() < 3:
 		PopupDisplayServer.push_warning(tr("POST_TITLE_TOO_SHORT"))

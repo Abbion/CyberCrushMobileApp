@@ -5,7 +5,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uk5nv"]
 bg_color = Color(1, 1, 1, 1)
 
-[node name="attribute_entry" type="Panel" unique_id=1847978581]
+[node name="attribute_entry" type="PanelContainer" unique_id=324066819]
 custom_minimum_size = Vector2(0, 39)
 anchors_preset = -1
 anchor_right = 1.0
@@ -18,12 +18,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_uk5nv")
 script = ExtResource("1_uk5nv")
 
 [node name="attribute_margin" type="MarginContainer" parent="." unique_id=1526107560]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
@@ -50,6 +45,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = " Default key"
 vertical_alignment = 1
+text_overrun_behavior = 2
 
 [node name="value_bg" type="ColorRect" parent="attribute_margin/h_box_container" unique_id=1017727301]
 layout_mode = 2
@@ -69,3 +65,4 @@ theme_override_font_sizes/font_size = 20
 text = "Default value "
 horizontal_alignment = 2
 vertical_alignment = 1
+text_overrun_behavior = 2

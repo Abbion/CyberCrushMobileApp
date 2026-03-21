@@ -10,6 +10,8 @@ enum LANGUAGE { ENGLISH = 0, POLISH = 1 }
 class UserData:
 	var username: String = ""
 	var personal_number: int = 0
+	var can_publish_posts: bool = false
+	var cyber_defence_level: int = 1
 	var extra_data: Dictionary = {}
 
 class DateTime:

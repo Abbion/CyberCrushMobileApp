@@ -98,3 +98,4 @@ ADD_POST,Create post,Dodaj post
 CLEAR_KEY,Clear,Wyczyść
 GROUP_CHAT_TITLE,Group chat title,Tytuł czatu grupowego
 WRITE_YOUR_MESSAGE,Write your message...,Napisz wiadomość...
+INFO_MESSAGE_GAME_NOT_STARTED,The game has not started yet,Gra jeszcze się nie zaczęła
