@@ -90,6 +90,7 @@ vk_type_type = 0
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 theme = ExtResource("7_qrs68")
+theme_override_constants/icon_max_width = 18
 icon = ExtResource("5_rkfdl")
 icon_alignment = 1
 expand_icon = true
@@ -112,7 +113,7 @@ secret_character = "*"
 vk_type_type = 0
 
 [node name="login_button" type="Button" parent="aspect_ration_container/login_margin/login_panel" unique_id=546174834]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("7_qrs68")

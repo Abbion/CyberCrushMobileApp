@@ -8,3 +8,4 @@ extends Node
 @warning_ignore("unused_signal") signal logout()
 @warning_ignore("unused_signal") signal app_language_changed(language: GlobalTypes.LANGUAGE)
 @warning_ignore("unused_signal") signal cyber_defence_pack_changed(pack: int)
+@warning_ignore("unused_signal") signal delete_post(id: int, title: String)

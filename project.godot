@@ -17,6 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="cyber_crush_mobile_app"
 run/main_scene="res://scenes/pages/login_page.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
+run/max_fps=60
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="uid://dmlildlmdl75v"

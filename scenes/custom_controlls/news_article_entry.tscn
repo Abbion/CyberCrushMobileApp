@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://6myg17qx0kd2" path="res://scripts/news_article_entry_script.gd" id="1_m7ei6"]
 [ext_resource type="StyleBox" uid="uid://d15v4jy70ncp3" path="res://themes/box_styles/panel_container_light_outline.tres" id="2_b2d6s"]
+[ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="3_4ec80"]
+[ext_resource type="Texture2D" uid="uid://d0wmvuo347ml7" path="res://assets/icons/trash_can.svg" id="4_7pp04"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="5_hvn44"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7ei6"]
 content_margin_left = 5.0
@@ -75,12 +78,26 @@ autowrap_mode = 3
 layout_mode = 2
 mouse_filter = 2
 
-[node name="author_label" type="Label" parent="autor_label_anchor" unique_id=755066656]
-custom_minimum_size = Vector2(80, 0)
+[node name="article_data" type="HBoxContainer" parent="autor_label_anchor" unique_id=1675158294]
 layout_mode = 0
 offset_right = 86.0
 offset_bottom = 27.0
+theme_override_constants/separation = 8
+
+[node name="author_label" type="Label" parent="autor_label_anchor/article_data" unique_id=755066656]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_m7ei6")
 text = "Author null"
+
+[node name="delete_post" type="Button" parent="autor_label_anchor/article_data" unique_id=727526953]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme = ExtResource("3_4ec80")
+theme_override_constants/icon_max_width = 18
+icon = ExtResource("4_7pp04")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_hvn44")
