@@ -10,6 +10,8 @@ var free_slots: int = 0
 @onready var free_slots_label: Label = $layouts_margin/actions_layout/free_slots_label
 @onready var remove_user_list: VBoxContainer = $layouts_margin/remove_user_layout/user_list_outline/users_list_container/user_list
 @onready var add_user_input = $layouts_margin/add_user_layout/find_control
+@onready var new_user_suggestion_margin: MarginContainer = $layouts_margin/add_user_layout/find_control/v_box/layout_override/suggestion_margin
+@onready var add_user_actions: HBoxContainer = $layouts_margin/add_user_layout/add_user_actions
 
 var checkbox_theme: Theme = preload("res://themes/accent_dark_buttons.tres")
 var chat_id: int = -1;
@@ -117,3 +119,13 @@ func on_add_button_pressed() -> void:
 		update_free_slots_label()
 		update_member_remove_list()
 		add_user_input.clear()
+
+func on_suggestion_margin_visibility_changed() -> void:
+	if new_user_suggestion_margin.visible == true:
+		add_user_actions.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for actions in add_user_actions.get_children():
+			actions.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		add_user_actions.mouse_filter = Control.MOUSE_FILTER_PASS
+		for actions in add_user_actions.get_children():
+			actions.mouse_filter = Control.MOUSE_FILTER_STOP

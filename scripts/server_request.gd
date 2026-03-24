@@ -129,6 +129,10 @@ var delete_news_article_url = build_url(ProtocoloType.HTTP, "delete_news_article
 #const post_news_article_url = "http://%s:3004/delete_news_article" % current_ip
 var delete_news_article_request: HTTPRequest
 
+var game_state_url = build_url(ProtocoloType.HTTP, "game_state", 3005, "game_state")
+#const post_news_article_url = "http://%s:3005/game_state" % current_ip
+var game_state_request: HTTPRequest
+
 func _ready() -> void:
 	GlobalSignals.app_language_changed.connect(app_language_changed)
 	
@@ -179,6 +183,9 @@ func _ready() -> void:
 	
 	delete_news_article_request = HTTPRequest.new()
 	add_child(delete_news_article_request)
+	
+	game_state_request = HTTPRequest.new()
+	add_child(game_state_request)
 
 func login(username: String, password: String) -> String:
 	login_request.cancel_request()
@@ -1042,3 +1049,48 @@ func delete_news_article(id: int) -> bool:
 		return false
 	
 	return true
+
+func game_state() -> GlobalTypes.ServerGameState:
+	game_state_request.cancel_request()
+	var SERVER_GAME_STATE_ERROR = tr("FAILED_TO_OBTAIN_GAME_STATE")
+	var server_game_state := GlobalTypes.ServerGameState.new()
+	
+	#=Request=============================================================
+	var request_state = game_state_request.request(game_state_url,
+			GlobalConstants.JSON_HTTP_HEADER,
+			HTTPClient.METHOD_GET)
+	
+	if request_state != OK:
+		var error_message = "%s. %s" % [SERVER_GAME_STATE_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Obtaining game state failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
+		return server_game_state
+	
+	var response = await game_state_request.request_completed
+	#=Response============================================================
+	
+	var response_state: int = response[0]
+	var response_code: int = response[1]
+	var _headers: PackedStringArray = response[2]
+	var body: PackedByteArray = response[3]
+	
+	if response_state != HTTPRequest.RESULT_SUCCESS:
+		var error_message = "%s. %s" % [SERVER_GAME_STATE_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Obtaining game state failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
+		return server_game_state
+	#=Parse===============================================================
+	
+	var response_text = body.get_string_from_utf8()
+	var json_response = JSON.new()
+	
+	if json_response.parse(response_text) != OK:
+		var error_message = "%s. %s" % [SERVER_GAME_STATE_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
+		return server_game_state
+	
+	var response_data = json_response.data
+	server_game_state.is_online = response_data["is_game_online"]
+	server_game_state.info_panel_text = response_data["info_panel_text"]
+	
+	return server_game_state

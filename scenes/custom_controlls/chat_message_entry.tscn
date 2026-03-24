@@ -27,6 +27,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7xolx")
 script = ExtResource("1_7xolx")
 message_text = "Null"
 sender_username = "null"
+min_chat_box_size = 120
+max_chat_box_size = 240
 
 [node name="inner_message_margin" type="MarginContainer" parent="." unique_id=1882154233]
 layout_mode = 2
@@ -48,11 +50,13 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="message_label" type="Label" parent="inner_message_margin/inner_message_v_box/message_panel/message_margin" unique_id=1886095913]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 18
 text = "Null"
+autowrap_mode = 3
 
 [node name="timestamp_margin" type="MarginContainer" parent="inner_message_margin/inner_message_v_box" unique_id=1790600533]
 layout_mode = 2

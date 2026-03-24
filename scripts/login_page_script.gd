@@ -44,6 +44,7 @@ func _process(_delta: float) -> void:
 		login_margin.add_theme_constant_override("margin_bottom", int(margin.y))
 
 func load_main_page():
+	AppSessionState.set_server_game_state(await ServerRequest.game_state())
 	get_tree().change_scene_to_file(GlobalConstants.MAIN_PAGE_SCENE)
 
 func on_login_button_pressed() -> void:

@@ -59,6 +59,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="top_panel" type="PanelContainer" parent="board_margin/board" unique_id=272710386]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2xdun")
 
@@ -68,8 +69,10 @@ theme_override_constants/separation = 0
 
 [node name="back_button_margin" type="MarginContainer" parent="board_margin/board/top_panel/top_bar_container" unique_id=390543476]
 layout_mode = 2
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="back_button" type="Button" parent="board_margin/board/top_panel/top_bar_container/back_button_margin" unique_id=146307277]
 custom_minimum_size = Vector2(35, 0)
@@ -92,12 +95,16 @@ size_flags_vertical = 1
 theme_override_font_sizes/font_size = 24
 text = "LOADING_DOT_KEY"
 vertical_alignment = 1
+text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="chat_settings_margin" type="MarginContainer" parent="board_margin/board/top_panel/top_bar_container" unique_id=119268681]
+visible = false
 layout_mode = 2
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="chat_settings_button" type="Button" parent="board_margin/board/top_panel/top_bar_container/chat_settings_margin" unique_id=94723760]
 custom_minimum_size = Vector2(40, 0)

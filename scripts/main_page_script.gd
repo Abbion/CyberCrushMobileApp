@@ -18,7 +18,9 @@ var current_panel: Control = null
 var game_start: bool = true
 
 func _ready() -> void:
+	game_start = AppSessionState.is_game_online()
 	AppSessionState.app_selector_height = int(app_selector.size.y)
+	
 	if AppSessionState.os_is_mobile() == true:
 		var safe_area := DisplayServer.get_display_safe_area()
 		var top_margin := DisplayManager.base_to_viewport_point_converter(safe_area.position)
@@ -51,7 +53,7 @@ func on_app_selector_socials_selected() -> void:
 	if game_start:
 		change_panel(news_panel_scene)
 	else:
-		change_to_info_panel("INFO_MESSAGE_GAME_NOT_STARTED")
+		change_to_info_panel(AppSessionState.get_info_panel_text())
 	
 func on_app_selector_bank_selected() -> void:
 	if game_start:

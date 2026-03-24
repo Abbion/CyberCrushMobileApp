@@ -150,7 +150,10 @@ text = "BACK_KEY"
 [connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/add_user_button" to="." method="go_to_add_user_layout"]
 [connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/remove_user_button" to="." method="go_to_remove_user_layout"]
 [connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/back_button" to="." method="close_chat_settings"]
+[connection signal="visibility_changed" from="layouts_margin/add_user_layout/find_control/v_box/layout_override/suggestion_margin" to="." method="on_suggestion_margin_visibility_changed"]
 [connection signal="pressed" from="layouts_margin/add_user_layout/add_user_actions/back_button" to="." method="go_to_selector_layout"]
 [connection signal="pressed" from="layouts_margin/add_user_layout/add_user_actions/add_button" to="." method="on_add_button_pressed"]
 [connection signal="pressed" from="layouts_margin/remove_user_layout/remove_user_actions/remove_button" to="." method="on_remove_button_pressed"]
 [connection signal="pressed" from="layouts_margin/remove_user_layout/remove_user_actions/back_button" to="." method="go_to_selector_layout"]
+
+[editable path="layouts_margin/add_user_layout/find_control"]

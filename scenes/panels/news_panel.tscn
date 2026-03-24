@@ -67,13 +67,11 @@ expand_mode = 5
 stretch_mode = 5
 
 [node name="decoration_separator" type="HSeparator" parent="main_margin/news_container" unique_id=537467368]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxLine_y701t")
 
 [node name="post_background" type="PanelContainer" parent="main_margin/news_container" unique_id=1093134259]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("5_y701t")
 

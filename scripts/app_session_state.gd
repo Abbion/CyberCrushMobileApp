@@ -13,6 +13,7 @@ var _can_publish_posts: bool = false
 var _cyber_defence_level: int = 1
 var _language := GlobalTypes.LANGUAGE.ENGLISH
 var _is_mobile := false
+var _server_game_state : GlobalTypes.ServerGameState
 
 func _ready() -> void:
 	if _app_config.load(_APP_CONFIG_PATH) == OK:
@@ -44,6 +45,12 @@ func set_can_publish_posts(can_publish: bool) -> void:
 func can_publish_posts() -> bool:
 	return _can_publish_posts
 
+func is_game_online() -> bool:
+	return _server_game_state.is_online
+
+func get_info_panel_text() -> String:
+	return _server_game_state.info_panel_text
+
 func set_cyber_defence_level(level: int) -> void:
 	_cyber_defence_level = level
 	GlobalSignals.cyber_defence_pack_changed.emit(_cyber_defence_level)
@@ -69,6 +76,9 @@ func set_language(language: GlobalTypes.LANGUAGE):
 	
 	_app_config.set_value("general", "language", _language)
 	_app_config.save(_APP_CONFIG_PATH)
+
+func set_server_game_state(server_game_state: GlobalTypes.ServerGameState):
+	_server_game_state = server_game_state
 
 func get_language() -> GlobalTypes.LANGUAGE:
 	return _language

@@ -84,6 +84,10 @@ func on_gui_input(event: InputEvent) -> void:
 		DisplayServer.virtual_keyboard_show(text, Rect2(0, 0, 0, 0), DisplayServer.KEYBOARD_TYPE_MULTILINE)
 
 func get_cleaned_text() -> String:
+	var text_length := text.length()
+	if text_length > max_character_limit:
+		return ""
+	
 	var cleaned_text := text
 	cleaned_text = cleaned_text.strip_edges()
 	var regex := RegEx.new()

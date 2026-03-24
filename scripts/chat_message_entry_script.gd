@@ -6,6 +6,8 @@ extends PanelContainer
 @export var sender_username: String
 @export var container_width: int
 @export var in_chat_index: int
+@export var min_chat_box_size: int
+@export var max_chat_box_size: int
 var timestamp: GlobalTypes.DateTime
 
 @onready var sender_username_label: Label = $username_float/username_label
@@ -24,6 +26,10 @@ var elapsed_time := 0.0
 const TIME_TO_REFRESH_TIMESTAMP := 90.0 # In seconds
 
 func _ready() -> void:
+	var text_size := HelperFunctions.measure_text(message_text)
+	var chat_box_size = clamp(text_size.x, min_chat_box_size, max_chat_box_size)
+	custom_minimum_size.x = chat_box_size
+	
 	message_label.text = message_text
 	timestamp_label.text = timestamp.get_string()
 	sender_username_label.text = sender_username

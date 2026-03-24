@@ -22,6 +22,8 @@ func _ready() -> void:
 	if AppSessionState.get_username() == author:
 		delete_post_button.show()
 		delete_post_button.connect("pressed", on_delete_post_pressed)
+	else:
+		delete_post_button.hide()
 
 func on_delete_post_pressed():
 	GlobalSignals.delete_post.emit(post_id, title)

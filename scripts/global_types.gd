@@ -14,6 +14,10 @@ class UserData:
 	var cyber_defence_level: int = 1
 	var extra_data: Dictionary = {}
 
+class ServerGameState:
+	var is_online: bool = true
+	var info_panel_text: String = "Null"
+
 class DateTime:
 	var year: int = 0
 	var month: int = 0
