@@ -113,7 +113,7 @@ secret_character = "*"
 vk_type_type = 0
 
 [node name="login_button" type="Button" parent="aspect_ration_container/login_margin/login_panel" unique_id=546174834]
-custom_minimum_size = Vector2(100, 32)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("7_qrs68")

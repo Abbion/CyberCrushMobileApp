@@ -268,8 +268,11 @@ func on_back_button_pressed() -> void:
 	close_chat()
 
 func on_message_send_button_pressed() -> void:
+	if message_input.is_text_over_character_limit():
+		PopupDisplayServer.push_error(tr("MESSAGE_OVER_TEXT_CHARACTER_LIMIT"))
+		return
+	
 	var message_to_send = message_input.get_cleaned_text()
-	message_to_send = message_to_send.strip_edges()
 	
 	if message_to_send.is_empty():
 		message_input.clear_text_box()

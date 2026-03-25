@@ -10,7 +10,6 @@ extends MarginContainer
 
 func _ready() -> void:
 	find_input.placeholder_text = place_holder
-	
 
 func on_suggestion_list_item_selected(index: int) -> void:
 	find_input.text = suggestion_list.get_item_text(index)

@@ -39,14 +39,14 @@ layout_mode = 2
 [node name="info_label" type="Label" parent="margin/transaction_elements/top_info_v_box" unique_id=1152322179]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "NEW_TRANSACTION_TITLE_KEY"
 horizontal_alignment = 1
 
 [node name="funds_label" type="Label" parent="margin/transaction_elements/top_info_v_box" unique_id=1693938772]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "AVAILABLE_FUNDS_KEY"
 horizontal_alignment = 1
 
@@ -77,12 +77,14 @@ layout_mode = 2
 theme_override_constants/separation = 32
 
 [node name="cancel_action" type="Button" parent="margin/transaction_elements/action_margin/action_v_box" unique_id=594035104]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("5_f2ci6")
 text = "CANCEL_KEY"
 
 [node name="transer_action" type="Button" parent="margin/transaction_elements/action_margin/action_v_box" unique_id=353462259]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("5_f2ci6")

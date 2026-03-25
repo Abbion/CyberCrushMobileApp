@@ -83,6 +83,9 @@ func on_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		DisplayServer.virtual_keyboard_show(text, Rect2(0, 0, 0, 0), DisplayServer.KEYBOARD_TYPE_MULTILINE)
 
+func is_text_over_character_limit() -> bool:
+	return text.length() > max_character_limit
+	
 func get_cleaned_text() -> String:
 	var text_length := text.length()
 	if text_length > max_character_limit:

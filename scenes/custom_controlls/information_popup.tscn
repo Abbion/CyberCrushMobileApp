@@ -81,14 +81,14 @@ layout_mode = 2
 
 [node name="popup_type_label" type="Label" parent="shadow/background/margin/data" unique_id=1892456124]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Info"
 
 [node name="content" type="Label" parent="shadow/background/margin/data" unique_id=556718500]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 20
 text = "Null "
 autowrap_mode = 3
 

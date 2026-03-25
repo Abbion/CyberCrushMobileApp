@@ -36,19 +36,19 @@ theme_override_constants/margin_bottom = 16
 
 [node name="actions_layout" type="VBoxContainer" parent="layouts_margin" unique_id=190021753]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 20
 
 [node name="title_label" type="Label" parent="layouts_margin/actions_layout" unique_id=287426789]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "MANAGE_CHAT_USERS_TITLE_KEY"
 horizontal_alignment = 1
 
 [node name="free_slots_label" type="Label" parent="layouts_margin/actions_layout" unique_id=462478976]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "FREE_SLOTS_DOT_KEY"
 horizontal_alignment = 1
 
@@ -58,16 +58,19 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="add_user_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=1155661314]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("3_bacik")
 text = "ADD_KEY"
 
 [node name="remove_user_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=1943700888]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("3_bacik")
 text = "DELETE_KEY"
 
 [node name="back_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=893073086]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
@@ -75,12 +78,12 @@ text = "BACK_KEY"
 [node name="add_user_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1480682698]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
 [node name="title_label" type="Label" parent="layouts_margin/add_user_layout" unique_id=1615432592]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "ADD_USER_KEY"
 horizontal_alignment = 1
 
@@ -95,13 +98,13 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
 [node name="back_button" type="Button" parent="layouts_margin/add_user_layout/add_user_actions" unique_id=1958777013]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
 
 [node name="add_button" type="Button" parent="layouts_margin/add_user_layout/add_user_actions" unique_id=1746437223]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "ADD_KEY"
@@ -109,12 +112,12 @@ text = "ADD_KEY"
 [node name="remove_user_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1695767672]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
 [node name="title_label" type="Label" parent="layouts_margin/remove_user_layout" unique_id=126645252]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "REMOVE_USER_KEY"
 horizontal_alignment = 1
 
@@ -136,17 +139,18 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
 [node name="remove_button" type="Button" parent="layouts_margin/remove_user_layout/remove_user_actions" unique_id=793532294]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "DELETE_KEY"
 
 [node name="back_button" type="Button" parent="layouts_margin/remove_user_layout/remove_user_actions" unique_id=163048799]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
 
+[connection signal="gui_input" from="." to="." method="on_gui_input"]
 [connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/add_user_button" to="." method="go_to_add_user_layout"]
 [connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/remove_user_button" to="." method="go_to_remove_user_layout"]
 [connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/back_button" to="." method="close_chat_settings"]

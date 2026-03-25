@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://l8i843cccn0j"]
+
+[ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="1_bno22"]
+[ext_resource type="StyleBox" uid="uid://bh06s1s34iiii" path="res://themes/box_styles/character_limit.tres" id="2_bno22"]
+[ext_resource type="Script" uid="uid://bddi5dees7u8j" path="res://scripts/short_text_input.gd" id="2_efb53"]
+
+[node name="short_text_input" type="VBoxContainer" unique_id=1544118219]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bno22")
+theme_override_constants/separation = 0
+script = ExtResource("2_efb53")
+
+[node name="input" type="LineEdit" parent="." unique_id=252770579]
+layout_mode = 2
+
+[node name="character_limit_margin" type="MarginContainer" parent="." unique_id=1414293630]
+layout_mode = 2
+theme_override_constants/margin_right = 4
+
+[node name="character_limit_counter" type="Label" parent="character_limit_margin" unique_id=415946249]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("2_bno22")
+text = "0/255"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="text_changed" from="input" to="." method="on_input_text_changed"]

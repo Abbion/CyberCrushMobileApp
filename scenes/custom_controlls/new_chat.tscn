@@ -38,17 +38,19 @@ text = "CREATE_CHAT_TITLE_KEY"
 horizontal_alignment = 1
 
 [node name="new_direct_chat_button" type="Button" parent="layouts_margin/new_chat_selector_layout" unique_id=1331475455]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("2_gmt4s")
 text = "CREATE_DIRECT_CHAT_KEY"
 
 [node name="new_group_chat_button" type="Button" parent="layouts_margin/new_chat_selector_layout" unique_id=1977570416]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("2_gmt4s")
 text = "CREATE_GROUP_CHAT_KEY"
 
 [node name="cancel_button" type="Button" parent="layouts_margin/new_chat_selector_layout" unique_id=1375793853]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("4_oftjk")
@@ -62,7 +64,7 @@ theme_override_constants/separation = 12
 [node name="card_title" type="Label" parent="layouts_margin/new_direct_chat_layout" unique_id=205045748]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "CREATE_DIRECT_CHAT_KEY"
 horizontal_alignment = 1
 
@@ -77,14 +79,14 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
 [node name="cancel_button" type="Button" parent="layouts_margin/new_direct_chat_layout/new_direct_chat_actions" unique_id=994079151]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("4_oftjk")
 text = "CANCEL_KEY"
 
 [node name="begin_chat_button" type="Button" parent="layouts_margin/new_direct_chat_layout/new_direct_chat_actions" unique_id=1258756503]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_oftjk")
 text = "BEGIN_CHAT_KEY"
@@ -97,7 +99,7 @@ theme_override_constants/separation = 12
 [node name="card_title" type="Label" parent="layouts_margin/new_group_chat_layout" unique_id=627803792]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "CREATE_GROUP_CHAT_KEY"
 horizontal_alignment = 1
 
@@ -105,6 +107,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme = ExtResource("2_gmt4s")
 placeholder_text = "GROUP_CHAT_TITLE"
+max_length = 32
 
 [node name="new_group_chat_actions" type="HBoxContainer" parent="layouts_margin/new_group_chat_layout" unique_id=2117665322]
 layout_mode = 2
@@ -112,14 +115,14 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
 [node name="cancel_button" type="Button" parent="layouts_margin/new_group_chat_layout/new_group_chat_actions" unique_id=207072317]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("4_oftjk")
 text = "CANCEL_KEY"
 
 [node name="begin_chat_button" type="Button" parent="layouts_margin/new_group_chat_layout/new_group_chat_actions" unique_id=2080885889]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("4_oftjk")

@@ -129,3 +129,8 @@ func on_suggestion_margin_visibility_changed() -> void:
 		add_user_actions.mouse_filter = Control.MOUSE_FILTER_PASS
 		for actions in add_user_actions.get_children():
 			actions.mouse_filter = Control.MOUSE_FILTER_STOP
+
+func on_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if add_user_layout.visible == true and new_user_suggestion_margin.visible == true:
+			add_user_input.clear()

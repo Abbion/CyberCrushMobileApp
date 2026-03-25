@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://jva5iuk5jdjb" path="res://assets/icons/news_icon.svg" id="3_modrm"]
 [ext_resource type="Texture2D" uid="uid://chuuhwk13wgw8" path="res://assets/icons/bank_icon.svg" id="4_3wr1x"]
 [ext_resource type="Texture2D" uid="uid://d18pxae7ar6ld" path="res://assets/icons/messages_icon.svg" id="5_2kamf"]
-[ext_resource type="Texture2D" uid="uid://bacofsfgjijf5" path="res://assets/icons/user_icon.svg" id="6_wh21d"]
+[ext_resource type="Texture2D" uid="uid://bjw5o8vywsb3w" path="res://assets/icons/id.svg" id="5_qxl34"]
 
 [node name="app_selector" type="ColorRect" unique_id=179221616]
 anchors_preset = 12
@@ -60,7 +60,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("6_wh21d")
+texture_normal = ExtResource("5_qxl34")
 ignore_texture_size = true
 stretch_mode = 4
 

@@ -92,7 +92,7 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 26
 text = "LOADING_DOT_KEY"
 vertical_alignment = 1
 text_overrun_behavior = 3
@@ -151,6 +151,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="message_input" parent="board_margin/board/message_input_margin/message_input_panel" unique_id=2090216064 instance=ExtResource("4_3756x")]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_ahqx6")

@@ -5,7 +5,7 @@ extends Control
 
 @onready var decoration_separator: HSeparator = $main_margin/news_container/decoration_separator
 @onready var post_background: PanelContainer = $main_margin/news_container/post_background
-@onready var title_input: LineEdit = $main_margin/news_container/post_background/inner_margin/post_box/title_input
+@onready var title_input: VBoxContainer = $main_margin/news_container/post_background/inner_margin/post_box/title_input
 @onready var content_input: TextEdit = $main_margin/news_container/post_background/inner_margin/post_box/content_input
 @onready var clear_buttton: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/clear_button
 @onready var publish_button: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/publish_button
@@ -51,7 +51,8 @@ func send_article():
 	if !AppSessionState.can_publish_posts():
 		return
 	
-	var title := title_input.text
+	
+	var title: String = title_input.get_cleaned_text()
 	if title.length() < 3:
 		PopupDisplayServer.push_warning(tr("POST_TITLE_TOO_SHORT"))
 		return
@@ -82,7 +83,7 @@ func send_article():
 	feed.add_child(article_entry)
 	feed.move_child(article_entry, 0)
 	
-	title_input.clear()
+	title_input.clear_text_box()
 	content_input.clear_text_box()
 
 func on_publish_button_pressed() -> void:
@@ -93,7 +94,7 @@ func on_publish_button_pressed() -> void:
 	clear_buttton.disabled = false
 
 func on_clear_button_pressed() -> void:
-	title_input.clear()
+	title_input.clear_text_box()
 	content_input.clear_text_box()
 
 func on_tree_entered() -> void:

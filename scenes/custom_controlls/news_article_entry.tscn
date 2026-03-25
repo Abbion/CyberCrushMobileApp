@@ -56,7 +56,7 @@ mouse_filter = 2
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_color = Color(1, 0, 0.6156863, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 18
 text = "Date null"
 
 [node name="title_label" type="Label" parent="article_margin/inner_margin/article" unique_id=343856240]
@@ -70,7 +70,7 @@ autowrap_mode = 3
 [node name="content_label" type="Label" parent="article_margin/inner_margin/article" unique_id=371311764]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 text = "Content null"
 autowrap_mode = 3
 
@@ -88,7 +88,7 @@ theme_override_constants/separation = 8
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_m7ei6")
 text = "Author null"
 
