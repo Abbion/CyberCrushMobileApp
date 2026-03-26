@@ -3,8 +3,8 @@ extends Node
 
 var main_font: Font = preload("res://assets/fonts/VT323-Regular.ttf")
 
-func measure_text(text: String) -> Vector2:
-	return main_font.get_string_size(text)
+func measure_text(text: String, font_size: int = 20) -> Vector2:
+	return main_font.get_string_size(text, 0, -1, font_size)
 
 func fuzzy_string(str_1: String, str_2: String) -> float:	
 	if str_1.is_empty() and str_2.is_empty():

@@ -14,6 +14,7 @@ var timestamp: GlobalTypes.DateTime
 @onready var message_label: Label = $inner_message_margin/inner_message_v_box/message_panel/message_margin/message_label
 @onready var timestamp_label: Label = $inner_message_margin/inner_message_v_box/timestamp_margin/timestamp_label
 @onready var message_panel: PanelContainer = $inner_message_margin/inner_message_v_box/message_panel
+@onready var copy_timer: Timer = $copy_timer
 
 var outline_style: StyleBox = preload("res://themes/box_styles/panel_container_light_outline.tres")
 var fill_style: StyleBox = preload("res://themes/box_styles/panel_container_light_fill.tres")
@@ -81,5 +82,20 @@ func on_message_label_resized() -> void:
 		anchor = max(anchor, timestamp_width / viewport_width)
 		
 		anchor_right = anchor
-		
+	
 	text_resized = true
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			copy_timer.start()
+		else:
+			copy_timer.stop()
+	
+	if event is InputEventScreenDrag:
+		copy_timer.stop()
+
+func on_copy_timer_timeout() -> void:
+	PopupDisplayServer.push_info("Wiadomość skopiowana")
+	DisplayServer.clipboard_set(message_label.text)
+	Input.vibrate_handheld(100, 0.25)

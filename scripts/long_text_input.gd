@@ -66,7 +66,7 @@ func update_text_length():
 	else:
 		character_limit_counter_label.add_theme_color_override("font_color", under_character_limit_labal_color)
 	
-	character_limit_counter_label.text = "%s/%s" % [text_length, max_character_limit]
+	character_limit_counter_label.text = "%s/%s" % [min(999, text_length), max_character_limit]
 
 func update_limit_counter_label() -> void:
 	if character_limit_anchor != CHARACTER_LIMIT_ANCHOR.IN_TEXT_INPUT:
@@ -75,7 +75,7 @@ func update_limit_counter_label() -> void:
 	var v_scroll := get_v_scroll_bar()
 	if v_scroll.visible == true:
 		var l_padding := v_scroll.get_theme_constant("padding_left");
-		character_limit_margin.add_theme_constant_override("margin_right", -int(v_scroll.size.x - l_padding / 2.0))
+		character_limit_margin.add_theme_constant_override("margin_right", -int(v_scroll.size.x + l_padding))
 	else:
 		character_limit_margin.add_theme_constant_override("margin_right", initial_character_limit_right_margin)
 

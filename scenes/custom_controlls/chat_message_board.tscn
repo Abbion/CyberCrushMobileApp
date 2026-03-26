@@ -163,7 +163,7 @@ over_character_limit_labal_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
 
 [node name="message_send_button" type="Button" parent="board_margin/board/message_input_margin/message_input_panel" unique_id=1303142549]
 editor_description = "vk"
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 theme = ExtResource("9_36jjd")

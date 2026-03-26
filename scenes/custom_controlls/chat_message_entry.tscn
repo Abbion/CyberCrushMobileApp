@@ -82,4 +82,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_uj6q6")
 text = "username"
 vertical_alignment = 1
 
+[node name="copy_timer" type="Timer" parent="." unique_id=731377720]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="resized" from="inner_message_margin/inner_message_v_box/message_panel/message_margin/message_label" to="." method="on_message_label_resized"]
+[connection signal="timeout" from="copy_timer" to="." method="on_copy_timer_timeout"]
