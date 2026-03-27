@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://1m4opeh0nxo1"]
 
 [ext_resource type="Script" uid="uid://c8pwjporhbij8" path="res://scripts/app_selector_script.gd" id="1_qxl34"]
-[ext_resource type="Texture2D" uid="uid://jva5iuk5jdjb" path="res://assets/icons/news_icon.svg" id="3_modrm"]
-[ext_resource type="Texture2D" uid="uid://chuuhwk13wgw8" path="res://assets/icons/bank_icon.svg" id="4_3wr1x"]
+[ext_resource type="Texture2D" uid="uid://ctfx3wlhbqr5h" path="res://assets/icons/news.svg" id="2_qxl34"]
+[ext_resource type="Texture2D" uid="uid://67gonmqgsqn" path="res://assets/icons/bank.svg" id="3_modrm"]
 [ext_resource type="Texture2D" uid="uid://d18pxae7ar6ld" path="res://assets/icons/messages_icon.svg" id="5_2kamf"]
 [ext_resource type="Texture2D" uid="uid://bjw5o8vywsb3w" path="res://assets/icons/id.svg" id="5_qxl34"]
 
@@ -33,7 +33,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("3_modrm")
+texture_normal = ExtResource("2_qxl34")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -42,7 +42,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("4_3wr1x")
+texture_normal = ExtResource("3_modrm")
 ignore_texture_size = true
 stretch_mode = 4
 
