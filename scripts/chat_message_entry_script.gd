@@ -96,6 +96,6 @@ func _on_gui_input(event: InputEvent) -> void:
 		copy_timer.stop()
 
 func on_copy_timer_timeout() -> void:
-	PopupDisplayServer.push_info("Wiadomość skopiowana")
+	PopupDisplayServer.push_info(tr("MESSAGE_COPIED"))
 	DisplayServer.clipboard_set(message_label.text)
 	Input.vibrate_handheld(100, 0.25)

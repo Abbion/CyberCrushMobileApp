@@ -50,8 +50,7 @@ func refresh_news_feed():
 func send_article():
 	if !AppSessionState.can_publish_posts():
 		return
-	
-	
+
 	var title: String = title_input.get_cleaned_text()
 	if title.length() < 3:
 		PopupDisplayServer.push_warning(tr("POST_TITLE_TOO_SHORT"))
