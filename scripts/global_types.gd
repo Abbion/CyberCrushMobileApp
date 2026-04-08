@@ -102,7 +102,12 @@ class DateTime:
 		return total_minutes
 	
 	func get_string() -> String:
-		var default_format := "%02d/%02d/%s %02d:%02d" %[day, month, year, hour, minute]
+		var display_year = year
+		
+		if GlobalConstants.OVERRIDE_CUSTOM_YEAR == true:
+			display_year = GlobalConstants.CUSTOM_YEAR
+		
+		var default_format := "%02d/%02d/%s %02d:%02d" %[day, month, display_year, hour, minute]
 		var minutes_for_default_format := 24 * 60;
 		var current_datetime := now()
 		
