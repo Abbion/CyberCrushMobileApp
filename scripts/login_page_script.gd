@@ -30,7 +30,7 @@ func _ready() -> void:
 			await request_app_state_variables()
 			load_main_page();
 			return
-	
+
 	unlock_input()
 
 func _process(_delta: float) -> void:
@@ -85,11 +85,6 @@ func unlock_input():
 
 func on_show_saved_users_button_pressed() -> void:
 	saved_users_list.visible = !saved_users_list.visible
-	
-	if saved_users_list.visible == true:
-		show_saved_users_button.icon = up_arrow_icon
-	else:
-		show_saved_users_button.icon = down_arrow_icon
 
 func load_saved_user_credentials() -> void:
 	var all_credentials := UserManager.get_all_saved_credentials()
@@ -166,3 +161,12 @@ func on_username_input_focus_entered() -> void:
 func on_language_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		language_selector.show_popup()
+
+func on_saved_users_list_visibility_changed() -> void:
+	if saved_users_list == null:
+		return
+
+	if saved_users_list.visible == true:
+		show_saved_users_button.icon = up_arrow_icon
+	else:
+		show_saved_users_button.icon = down_arrow_icon

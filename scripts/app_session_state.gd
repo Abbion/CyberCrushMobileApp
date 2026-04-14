@@ -21,7 +21,7 @@ func _ready() -> void:
 		_language = _app_config.get_value("general", "language", GlobalTypes.LANGUAGE.ENGLISH)
 	
 	set_language(_language)
-	if OS.get_name() in ["Android", "iOS"]:
+	if OS.get_name() in ["Android", "iOS", "Web"]:
 		_is_mobile = true
 
 func os_is_mobile() -> bool:

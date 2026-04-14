@@ -105,3 +105,4 @@ FAILED_TO_OBTAIN_GAME_STATE,Failed to obtain game state,Błąd pozyksania status
 MESSAGE_OVER_TEXT_CHARACTER_LIMIT,Message is over character limit,Wiadomość przekroczyła ograniczenie znaków
 MESSAGE_COPIED,The message was copied,Wiadomość została skopiowana
 TITLE_CANNOT_BE_EMPTY,The post title cannot be empty,Tytuł posta nie może być pusty
+GAME_IS_OFFLINE,The game did not start yet,Gra jeszcze nie wystartowała

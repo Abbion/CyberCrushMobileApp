@@ -31,7 +31,7 @@ func build_data_entires(user_data: GlobalTypes.UserData) -> void:
 	user_code_label.text = str(user_data.personal_number)
 	
 	var cyber_defence_attribute_instance = user_attribute_entry.instantiate()
-	cyber_defence_attribute_instance.key = "Cyber defence pack"
+	cyber_defence_attribute_instance.key = "cyber defence pack"
 	cyber_defence_attribute_instance.value = GlobalConstants.CYBER_DEFENCE_PACK_NAME[user_data.cyber_defence_level]
 	attributes.add_child(cyber_defence_attribute_instance)
 	

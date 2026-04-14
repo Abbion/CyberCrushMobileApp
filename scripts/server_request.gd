@@ -16,7 +16,7 @@ enum GroupChatUpdateAction {
 const use_ssl = true
 const use_ports = false
 
-const web_ip = "kijankainabox.pl"
+const web_ip = "cybercrushlarpepone.online"
 const dev_ip = "127.0.0.1"
 const local_ip = "192.168.50.162"
 const current_ip = web_ip

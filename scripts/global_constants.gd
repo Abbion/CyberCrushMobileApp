@@ -21,5 +21,7 @@ const RED_COLOR_1: Color = Color("ea1e55")
 const GREEN_COLOR_1: Color = Color("14ff9d")
 const BLUE_COLOR_1: Color = Color("34b9beff")
 
-const OVERRIDE_CUSTOM_YEAR = true
-const CUSTOM_YEAR = 2065
+const OVERRIDE_CUSTOM_YEAR: bool = true
+const CUSTOM_YEAR: int = 2065
+
+const TRANSLATION_MARK: String = "#TR-"

@@ -59,13 +59,13 @@ func on_app_selector_bank_selected() -> void:
 	if game_start:
 		change_panel(bank_panel_scene)
 	else:
-		change_to_info_panel("INFO_MESSAGE_GAME_NOT_STARTED")
+		change_to_info_panel(AppSessionState.get_info_panel_text())
 	
 func on_app_selector_messages_selected() -> void:
 	if game_start:
 		change_panel(chat_panel_scene)
 	else:
-		change_to_info_panel("INFO_MESSAGE_GAME_NOT_STARTED")
+		change_to_info_panel(AppSessionState.get_info_panel_text())
 
 func on_app_selector_my_id_selected() -> void:
 	change_panel(id_panel_scene)

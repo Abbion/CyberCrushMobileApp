@@ -200,12 +200,13 @@ offset_right = 85.0
 offset_bottom = -10.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
-text = "Ver 0.2.1"
+text = "Ver 0.2.2"
 
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/username_input" to="." method="on_username_input_focus_entered"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/show_saved_users_button" to="." method="on_show_saved_users_button_pressed"]
 [connection signal="item_clicked" from="aspect_ration_container/login_margin/login_panel/username_settings/saved_users_list" to="." method="on_saved_users_list_item_clicked"]
+[connection signal="visibility_changed" from="aspect_ration_container/login_margin/login_panel/username_settings/saved_users_list" to="." method="on_saved_users_list_visibility_changed"]
 [connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/password_input" to="." method="on_password_input_focus_entered"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/login_button" to="." method="on_login_button_pressed"]
 [connection signal="gui_input" from="language_panel" to="." method="on_language_panel_gui_input"]
