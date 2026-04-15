@@ -28,7 +28,7 @@ theme_override_constants/margin_bottom = 32
 
 [node name="new_chat_selector_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1482884788]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 24
 
 [node name="new_chat_label" type="Label" parent="layouts_margin/new_chat_selector_layout" unique_id=1513979303]
 layout_mode = 2
@@ -59,7 +59,7 @@ text = "CANCEL_KEY"
 [node name="new_direct_chat_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1895653476]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 32
 
 [node name="card_title" type="Label" parent="layouts_margin/new_direct_chat_layout" unique_id=205045748]
 layout_mode = 2
@@ -94,7 +94,7 @@ text = "BEGIN_CHAT_KEY"
 [node name="new_group_chat_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1201088462]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 32
 
 [node name="card_title" type="Label" parent="layouts_margin/new_group_chat_layout" unique_id=627803792]
 layout_mode = 2

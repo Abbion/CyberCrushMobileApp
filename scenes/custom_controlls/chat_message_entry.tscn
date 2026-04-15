@@ -56,7 +56,6 @@ size_flags_vertical = 6
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 20
 text = "Null"
-autowrap_mode = 3
 
 [node name="timestamp_margin" type="MarginContainer" parent="inner_message_margin/inner_message_v_box" unique_id=1790600533]
 layout_mode = 2

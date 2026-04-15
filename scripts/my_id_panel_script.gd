@@ -39,7 +39,21 @@ func build_data_entires(user_data: GlobalTypes.UserData) -> void:
 		var user_attribute_instance = user_attribute_entry.instantiate()
 		user_attribute_instance.key = key
 		#TODO check the type of extra_data[key] and convert float, int, bool into str
-		user_attribute_instance.value = str(user_data.extra_data[key])
+		
+		var attribute_value = user_data.extra_data[key]
+		
+		if typeof(attribute_value) == TYPE_FLOAT:
+			var value_as_int = int(attribute_value)
+			var can_be_int = attribute_value - value_as_int == 0
+			
+			if can_be_int:
+				user_attribute_instance.value = str(value_as_int)
+			else:
+				user_attribute_instance.value = str(attribute_value)
+			
+		else:
+			user_attribute_instance.value = str(attribute_value)
+		
 		attributes.add_child(user_attribute_instance)
 
 func _on_logout_button_button_down() -> void:

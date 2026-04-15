@@ -10,6 +10,7 @@
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 28.0
+grow_horizontal = 2
 color = Color(1, 0, 0.6156863, 1)
 script = ExtResource("1_ph4a7")
 
@@ -28,8 +29,19 @@ theme_override_constants/margin_bottom = 4
 [node name="bar_elements_container" type="HBoxContainer" parent="top_bar_margin" unique_id=629534633]
 layout_mode = 2
 
-[node name="cyber_defence_icon" type="TextureRect" parent="top_bar_margin/bar_elements_container" unique_id=916475529]
+[node name="date_time" type="Label" parent="top_bar_margin/bar_elements_container" unique_id=327355719]
 layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 20
+text = "12:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cyber_defence_icon" type="TextureRect" parent="top_bar_margin/bar_elements_container/date_time" unique_id=916475529]
+layout_mode = 0
+offset_left = -24.0
+offset_right = -4.0
+offset_bottom = 20.0
 size_flags_horizontal = 10
 texture = ExtResource("2_ph4a7")
 expand_mode = 2
@@ -38,13 +50,5 @@ base_pack_texture = ExtResource("2_ph4a7")
 plus_pack_texture = ExtResource("4_cbpmj")
 pro_pack_texture = ExtResource("5_k8sur")
 
-[node name="date_time" type="Label" parent="top_bar_margin/bar_elements_container" unique_id=327355719]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 20
-text = "12:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="tree_entered" from="top_bar_margin/bar_elements_container/cyber_defence_icon" to="top_bar_margin/bar_elements_container/cyber_defence_icon" method="on_tree_entered"]
-[connection signal="tree_exiting" from="top_bar_margin/bar_elements_container/cyber_defence_icon" to="top_bar_margin/bar_elements_container/cyber_defence_icon" method="on_tree_exiting"]
+[connection signal="tree_entered" from="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" to="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" method="on_tree_entered"]
+[connection signal="tree_exiting" from="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" to="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" method="on_tree_exiting"]

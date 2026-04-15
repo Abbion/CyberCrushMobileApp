@@ -638,7 +638,7 @@ func create_direct_chat(partner_username: String) -> int:
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
 		"partner_username" : partner_username,
-		"creation_message" : AppSessionState.get_username() + (" %" % tr("START_CHAT_MESSAGE"))
+		"creation_message" : AppSessionState.get_username() + (" %s" % tr("START_CHAT_MESSAGE"))
 	}
 
 	var request_state = create_direct_chat_request.request(create_direct_chat_url,

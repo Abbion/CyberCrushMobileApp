@@ -51,14 +51,13 @@ func _process(delta: float) -> void:
 func on_message_label_resized() -> void:
 	if text_resized or message_label == null:
 		return
-		
+	
 	var text_length = message_label.text.length()
 	
 	if text_length == 0:
 		return
 	
-	var last_character := message_label.get_character_bounds(text_length - 1)
-	var message_width := last_character.position.x + last_character.size.x
+	var message_width := HelperFunctions.measure_text(message_label.text, message_label.get_theme_font_size("font_size")).x
 	var viewport_width := get_viewport_rect().size.x
 	var max_message_width := viewport_width * max_message_width_ratio
 	
