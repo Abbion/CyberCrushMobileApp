@@ -126,14 +126,28 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 
-[node name="scroll_message_log" type="ScrollContainer" parent="board_margin/board/message_log_margin" unique_id=65225126]
+[node name="message_log_content" type="VBoxContainer" parent="board_margin/board/message_log_margin" unique_id=476956467]
+layout_mode = 2
+
+[node name="spinner_container" type="PanelContainer" parent="board_margin/board/message_log_margin/message_log_content" unique_id=537380790]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_2f82o")
+
+[node name="spinner" parent="board_margin/board/message_log_margin/message_log_content/spinner_container" unique_id=1447493239 instance=ExtResource("5_2xdun")]
+layout_mode = 2
+size_flags_horizontal = 4
+spinner_size = 30.0
+
+[node name="scroll_message_log" type="ScrollContainer" parent="board_margin/board/message_log_margin/message_log_content" unique_id=65225126]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("7_tqane")
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="message_log" type="VBoxContainer" parent="board_margin/board/message_log_margin/scroll_message_log" unique_id=1769459601]
+[node name="message_log" type="VBoxContainer" parent="board_margin/board/message_log_margin/message_log_content/scroll_message_log" unique_id=1769459601]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

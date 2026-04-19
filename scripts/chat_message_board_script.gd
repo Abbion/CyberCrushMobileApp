@@ -12,8 +12,9 @@ var locketd_message_input_height: int = 0
 var chunk_counter: int = 0
 var scroll_to_new_chunk: bool = false
 
-@onready var message_scroll_log: ScrollContainer = $board_margin/board/message_log_margin/scroll_message_log
-@onready var message_log: VBoxContainer  = $board_margin/board/message_log_margin/scroll_message_log/message_log
+@onready var message_scroll_log: ScrollContainer = $board_margin/board/message_log_margin/message_log_content/scroll_message_log
+@onready var message_log: VBoxContainer = $board_margin/board/message_log_margin/message_log_content/scroll_message_log/message_log
+@onready var old_message_spinner_container: PanelContainer = $board_margin/board/message_log_margin/message_log_content/spinner_container
 @onready var title_label: Label = $board_margin/board/top_panel/top_bar_container/title
 @onready var message_input: TextEdit = $board_margin/board/message_input_margin/message_input_panel/message_input
 @onready var chat_settings_margin: MarginContainer = $board_margin/board/top_panel/top_bar_container/chat_settings_margin
@@ -194,6 +195,8 @@ var lock_requesting_chat_history = false
 func load_older_messages() -> void:
 	if lock_requesting_chat_history == true:
 		return
+		
+	old_message_spinner_container.show()
 	
 	lock_requesting_chat_history = true
 	
@@ -208,6 +211,7 @@ func load_older_messages() -> void:
 	scroll_to_new_chunk = true
 	
 	lock_requesting_chat_history = false
+	old_message_spinner_container.hide()
 
 func buld_chat_chunk(messages: Array) -> void:
 	var chunk := VBoxContainer.new()
@@ -337,8 +341,9 @@ func on_settings_panel_closed(_settings: Node) -> void:
 	settings_overlay.hide()
 
 func close_chat() -> void:
-	disconnect_from_chat();
-	clear_chat();
+	disconnect_from_chat()
+	scroll_to_bottom()
+	clear_chat()
 	GlobalSignals.close_chat_board.emit()
 	spinner_container.show()
 
