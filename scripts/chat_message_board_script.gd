@@ -314,6 +314,9 @@ func create_message_entry(index: int, message: String, sender: String, dateTime:
 	message_entry_object.container_width = container_width
 	message_entry_object.min_chat_box_size = 120
 	message_entry_object.max_chat_box_size = 300
+	
+	#Make message transparent -> AnimationPlayer in the message entry will make it appear
+	message_entry_object.modulate.a = 0
 	return message_entry_object
 
 func scroll_to_bottom() -> void:

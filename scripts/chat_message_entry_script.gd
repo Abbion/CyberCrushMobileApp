@@ -15,6 +15,7 @@ var timestamp: GlobalTypes.DateTime
 @onready var timestamp_label: Label = $inner_message_margin/inner_message_v_box/timestamp_margin/timestamp_label
 @onready var message_panel: PanelContainer = $inner_message_margin/inner_message_v_box/message_panel
 @onready var copy_timer: Timer = $copy_timer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var outline_style: StyleBox = preload("res://themes/box_styles/panel_container_light_outline.tres")
 var fill_style: StyleBox = preload("res://themes/box_styles/panel_container_light_fill.tres")
@@ -41,6 +42,8 @@ func _ready() -> void:
 		timestamp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		message_panel.add_theme_stylebox_override("panel", fill_style)
 		message_label.add_theme_color_override("font_color", Color.BLACK)
+
+	animation_player.play("pop_up")
 
 func _process(delta: float) -> void:
 	elapsed_time += delta
