@@ -58,7 +58,7 @@ func refresh_user_bank_account() -> void:
 		
 	await update_transaction_history()
 	user_funds = await ServerRequest.bank_funds()
-	funds_label.text = tr("AVAILABLE_FUNDS_KEY") + ": " + str(user_funds)
+	funds_label.text = tr("AVAILABLE_FUNDS_KEY") + ": " + str(user_funds) + GlobalConstants.MONEY_SYMBOL
 	
 	spinner_container.hide()
 	transactions_scroll.show()

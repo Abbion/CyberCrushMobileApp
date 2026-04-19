@@ -21,7 +21,7 @@ func _ready() -> void:
 func update_user_funds() -> void:
 	var funds = await ServerRequest.bank_funds()
 	user_funds = funds
-	funds_label.text =  tr("AVAILABLE_FUNDS_KEY") + ": " + str(user_funds)
+	funds_label.text =  tr("AVAILABLE_FUNDS_KEY") + ": " + str(user_funds) + GlobalConstants.MONEY_SYMBOL
 
 func on_transer_action_pressed() -> void:
 	if recepiant_input.is_in_suggestions() == false:

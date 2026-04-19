@@ -25,3 +25,5 @@ const OVERRIDE_CUSTOM_YEAR: bool = true
 const CUSTOM_YEAR: int = 2065
 
 const TRANSLATION_MARK: String = "#TR-"
+
+const MONEY_SYMBOL = "¥"
