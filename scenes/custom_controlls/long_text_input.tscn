@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://qd4sea1drih0" path="res://scripts/long_text_input.gd" id="1_77yd6"]
 [ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="1_s06oq"]
+[ext_resource type="Texture2D" uid="uid://gaw086dgid2v" path="res://assets/images/circle_loader.png" id="3_1npx8"]
 
 [node name="long_text_input" type="TextEdit" unique_id=714521716]
 anchors_preset = 15
@@ -40,6 +41,20 @@ theme_override_font_sizes/font_size = 16
 text = "23/255"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="character_limit_progress" type="TextureProgressBar" parent="character_limit_margin" unique_id=326957049]
+texture_filter = 2
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+value = 51.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("3_1npx8")
+texture_progress = ExtResource("3_1npx8")
+tint_under = Color(0, 0, 0, 1)
+tint_progress = Color(1, 0, 0.016666412, 1)
 
 [connection signal="gui_input" from="." to="." method="on_gui_input"]
 [connection signal="text_changed" from="." to="." method="on_text_changed"]

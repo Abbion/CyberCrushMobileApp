@@ -60,6 +60,7 @@ layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="top_decoration" type="TextureRect" parent="main_margin/news_container" unique_id=563894614]
+texture_repeat = 2
 layout_mode = 2
 texture = ExtResource("3_hyf1r")
 expand_mode = 5
@@ -107,8 +108,8 @@ placeholder_text = "CONTENT_KEY"
 character_limit_anchor = 1
 max_visible_lines = 5
 max_character_limit = 255
-over_character_limit_labal_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
-under_character_limit_labal_color = Color(1, 1, 1, 1)
+under_character_limit_color = Color(1, 1, 1, 1)
+over_character_limit_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
 
 [node name="separator" type="Panel" parent="main_margin/news_container/post_background/inner_margin/post_box" unique_id=1875504056]
 layout_mode = 2

@@ -6,34 +6,49 @@ enum CHARACTER_LIMIT_ANCHOR {
 	OUTSIDE_TEXT_INPUT
 }
 
+enum CHARACTER_LIMIT_TYPE {
+	TEXT,
+	CIRCLE_PROGRESS
+}
+
 @export var character_limit_anchor: CHARACTER_LIMIT_ANCHOR = CHARACTER_LIMIT_ANCHOR.IN_TEXT_INPUT
+@export var character_limit_type: CHARACTER_LIMIT_TYPE = CHARACTER_LIMIT_TYPE.TEXT
 @export var max_visible_lines: int = 3
 @export var max_character_limit: int = 12
-@export var over_character_limit_labal_color: Color
-@export var under_character_limit_labal_color: Color
+@export var under_character_limit_color: Color
+@export var over_character_limit_color: Color
 
 @onready var character_limit_counter_label: Label = $character_limit_margin/character_limit_counter
+@onready var character_limit_counter_progress: TextureProgressBar = $character_limit_margin/character_limit_progress
 @onready var character_limit_margin: MarginContainer = $character_limit_margin
 
 var outside_text_input_style: StyleBoxFlat = preload("res://themes/box_styles/character_limit.tres")
 
 const min_visible_lines: int = 1
 var vertical_margins: float = 0.0
-var initial_character_limit_right_margin: int = 0
 
 func _ready() -> void:
 	character_limit_counter_label.text = "0/%s" % max_character_limit
-	get_v_scroll_bar().visibility_changed.connect(update_limit_counter_label)
+	character_limit_counter_progress.max_value = max_character_limit
+	character_limit_counter_progress.value = 0
+	
+	get_v_scroll_bar().visibility_changed.connect(update_limit_label)
 	var stylebox = get_theme_stylebox("normal")
 	var margin_bottom = stylebox.content_margin_bottom if stylebox.content_margin_bottom > 0 else 0
 	var margin_top = stylebox.content_margin_top if stylebox.content_margin_top > 0 else 0
 	
 	vertical_margins = margin_bottom + margin_top
-	initial_character_limit_right_margin = character_limit_margin.get_theme_constant("margin_right")
 	
 	check_for_resize_text_input()
 	update_text_length()
-	update_character_limit_anchor()
+	update_character_limit_position()
+	
+	if character_limit_type == CHARACTER_LIMIT_TYPE.TEXT:
+		character_limit_counter_progress.hide()
+		character_limit_counter_label.show()
+	else:
+		character_limit_counter_progress.show()
+		character_limit_counter_label.hide()
 
 func on_text_changed() -> void:
 	check_for_resize_text_input()
@@ -61,23 +76,26 @@ func update_scroll_to_bottom() -> void:
 func update_text_length():
 	var text_length := text.length()
 	
+	character_limit_counter_progress.value = text_length
+	
 	if text_length > max_character_limit:
-		character_limit_counter_label.add_theme_color_override("font_color", over_character_limit_labal_color)
+		character_limit_counter_label.add_theme_color_override("font_color", over_character_limit_color)
+		character_limit_counter_progress.tint_progress = over_character_limit_color
 	else:
-		character_limit_counter_label.add_theme_color_override("font_color", under_character_limit_labal_color)
+		character_limit_counter_label.add_theme_color_override("font_color", under_character_limit_color)
+		character_limit_counter_progress.tint_progress = under_character_limit_color
 	
 	character_limit_counter_label.text = "%s/%s" % [min(999, text_length), max_character_limit]
 
-func update_limit_counter_label() -> void:
-	if character_limit_anchor != CHARACTER_LIMIT_ANCHOR.IN_TEXT_INPUT:
+func update_limit_label() -> void:
+	if character_limit_anchor == CHARACTER_LIMIT_ANCHOR.OUTSIDE_TEXT_INPUT:
 		return
 	
 	var v_scroll := get_v_scroll_bar()
 	if v_scroll.visible == true:
-		var l_padding := v_scroll.get_theme_constant("padding_left");
-		character_limit_margin.add_theme_constant_override("margin_right", -int(v_scroll.size.x + l_padding))
+		character_limit_margin.add_theme_constant_override("margin_right", int(-v_scroll.size.x))
 	else:
-		character_limit_margin.add_theme_constant_override("margin_right", initial_character_limit_right_margin)
+		character_limit_margin.add_theme_constant_override("margin_right", 0)
 
 func on_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
@@ -98,9 +116,9 @@ func get_cleaned_text() -> String:
 	cleaned_text = regex.sub(cleaned_text, "\n", true)
 	return cleaned_text
 
-func update_character_limit_anchor() -> void:
+func update_character_limit_position() -> void:
 	if character_limit_anchor == CHARACTER_LIMIT_ANCHOR.IN_TEXT_INPUT:
-		character_limit_margin.add_theme_constant_override("margin_bottom", 0)
+		character_limit_margin.add_theme_constant_override("margin_bottom", 4)
 	elif character_limit_anchor == CHARACTER_LIMIT_ANCHOR.OUTSIDE_TEXT_INPUT:
 		var font_size = character_limit_counter_label.get_theme_font_size("font_size")
 		var margins = outside_text_input_style.content_margin_bottom + outside_text_input_style.content_margin_top

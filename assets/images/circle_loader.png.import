@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc6bctwjnpiqf"
-path="res://.godot/imported/temp_spinner.png-0c41a4ca82b4a0e25c58a21cdbbb5ffa.ctex"
+uid="uid://gaw086dgid2v"
+path="res://.godot/imported/circle_loader.png-70bd1b37348b2e0138542da69dcbc028.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/temp_spinner.png"
-dest_files=["res://.godot/imported/temp_spinner.png-0c41a4ca82b4a0e25c58a21cdbbb5ffa.ctex"]
+source_file="res://assets/images/circle_loader.png"
+dest_files=["res://.godot/imported/circle_loader.png-70bd1b37348b2e0138542da69dcbc028.ctex"]
 
 [params]
 

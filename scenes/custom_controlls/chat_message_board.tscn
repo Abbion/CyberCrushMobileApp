@@ -171,9 +171,11 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_ahqx6")
 theme_override_styles/focus = SubResource("StyleBoxFlat_yxt3j")
 placeholder_text = "WRITE_YOUR_MESSAGE"
+character_limit_type = 1
 max_visible_lines = 5
 max_character_limit = 512
-over_character_limit_labal_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
+under_character_limit_color = Color(1, 0, 0.6156863, 1)
+over_character_limit_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
 
 [node name="message_send_button" type="Button" parent="board_margin/board/message_input_margin/message_input_panel" unique_id=1303142549]
 editor_description = "vk"
