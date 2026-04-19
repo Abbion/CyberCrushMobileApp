@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://67gonmqgsqn" path="res://assets/icons/bank.svg" id="3_modrm"]
 [ext_resource type="Texture2D" uid="uid://d18pxae7ar6ld" path="res://assets/icons/messages_icon.svg" id="5_2kamf"]
 [ext_resource type="Texture2D" uid="uid://bjw5o8vywsb3w" path="res://assets/icons/id.svg" id="5_qxl34"]
+[ext_resource type="StyleBox" uid="uid://db44ltxgfrbr1" path="res://themes/box_styles/line_transparent.tres" id="6_modrm"]
 
 [node name="app_selector" type="ColorRect" unique_id=179221616]
 anchors_preset = 12
@@ -18,17 +19,21 @@ size_flags_horizontal = 0
 color = Color(0, 0, 0, 1)
 script = ExtResource("1_qxl34")
 
-[node name="app_selector_container" type="HBoxContainer" parent="." unique_id=1537564464]
+[node name="app_selector_stack" type="VBoxContainer" parent="." unique_id=972094108]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="app_selector_container" type="HBoxContainer" parent="app_selector_stack" unique_id=1537564464]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 65
 alignment = 1
 
-[node name="socials" type="TextureButton" parent="app_selector_container" unique_id=1024598353]
+[node name="socials" type="TextureButton" parent="app_selector_stack/app_selector_container" unique_id=1024598353]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -37,7 +42,7 @@ texture_normal = ExtResource("2_qxl34")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="bank" type="TextureButton" parent="app_selector_container" unique_id=788676358]
+[node name="bank" type="TextureButton" parent="app_selector_stack/app_selector_container" unique_id=788676358]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -46,7 +51,7 @@ texture_normal = ExtResource("3_modrm")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="chat" type="TextureButton" parent="app_selector_container" unique_id=480944337]
+[node name="chat" type="TextureButton" parent="app_selector_stack/app_selector_container" unique_id=480944337]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -55,7 +60,7 @@ texture_normal = ExtResource("5_2kamf")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="my_id" type="TextureButton" parent="app_selector_container" unique_id=952038588]
+[node name="my_id" type="TextureButton" parent="app_selector_stack/app_selector_container" unique_id=952038588]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -64,7 +69,12 @@ texture_normal = ExtResource("5_qxl34")
 ignore_texture_size = true
 stretch_mode = 4
 
-[connection signal="pressed" from="app_selector_container/socials" to="." method="on_socials_pressed"]
-[connection signal="pressed" from="app_selector_container/bank" to="." method="on_bank_pressed"]
-[connection signal="pressed" from="app_selector_container/chat" to="." method="on_chat_pressed"]
-[connection signal="pressed" from="app_selector_container/my_id" to="." method="on_my_id_pressed"]
+[node name="free_space" type="HSeparator" parent="app_selector_stack" unique_id=834778163]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = ExtResource("6_modrm")
+
+[connection signal="pressed" from="app_selector_stack/app_selector_container/socials" to="." method="on_socials_pressed"]
+[connection signal="pressed" from="app_selector_stack/app_selector_container/bank" to="." method="on_bank_pressed"]
+[connection signal="pressed" from="app_selector_stack/app_selector_container/chat" to="." method="on_chat_pressed"]
+[connection signal="pressed" from="app_selector_stack/app_selector_container/my_id" to="." method="on_my_id_pressed"]

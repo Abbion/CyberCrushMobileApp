@@ -7,10 +7,10 @@ enum AppPanels {
 	ID
 }
 
-@onready var socials_button: TextureButton = $app_selector_container/socials
-@onready var bank_button: TextureButton = $app_selector_container/bank
-@onready var chat_button: TextureButton = $app_selector_container/chat
-@onready var my_id_button: TextureButton = $app_selector_container/my_id
+@onready var socials_button: TextureButton = $app_selector_stack/app_selector_container/socials
+@onready var bank_button: TextureButton = $app_selector_stack/app_selector_container/bank
+@onready var chat_button: TextureButton = $app_selector_stack/app_selector_container/chat
+@onready var my_id_button: TextureButton = $app_selector_stack/app_selector_container/my_id
 
 var current_panel := AppPanels.SOCIAL
 
