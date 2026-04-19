@@ -90,6 +90,8 @@ func load_saved_user_credentials() -> void:
 	var all_credentials := UserManager.get_all_saved_credentials()
 	
 	if all_credentials.is_empty():
+		show_saved_users_button.hide()
+		saved_users_list.hide()
 		return
 		
 	show_saved_users_button.show()
