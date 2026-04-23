@@ -226,6 +226,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="back_button_margin" type="MarginContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=376031360]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_right = 32

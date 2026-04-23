@@ -700,7 +700,7 @@ func create_group_chat(title: String) -> int:
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
 		"title" : title,
-		"creation_message" : AppSessionState.get_username() + " stworzył czat"
+		"creation_message" : AppSessionState.get_username() + (" %s" % tr("START_CHAT_MESSAGE"))
 	}
 
 	var request_state = create_group_chat_request.request(create_group_chat_url,

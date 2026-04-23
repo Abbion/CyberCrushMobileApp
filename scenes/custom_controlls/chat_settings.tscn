@@ -5,6 +5,8 @@
 [ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="1_yl1iw"]
 [ext_resource type="Theme" uid="uid://bsnl3lopwxg71" path="res://themes/dark_buttons.tres" id="3_bacik"]
 [ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="4_jrgqe"]
+[ext_resource type="StyleBox" uid="uid://db44ltxgfrbr1" path="res://themes/box_styles/line_transparent.tres" id="6_jrgqe"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="7_htws2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bacik"]
 bg_color = Color(0, 0, 0, 0)
@@ -78,7 +80,7 @@ text = "BACK_KEY"
 [node name="add_user_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1480682698]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 28
 
 [node name="title_label" type="Label" parent="layouts_margin/add_user_layout" unique_id=1615432592]
 layout_mode = 2
@@ -91,6 +93,11 @@ horizontal_alignment = 1
 layout_mode = 2
 max_suggestions = 3
 place_holder = "USERNAME_KEY"
+
+[node name="HSeparator" type="HSeparator" parent="layouts_margin/add_user_layout" unique_id=872110586]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = ExtResource("6_jrgqe")
 
 [node name="add_user_actions" type="HBoxContainer" parent="layouts_margin/add_user_layout" unique_id=1012478394]
 layout_mode = 2
@@ -108,6 +115,7 @@ custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "ADD_KEY"
+script = ExtResource("7_htws2")
 
 [node name="remove_user_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1695767672]
 visible = false
@@ -143,6 +151,7 @@ custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme = ExtResource("4_jrgqe")
 text = "DELETE_KEY"
+script = ExtResource("7_htws2")
 
 [node name="back_button" type="Button" parent="layouts_margin/remove_user_layout/remove_user_actions" unique_id=163048799]
 custom_minimum_size = Vector2(120, 50)

@@ -201,10 +201,11 @@ horizontal_alignment = 1
 [node name="post_title_label" type="Label" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content" unique_id=515332522]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 
 [node name="delete_post_actions" type="HBoxContainer" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content" unique_id=126457667]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 16
