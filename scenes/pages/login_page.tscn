@@ -200,7 +200,7 @@ offset_right = 85.0
 offset_bottom = -10.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
-text = "Ver 0.2.5"
+text = "Ver 1.0.0"
 
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/username_input" to="." method="on_username_input_focus_entered"]

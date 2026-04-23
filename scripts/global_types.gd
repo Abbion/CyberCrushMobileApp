@@ -127,7 +127,7 @@ class DateTime:
 						1:
 							return "hour ago"
 						_:
-							return "%s hours ago"
+							return "%s hours ago" % hours_elapsed
 				GlobalTypes.LANGUAGE.POLISH:
 					match hours_elapsed:
 						1:
