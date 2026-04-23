@@ -21,6 +21,9 @@ func _ready() -> void:
 	if AppSessionState.can_publish_posts():
 		decoration_separator.show()
 		post_background.show()
+	else:
+		decoration_separator.hide()
+		post_background.hide()
 	
 	refresh_news_feed()
 
