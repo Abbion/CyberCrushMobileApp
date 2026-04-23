@@ -1,20 +1,25 @@
 #Refactor 1
-extends Control
+extends MarginContainer
 
 @export var all_suggestions: PackedStringArray
 @export var max_suggestions: int = 5
-@onready var suggestion_list: ItemList = $suggestion_list
-@onready var find_input: LineEdit = $input_field
+@export var place_holder: String = ""
+@onready var find_input: LineEdit = $v_box/input_field
+@onready var suggestion_list: ItemList = $v_box/layout_override/suggestion_margin/suggestion_v_box/suggestion_list
+@onready var suggestion_margin: MarginContainer = $v_box/layout_override/suggestion_margin
+
+func _ready() -> void:
+	find_input.placeholder_text = place_holder
 
 func on_suggestion_list_item_selected(index: int) -> void:
 	find_input.text = suggestion_list.get_item_text(index)
-	suggestion_list.visible = false
+	suggestion_margin.hide()
 
 func on_text_changed(new_text: String) -> void:
 	suggestion_list.clear()
 	
 	if new_text.is_empty():
-		suggestion_list.visible = false
+		suggestion_margin.hide()
 		return
 	
 	var fit_dir: Dictionary = {}
@@ -66,14 +71,15 @@ func on_text_changed(new_text: String) -> void:
 			
 		saturation += current_fit
 		suggestion_list.add_item(suggestion)
+		suggestion_list.set_item_tooltip_enabled(suggestion_list.item_count - 1, false)
 		
 		if saturation >= 1.0:
 			break
 	
 	if suggestion_list.item_count > 0:
-		suggestion_list.visible = true
+		suggestion_margin.show()
 	else:
-		suggestion_list.visible = false
+		suggestion_margin.hide()
 
 func is_in_suggestions() -> bool:
 	if find_input.text in all_suggestions:
@@ -87,3 +93,4 @@ func get_value() -> String:
 
 func clear() -> void:
 	find_input.text = ""
+	suggestion_margin.hide()

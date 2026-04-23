@@ -1,0 +1,5 @@
+Rouding for small elements = 4px
+Rouding for big elements = 8px
+Normal font size = 20px
+Headers and titles font size = 24px
+Footers font size = 14px

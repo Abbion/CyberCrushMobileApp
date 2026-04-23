@@ -2,158 +2,171 @@
 
 [ext_resource type="Script" uid="uid://brm5junmsma2t" path="res://scripts/chat_settings_script.gd" id="1_1my76"]
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_d7itt"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="1_yl1iw"]
+[ext_resource type="Theme" uid="uid://bsnl3lopwxg71" path="res://themes/dark_buttons.tres" id="3_bacik"]
+[ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="4_jrgqe"]
+[ext_resource type="StyleBox" uid="uid://db44ltxgfrbr1" path="res://themes/box_styles/line_transparent.tres" id="6_jrgqe"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="7_htws2"]
 
-[node name="chat_settings" type="CenterContainer" unique_id=696422539]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bacik"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="chat_settings" type="PanelContainer" unique_id=1963823581]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_yl1iw")
 script = ExtResource("1_1my76")
 
-[node name="background" type="ColorRect" parent="." unique_id=747508453]
-custom_minimum_size = Vector2(300, 400)
+[node name="layouts_margin" type="MarginContainer" parent="." unique_id=89686755]
 layout_mode = 2
-color = Color(0, 0, 0, 1)
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 16
 
-[node name="selector_view" type="VBoxContainer" parent="background" unique_id=190021753]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -122.5
-offset_top = -109.5
-offset_right = 122.5
-offset_bottom = 109.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="actions_layout" type="VBoxContainer" parent="layouts_margin" unique_id=190021753]
+layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="view_title" type="Label" parent="background/selector_view" unique_id=287426789]
+[node name="title_label" type="Label" parent="layouts_margin/actions_layout" unique_id=287426789]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
 text = "MANAGE_CHAT_USERS_TITLE_KEY"
 horizontal_alignment = 1
 
-[node name="free_slots_label" type="Label" parent="background/selector_view" unique_id=462478976]
+[node name="free_slots_label" type="Label" parent="layouts_margin/actions_layout" unique_id=462478976]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 22
 text = "FREE_SLOTS_DOT_KEY"
 horizontal_alignment = 1
 
-[node name="add_user_button" type="Button" parent="background/selector_view" unique_id=1155661314]
+[node name="actions_v_box" type="VBoxContainer" parent="layouts_margin/actions_layout" unique_id=1853484876]
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="add_user_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=1155661314]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("3_bacik")
 text = "ADD_KEY"
 
-[node name="remove_user_button" type="Button" parent="background/selector_view" unique_id=1943700888]
+[node name="remove_user_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=1943700888]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("3_bacik")
 text = "DELETE_KEY"
 
-[node name="back_button" type="Button" parent="background/selector_view" unique_id=893073086]
+[node name="back_button" type="Button" parent="layouts_margin/actions_layout/actions_v_box" unique_id=893073086]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
 
-[node name="add_user_view" type="Control" parent="background" unique_id=939374277]
+[node name="add_user_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1480682698]
 visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="view" type="VBoxContainer" parent="background/add_user_view" unique_id=1480682698]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.5
-offset_top = -117.5
-offset_right = 100.5
-offset_bottom = 117.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 15
-
-[node name="view_title" type="Label" parent="background/add_user_view/view" unique_id=1615432592]
 layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="title_label" type="Label" parent="layouts_margin/add_user_layout" unique_id=1615432592]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
 text = "ADD_USER_KEY"
 horizontal_alignment = 1
 
-[node name="username_label" type="Label" parent="background/add_user_view/view" unique_id=1804976975]
+[node name="find_control" parent="layouts_margin/add_user_layout" unique_id=1406289447 instance=ExtResource("1_d7itt")]
 layout_mode = 2
-text = "USERNAME_KEY"
+max_suggestions = 3
+place_holder = "USERNAME_KEY"
 
-[node name="find_control_placeholder" type="Panel" parent="background/add_user_view/view" unique_id=195017969]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 26.58)
+[node name="HSeparator" type="HSeparator" parent="layouts_margin/add_user_layout" unique_id=872110586]
 layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = ExtResource("6_jrgqe")
 
-[node name="add_button" type="Button" parent="background/add_user_view/view" unique_id=1746437223]
+[node name="add_user_actions" type="HBoxContainer" parent="layouts_margin/add_user_layout" unique_id=1012478394]
 layout_mode = 2
-text = "ADD_KEY"
+size_flags_horizontal = 4
+theme_override_constants/separation = 16
 
-[node name="back_button" type="Button" parent="background/add_user_view/view" unique_id=1958777013]
+[node name="back_button" type="Button" parent="layouts_margin/add_user_layout/add_user_actions" unique_id=1958777013]
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
+theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
 
-[node name="find_control" parent="background/add_user_view" unique_id=1406289447 instance=ExtResource("1_d7itt")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -80.0
-offset_top = -23.0
-offset_right = 119.0
-offset_bottom = 7.0
-
-[node name="remove_user_view" type="VBoxContainer" parent="background" unique_id=1695767672]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -111.0
-offset_top = -125.0
-offset_right = 109.0
-offset_bottom = 125.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 15
-
-[node name="view_title" type="Label" parent="background/remove_user_view" unique_id=126645252]
+[node name="add_button" type="Button" parent="layouts_margin/add_user_layout/add_user_actions" unique_id=1746437223]
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
-text = "REMOVE_USER_KEY"
+theme = ExtResource("4_jrgqe")
+text = "ADD_KEY"
+script = ExtResource("7_htws2")
 
-[node name="users_list_container" type="ScrollContainer" parent="background/remove_user_view" unique_id=2096087392]
+[node name="remove_user_layout" type="VBoxContainer" parent="layouts_margin" unique_id=1695767672]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="title_label" type="Label" parent="layouts_margin/remove_user_layout" unique_id=126645252]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "REMOVE_USER_KEY"
+horizontal_alignment = 1
+
+[node name="user_list_outline" type="PanelContainer" parent="layouts_margin/remove_user_layout" unique_id=110773193]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bacik")
+
+[node name="users_list_container" type="ScrollContainer" parent="layouts_margin/remove_user_layout/user_list_outline" unique_id=2096087392]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
+theme = ExtResource("4_jrgqe")
 
-[node name="user_list" type="VBoxContainer" parent="background/remove_user_view/users_list_container" unique_id=1770878485]
+[node name="user_list" type="VBoxContainer" parent="layouts_margin/remove_user_layout/user_list_outline/users_list_container" unique_id=1770878485]
 layout_mode = 2
 
-[node name="remove_button" type="Button" parent="background/remove_user_view" unique_id=793532294]
+[node name="remove_user_actions" type="HBoxContainer" parent="layouts_margin/remove_user_layout" unique_id=1972434205]
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 16
+
+[node name="remove_button" type="Button" parent="layouts_margin/remove_user_layout/remove_user_actions" unique_id=793532294]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+theme = ExtResource("4_jrgqe")
 text = "DELETE_KEY"
+script = ExtResource("7_htws2")
 
-[node name="back_button" type="Button" parent="background/remove_user_view" unique_id=163048799]
+[node name="back_button" type="Button" parent="layouts_margin/remove_user_layout/remove_user_actions" unique_id=163048799]
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
+theme = ExtResource("4_jrgqe")
 text = "BACK_KEY"
 
-[connection signal="pressed" from="background/selector_view/add_user_button" to="." method="go_to_add_user_view"]
-[connection signal="pressed" from="background/selector_view/remove_user_button" to="." method="go_to_remove_user_view"]
-[connection signal="pressed" from="background/selector_view/back_button" to="." method="close_chat_settings"]
-[connection signal="pressed" from="background/add_user_view/view/add_button" to="." method="on_add_button_pressed"]
-[connection signal="pressed" from="background/add_user_view/view/back_button" to="." method="go_to_selector_view"]
-[connection signal="pressed" from="background/remove_user_view/remove_button" to="." method="on_remove_button_pressed"]
-[connection signal="pressed" from="background/remove_user_view/back_button" to="." method="go_to_selector_view"]
+[connection signal="gui_input" from="." to="." method="on_gui_input"]
+[connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/add_user_button" to="." method="go_to_add_user_layout"]
+[connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/remove_user_button" to="." method="go_to_remove_user_layout"]
+[connection signal="pressed" from="layouts_margin/actions_layout/actions_v_box/back_button" to="." method="close_chat_settings"]
+[connection signal="visibility_changed" from="layouts_margin/add_user_layout/find_control/v_box/layout_override/suggestion_margin" to="." method="on_suggestion_margin_visibility_changed"]
+[connection signal="pressed" from="layouts_margin/add_user_layout/add_user_actions/back_button" to="." method="go_to_selector_layout"]
+[connection signal="pressed" from="layouts_margin/add_user_layout/add_user_actions/add_button" to="." method="on_add_button_pressed"]
+[connection signal="pressed" from="layouts_margin/remove_user_layout/remove_user_actions/remove_button" to="." method="on_remove_button_pressed"]
+[connection signal="pressed" from="layouts_margin/remove_user_layout/remove_user_actions/back_button" to="." method="go_to_selector_layout"]
+
+[editable path="layouts_margin/add_user_layout/find_control"]

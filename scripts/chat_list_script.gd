@@ -9,13 +9,12 @@ class ChatSortData:
 	var chat_id: int
 	var time_stamp: Dictionary
 
-@onready var chat_list = $chat_list_container/chat_list
+@onready var chat_list = $main_v_box/chat_list_margin/chat_list_scroll/chat_list
 @onready var overlay_margin = $overlay_margin
 @onready var overlay_center_container = $overlay_margin/center_container
-
-@onready var chat_list_container = $chat_list_container
-@onready var spinner_container = $spinner_container
-@onready var empty_chat_list_container = $empty_chat_list_container
+@onready var chat_list_margin = $main_v_box/chat_list_margin
+@onready var spinner_container = $main_v_box/spinner_container
+@onready var empty_chat_list_container = $main_v_box/empty_chat_list_container
 
 @export var chat_entry : PackedScene
 
@@ -112,16 +111,17 @@ func clear_chats_list() -> void:
 
 func refresh_chat_list() -> void:
 	spinner_container.show()
-	chat_list_container.hide()
+	chat_list_margin.hide()
 	empty_chat_list_container.hide()
 	
 	await update_chats_list()
 	
 	spinner_container.hide()
-	chat_list_container.show()
+	chat_list_margin.show()
 	
 	if chat_list.get_child_count() == 0:
-		chat_list.hide()
+		chat_list_margin.hide()
+		spinner_container.hide()
 		empty_chat_list_container.show()
 
 func reset_layout() -> void:

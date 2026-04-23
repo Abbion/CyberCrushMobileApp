@@ -1,32 +1,54 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc7if8n618gcj"]
+[gd_scene format=3 uid="uid://cc7if8n618gcj"]
 
 [ext_resource type="Script" uid="uid://05lcwxuxxiv1" path="res://scripts/top_bar.gd" id="1_ph4a7"]
+[ext_resource type="Texture2D" uid="uid://dpx8tdmc1hcbf" path="res://assets/icons/cyber_defence_base.svg" id="2_ph4a7"]
+[ext_resource type="Script" uid="uid://cisfsu8obtacv" path="res://scripts/cyber_defence_top_bar.gd" id="3_vjfri"]
+[ext_resource type="Texture2D" uid="uid://o6u42cfugcak" path="res://assets/icons/cyber_defence_plus.svg" id="4_cbpmj"]
+[ext_resource type="Texture2D" uid="uid://cps2m0tkd078t" path="res://assets/icons/cyber_defence_pro.svg" id="5_k8sur"]
 
-[node name="top_bar" type="ColorRect"]
+[node name="top_bar" type="ColorRect" unique_id=1653589669]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 28.0
-color = Color(0.596678, 0.153481, 0.800526, 1)
+grow_horizontal = 2
+color = Color(1, 0, 0.6156863, 1)
 script = ExtResource("1_ph4a7")
 
-[node name="top_bar_margin" type="MarginContainer" parent="."]
+[node name="top_bar_margin" type="MarginContainer" parent="." unique_id=1446085239]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 4
 
-[node name="bar_elements_container" type="HBoxContainer" parent="top_bar_margin"]
+[node name="bar_elements_container" type="HBoxContainer" parent="top_bar_margin" unique_id=629534633]
 layout_mode = 2
 
-[node name="date_time" type="Label" parent="top_bar_margin/bar_elements_container"]
+[node name="date_time" type="Label" parent="top_bar_margin/bar_elements_container" unique_id=327355719]
 layout_mode = 2
 size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 20
 text = "12:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="cyber_defence_icon" type="TextureRect" parent="top_bar_margin/bar_elements_container/date_time" unique_id=916475529]
+layout_mode = 0
+offset_left = -24.0
+offset_right = -4.0
+offset_bottom = 20.0
+size_flags_horizontal = 10
+texture = ExtResource("2_ph4a7")
+expand_mode = 2
+script = ExtResource("3_vjfri")
+base_pack_texture = ExtResource("2_ph4a7")
+plus_pack_texture = ExtResource("4_cbpmj")
+pro_pack_texture = ExtResource("5_k8sur")
+
+[connection signal="tree_entered" from="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" to="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" method="on_tree_entered"]
+[connection signal="tree_exiting" from="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" to="top_bar_margin/bar_elements_container/date_time/cyber_defence_icon" method="on_tree_exiting"]

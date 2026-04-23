@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bd05lxguklptk"]
+
+[ext_resource type="StyleBox" uid="uid://dts7gneyhcc5j" path="res://themes/box_styles/panel_container_dark_outline.tres" id="1_5jtmp"]
+[ext_resource type="Script" uid="uid://c04jutsc7xakc" path="res://scripts/bug_log_entry.gd" id="1_70q2m"]
+
+[node name="bug_log_entry" type="PanelContainer" unique_id=1370576793]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_5jtmp")
+script = ExtResource("1_70q2m")
+
+[node name="data_margin" type="MarginContainer" parent="." unique_id=1949268320]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="data_stack_container" type="VBoxContainer" parent="data_margin" unique_id=2012653887]
+layout_mode = 2
+
+[node name="type_label" type="Label" parent="data_margin/data_stack_container" unique_id=1117361698]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "null"
+autowrap_mode = 3
+
+[node name="short_description_label" type="Label" parent="data_margin/data_stack_container" unique_id=1582671260]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "null"
+autowrap_mode = 3
+
+[node name="long_description_label" type="Label" parent="data_margin/data_stack_container" unique_id=2017656001]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "null"
+autowrap_mode = 3

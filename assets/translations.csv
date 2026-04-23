@@ -31,7 +31,7 @@ EMPTY_CHAT_LIST_KEY,Chat list is empty,Lista czatów jest pusta
 CHAT_NAME_KEY,Chat name,Nazwa czatu
 LOADING_DOT_KEY,Loading...,Wczytywanie...
 EVENT_LOG_TITLE_KYE,Current session event log,Dziennik zdarzeń obecnej sesji
-EMPTY_EVENT_LOG_KEY,Even log is empty,Dziennik zdarzeń jest pusty
+EMPTY_EVENT_LOG_KEY,Event log is empty,Dziennik zdarzeń jest pusty
 TYPE_KEY,Type,Typ
 DESCRIPTION_KEY,Description,Opis
 VERBOSE_DESCRIPTION_KEY,Verbose,Opis długi
@@ -59,8 +59,8 @@ WARNING,Warning,Uwaga
 INFORMATION,Information,Informacja
 POST_TITLE_TOO_SHORT,The post title is too short. Minimum 3 characters required,Tytuł posta jest za krótki. Wymagane minimum 3 znaki
 POST_TITLE_TOO_LONG,The post title is too long. 32 characters limit,Tytuł posta jest za długi. Ograniczenie maksymalnie 32 znaków
-POST_CONTENT_TOO_SHORT,The content of the post is too short. Minimum 3 characters required,Zawartość posta jest za krótka. Wymagane minimum 3 znaki
-POST_CONTENT_TOO_LONG,The content of the post is too short. 256 character limit,Zawartość posta jest za krótka. Ograniczenie maksymalnie 256 znaków
+POST_CONTENT_TOO_SHORT,The content of the post is too short. Minimum 3 characters required,Treść posta jest za krótka. Wymagane minimum 3 znaki
+POST_CONTENT_TOO_LONG,The content of the post is too short. 256 character limit,Treść posta jest za krótka. Ograniczenie maksymalnie 256 znaków
 DIRECT_CHAT_CREATION_PANEL,Direct chat creation panel,Panel tworzenia czatu bezpośredniego
 HAPPY_INFORMATION,Happy information,Szczęśliwa informacja
 FAILED_TO_SAVE_USER_DATA,Failed to save user data,Błąd zapisu danych użytkownika
@@ -94,3 +94,15 @@ FAILED_TO_TRANSFER_FUNDS,Transfering funds failed,Bład transferu środków bank
 FAILED_TO_ACCESS_TRANSACTION_HISTORY,Accessing transaction history failed,Bład dostępu do historii transakcji bankowych
 FAILED_TO_ACCESS_NEWS_FEED,Accessing news feed failed,Bład systemu informacji
 FAILED_TO_POST_NEWS,Failed to post news,Bład wysłania posta
+ADD_POST,Create post,Dodaj post
+CLEAR_KEY,Clear,Wyczyść
+GROUP_CHAT_TITLE,Group chat title,Tytuł czatu grupowego
+WRITE_YOUR_MESSAGE,Write your message...,Napisz wiadomość...
+INFO_MESSAGE_GAME_NOT_STARTED,The game has not started yet,Gra jeszcze się nie zaczęła
+CONFIRM_KEY,Confirm,Potwierdź
+DELETE_POST_INFO,Do you want to delete this post?,Czy chcesz usunąć ten post?
+FAILED_TO_OBTAIN_GAME_STATE,Failed to obtain game state,Błąd pozyksania statusu gry
+MESSAGE_OVER_TEXT_CHARACTER_LIMIT,Message is over character limit,Wiadomość przekroczyła ograniczenie znaków
+MESSAGE_COPIED,The message was copied,Wiadomość została skopiowana
+TITLE_CANNOT_BE_EMPTY,The post title cannot be empty,Tytuł posta nie może być pusty
+GAME_IS_OFFLINE,The game did not start yet,Gra jeszcze nie wystartowała

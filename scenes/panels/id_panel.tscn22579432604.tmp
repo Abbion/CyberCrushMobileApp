@@ -1,0 +1,224 @@
+[gd_scene format=3 uid="uid://dnpm7vyhf2ftt"]
+
+[ext_resource type="Script" uid="uid://drrs6k6mnga27" path="res://scripts/my_id_panel_script.gd" id="1_yk5dp"]
+[ext_resource type="PackedScene" uid="uid://cag4bqdhpycwf" path="res://scenes/custom_controlls/user_attribute_entry.tscn" id="2_ieadh"]
+[ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yk5dp"]
+[ext_resource type="PackedScene" uid="uid://bd05lxguklptk" path="res://scenes/custom_controlls/bug_log_entry.tscn" id="3_l1b6j"]
+[ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="4_q8jwa"]
+[ext_resource type="Texture2D" uid="uid://bacofsfgjijf5" path="res://assets/icons/user_icon.svg" id="5_rb2qo"]
+[ext_resource type="Theme" uid="uid://1mdmdxaqh6y3" path="res://themes/login_theme.tres" id="7_sa2o2"]
+[ext_resource type="Texture2D" uid="uid://ca45ypw6q5p1b" path="res://assets/icons/log_book_icon.svg" id="8_nw7ie"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="9_43p8p"]
+[ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="10_ooid4"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_q8jwa"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
+
+[node name="my_id_panel" type="Control" unique_id=905157010]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yk5dp")
+user_attribute_entry = ExtResource("2_ieadh")
+popup_log_entry = ExtResource("3_l1b6j")
+
+[node name="background" type="ColorRect" parent="." unique_id=1997410262]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="main_margin" type="MarginContainer" parent="." unique_id=389231697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 16
+
+[node name="main_v_box" type="VBoxContainer" parent="main_margin" unique_id=1228694736]
+layout_mode = 2
+
+[node name="top_decoration" type="TextureRect" parent="main_margin/main_v_box" unique_id=1131314618]
+layout_mode = 2
+texture = ExtResource("4_q8jwa")
+expand_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="main_margin/main_v_box" unique_id=1841926784]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxLine_q8jwa")
+
+[node name="spinner_container" type="CenterContainer" parent="main_margin/main_v_box" unique_id=1223006473]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="spinner" parent="main_margin/main_v_box/spinner_container" unique_id=1801390252 instance=ExtResource("2_yk5dp")]
+layout_mode = 2
+spinner_size = 80.0
+
+[node name="data_container" type="VBoxContainer" parent="main_margin/main_v_box" unique_id=850021308]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="avatar_margin" type="MarginContainer" parent="main_margin/main_v_box/data_container" unique_id=1468831789]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 100
+
+[node name="user_avatar" type="TextureRect" parent="main_margin/main_v_box/data_container/avatar_margin" unique_id=727270700]
+modulate = Color(1, 0, 0.6156863, 1)
+layout_mode = 2
+texture = ExtResource("5_rb2qo")
+expand_mode = 4
+
+[node name="username_label" type="Label" parent="main_margin/main_v_box/data_container" unique_id=188129723]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Username"
+horizontal_alignment = 1
+
+[node name="user_code_label" type="Label" parent="main_margin/main_v_box/data_container" unique_id=1630646647]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "0000"
+horizontal_alignment = 1
+
+[node name="attributes_margin" type="MarginContainer" parent="main_margin/main_v_box/data_container" unique_id=1605760571]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 16
+
+[node name="attributes_scroll" type="ScrollContainer" parent="main_margin/main_v_box/data_container/attributes_margin" unique_id=456662332]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="attributes" type="VBoxContainer" parent="main_margin/main_v_box/data_container/attributes_margin/attributes_scroll" unique_id=892243131]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="logout_button" type="Button" parent="." unique_id=2123535275]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -35.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme = ExtResource("7_sa2o2")
+text = "LOGOUT_KEY"
+
+[node name="popup_log_button" type="Button" parent="." unique_id=1529614323]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("7_sa2o2")
+
+[node name="log_button_icon" type="TextureRect" parent="popup_log_button" unique_id=521605287]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.5
+offset_top = -10.5
+offset_right = 10.5
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_nw7ie")
+expand_mode = 1
+
+[node name="overlay" type="MarginContainer" parent="." unique_id=1660805636]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="ColorRect" parent="overlay" unique_id=439719664]
+layout_mode = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="overlay_center" type="CenterContainer" parent="overlay" unique_id=1879481984]
+layout_mode = 2
+
+[node name="popup_log_container" type="PanelContainer" parent="overlay/overlay_center" unique_id=259166196]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("9_43p8p")
+
+[node name="popup_log_margin" type="MarginContainer" parent="overlay/overlay_center/popup_log_container" unique_id=1758556586]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="popup_data" type="VBoxContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin" unique_id=1064791025]
+layout_mode = 2
+
+[node name="empty_log_label" type="Label" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=114893489]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "EMPTY_EVENT_LOG_KEY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="log_scroll_container" type="ScrollContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=958081711]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="log_stack" type="VBoxContainer" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/log_scroll_container" unique_id=493283005]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="back_button" type="Button" parent="overlay/overlay_center/popup_log_container/popup_log_margin/popup_data" unique_id=1467475929]
+layout_mode = 2
+theme = ExtResource("10_ooid4")
+text = "BACK_KEY"
+
+[connection signal="button_down" from="logout_button" to="." method="_on_logout_button_button_down"]
+[connection signal="mouse_entered" from="popup_log_button" to="." method="on_popup_log_button_mouse_entered"]
+[connection signal="mouse_exited" from="popup_log_button" to="." method="on_popup_log_button_mouse_exited"]
+[connection signal="pressed" from="popup_log_button" to="." method="on_popup_log_button_pressed"]

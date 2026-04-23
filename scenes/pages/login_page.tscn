@@ -2,8 +2,22 @@
 
 [ext_resource type="Script" uid="uid://bll3ts1huagh6" path="res://scripts/login_page_script.gd" id="1_iydcg"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_dmx6h"]
+[ext_resource type="Texture2D" uid="uid://disg54wc6jags" path="res://assets/icons/arrow_up.svg" id="2_pjqn7"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="3_xbu75"]
 [ext_resource type="PackedScene" uid="uid://bvmqfcmkhcbkt" path="res://scenes/custom_controlls/information_popup.tscn" id="4_sbehe"]
+[ext_resource type="Texture2D" uid="uid://di4kmdco6jf80" path="res://assets/icons/language_icon.svg" id="5_4ug7m"]
+[ext_resource type="Texture2D" uid="uid://rt4ukeupbpe2" path="res://assets/icons/arrow_down.svg" id="5_rkfdl"]
+[ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="6_4jah3"]
+[ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="7_qrs68"]
+[ext_resource type="Texture2D" uid="uid://s0b81mghn2kv" path="res://assets/login_logo.svg" id="7_wbb5q"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="8_4jah3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qrs68"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="login_page" type="Control" unique_id=505686283]
 layout_mode = 3
@@ -13,7 +27,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iydcg")
+up_arrow_icon = ExtResource("2_pjqn7")
+down_arrow_icon = ExtResource("5_rkfdl")
 metadata/_edit_use_anchors_ = true
+
+[node name="background" type="ColorRect" parent="." unique_id=1512617491]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="aspect_ration_container" type="AspectRatioContainer" parent="." unique_id=1518367896]
 layout_mode = 1
@@ -27,79 +52,121 @@ ratio = 0.5625
 [node name="login_margin" type="MarginContainer" parent="aspect_ration_container" unique_id=1551747901]
 layout_mode = 2
 theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 0
 
 [node name="login_panel" type="VBoxContainer" parent="aspect_ration_container/login_margin" unique_id=1745351147]
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_constants/separation = 16
 metadata/_edit_use_anchors_ = true
 
-[node name="username_label" type="Label" parent="aspect_ration_container/login_margin/login_panel" unique_id=990697690]
+[node name="logo" type="TextureRect" parent="aspect_ration_container/login_margin/login_panel" unique_id=1234281530]
 layout_mode = 2
-text = "LOGIN_KEY"
+texture = ExtResource("7_wbb5q")
+expand_mode = 5
 
-[node name="username_input_options" type="HBoxContainer" parent="aspect_ration_container/login_margin/login_panel" unique_id=1698075160]
+[node name="separator" type="HSeparator" parent="aspect_ration_container/login_margin/login_panel" unique_id=449574284]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="username_settings" type="VBoxContainer" parent="aspect_ration_container/login_margin/login_panel" unique_id=906228629]
 layout_mode = 2
 
-[node name="username_input" parent="aspect_ration_container/login_margin/login_panel/username_input_options" unique_id=940418458 instance=ExtResource("2_dmx6h")]
+[node name="username_input_options" type="HBoxContainer" parent="aspect_ration_container/login_margin/login_panel/username_settings" unique_id=1698075160]
+layout_mode = 2
+
+[node name="username_input" parent="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options" unique_id=940418458 instance=ExtResource("2_dmx6h")]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("6_4jah3")
+placeholder_text = "USERNAME_KEY"
 vk_type_type = 0
 
-[node name="show_saved_users_button" type="Button" parent="aspect_ration_container/login_margin/login_panel/username_input_options" unique_id=507512890]
-visible = false
+[node name="show_saved_users_button" type="Button" parent="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options" unique_id=507512890]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
-text = "V"
+theme = ExtResource("7_qrs68")
+theme_override_constants/icon_max_width = 18
+icon = ExtResource("5_rkfdl")
+icon_alignment = 1
+expand_icon = true
 
-[node name="saved_users_list" type="ItemList" parent="aspect_ration_container/login_margin/login_panel" unique_id=369826948]
-visible = false
+[node name="saved_users_list" type="ItemList" parent="aspect_ration_container/login_margin/login_panel/username_settings" unique_id=369826948]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
+mouse_behavior_recursive = 2
+theme = ExtResource("6_4jah3")
+allow_search = false
 auto_height = true
-
-[node name="password_label" type="Label" parent="aspect_ration_container/login_margin/login_panel" unique_id=950478630]
-layout_mode = 2
-text = "PASSWORD_KEY"
 
 [node name="password_input" parent="aspect_ration_container/login_margin/login_panel" unique_id=1561401347 instance=ExtResource("2_dmx6h")]
 layout_mode = 2
+theme = ExtResource("6_4jah3")
+placeholder_text = "PASSWORD_KEY"
 secret = true
 secret_character = "*"
 vk_type_type = 0
 
 [node name="login_button" type="Button" parent="aspect_ration_container/login_margin/login_panel" unique_id=546174834]
-layout_mode = 2
-text = "LOGIN_KEY"
-
-[node name="spinner_margin" type="MarginContainer" parent="aspect_ration_container/login_margin/login_panel" unique_id=381411670]
-layout_mode = 2
-theme_override_constants/margin_top = 30
-
-[node name="spinner" parent="aspect_ration_container/login_margin/login_panel/spinner_margin" unique_id=694695298 instance=ExtResource("3_xbu75")]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
-spinner_scale = 0.25
+theme = ExtResource("7_qrs68")
+text = "LOGIN_KEY"
+script = ExtResource("8_4jah3")
 
-[node name="language_options" type="HBoxContainer" parent="." unique_id=1170940440]
+[node name="spinner" parent="aspect_ration_container/login_margin/login_panel" unique_id=694695298 instance=ExtResource("3_xbu75")]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+spinner_size = 80.0
+
+[node name="language_panel" type="PanelContainer" parent="." unique_id=719148649]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -133.0
-offset_top = 15.0
-offset_right = -20.0
-offset_bottom = 55.0
+offset_left = -154.0
+offset_top = 28.0
+offset_right = -27.0
+offset_bottom = 61.0
 grow_horizontal = 0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_qrs68")
 
-[node name="globe_label" type="Label" parent="language_options" unique_id=2133482459]
+[node name="language_panel_margin" type="MarginContainer" parent="language_panel" unique_id=288635667]
 layout_mode = 2
-text = "🌐"
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="language_selector" type="OptionButton" parent="language_options" unique_id=761163970]
+[node name="language_options" type="HBoxContainer" parent="language_panel/language_panel_margin" unique_id=1170940440]
 layout_mode = 2
+
+[node name="language_icon_margin" type="MarginContainer" parent="language_panel/language_panel_margin/language_options" unique_id=1564039997]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="language_icon" type="TextureRect" parent="language_panel/language_panel_margin/language_options/language_icon_margin" unique_id=617185136]
+modulate = Color(1, 0, 0.6156863, 1)
+layout_mode = 2
+texture = ExtResource("5_4ug7m")
+expand_mode = 2
+
+[node name="language_selector" type="OptionButton" parent="language_panel/language_panel_margin/language_options" unique_id=761163970]
+layout_mode = 2
+theme = ExtResource("6_4jah3")
 selected = 0
 item_count = 2
 popup/item_0/text = "English"
@@ -132,10 +199,15 @@ offset_top = -33.0
 offset_right = 85.0
 offset_bottom = -10.0
 grow_vertical = 0
-text = "Ver 0.1.2"
+theme_override_font_sizes/font_size = 20
+text = "Ver 0.2.5"
 
 [connection signal="resized" from="." to="." method="_on_resized"]
-[connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/username_input_options/show_saved_users_button" to="." method="on_show_saved_users_button_pressed"]
-[connection signal="item_clicked" from="aspect_ration_container/login_margin/login_panel/saved_users_list" to="." method="on_saved_users_list_item_clicked"]
+[connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/username_input" to="." method="on_username_input_focus_entered"]
+[connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/username_settings/username_input_options/show_saved_users_button" to="." method="on_show_saved_users_button_pressed"]
+[connection signal="item_clicked" from="aspect_ration_container/login_margin/login_panel/username_settings/saved_users_list" to="." method="on_saved_users_list_item_clicked"]
+[connection signal="visibility_changed" from="aspect_ration_container/login_margin/login_panel/username_settings/saved_users_list" to="." method="on_saved_users_list_visibility_changed"]
+[connection signal="focus_entered" from="aspect_ration_container/login_margin/login_panel/password_input" to="." method="on_password_input_focus_entered"]
 [connection signal="pressed" from="aspect_ration_container/login_margin/login_panel/login_button" to="." method="on_login_button_pressed"]
-[connection signal="item_selected" from="language_options/language_selector" to="." method="on_language_selector_item_selected"]
+[connection signal="gui_input" from="language_panel" to="." method="on_language_panel_gui_input"]
+[connection signal="item_selected" from="language_panel/language_panel_margin/language_options/language_selector" to="." method="on_language_selector_item_selected"]

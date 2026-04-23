@@ -1,50 +1,73 @@
 #Refactor 1
 extends Control
 
-@export var id_page_entry: PackedScene
+@export var user_attribute_entry: PackedScene
 @export var popup_log_entry: PackedScene
 
-@onready var attributes: VBoxContainer = $attributes_margin/attributes
-@onready var spinner_container: CenterContainer = $spinner_container
-@onready var overlay: ColorRect = $overlay
-@onready var popup_log: VBoxContainer = $overlay/popup_log_container/popup_data/log_scroll_container/log_stack
+@onready var data_container: VBoxContainer = $main_margin/main_v_box/data_container
+@onready var attributes: VBoxContainer = $main_margin/main_v_box/data_container/attributes_margin/attributes_scroll/attributes
+@onready var username_label: Label = $main_margin/main_v_box/data_container/username_label
+@onready var user_code_label: Label = $main_margin/main_v_box/data_container/user_code_label
+
+@onready var spinner_container: CenterContainer = $main_margin/main_v_box/spinner_container
+@onready var overlay: MarginContainer = $overlay
+@onready var empty_log_label: Label = $overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/empty_log_label
+@onready var popup_log_scroll: ScrollContainer = $overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/log_scroll_container
+@onready var popup_log: VBoxContainer = $overlay/overlay_center/popup_log_container/popup_log_margin/popup_data/log_scroll_container/log_stack
 
 func _ready() -> void:
-	var user_data := await ServerRequest.user_data()
 	spinner_container.show()
-	
-	attributes.hide()
-	
+	data_container.hide()
+	var user_data := await ServerRequest.user_data()
 	build_data_entires(user_data)
 	spinner_container.hide()
-	attributes.show()
+	data_container.show()
 
 func build_data_entires(user_data: GlobalTypes.UserData) -> void:
-	var id_page_entry_username_instance = id_page_entry.instantiate()
-	id_page_entry_username_instance.key = "username"
-	id_page_entry_username_instance.value = user_data.username
-	attributes.add_child(id_page_entry_username_instance)
+	AppSessionState.set_can_publish_posts(user_data.can_publish_posts)
+	AppSessionState.set_cyber_defence_level(user_data.cyber_defence_level)
 	
-	var id_page_entry_personal_number_instance = id_page_entry.instantiate()
-	id_page_entry_personal_number_instance.key = "personal number"
-	id_page_entry_personal_number_instance.value = str(user_data.personal_number)
-	attributes.add_child(id_page_entry_personal_number_instance)
+	username_label.text = user_data.username
+	user_code_label.text = str(user_data.personal_number)
+	
+	var cyber_defence_attribute_instance = user_attribute_entry.instantiate()
+	cyber_defence_attribute_instance.key = "cyber defence pack"
+	cyber_defence_attribute_instance.value = GlobalConstants.CYBER_DEFENCE_PACK_NAME[user_data.cyber_defence_level]
+	attributes.add_child(cyber_defence_attribute_instance)
 	
 	for key in user_data.extra_data:
-		var id_page_entry_extra_data_instance = id_page_entry.instantiate()
-		id_page_entry_extra_data_instance.key = key
+		var user_attribute_instance = user_attribute_entry.instantiate()
+		user_attribute_instance.key = key
 		#TODO check the type of extra_data[key] and convert float, int, bool into str
-		id_page_entry_extra_data_instance.value = str(user_data.extra_data[key])
-		attributes.add_child(id_page_entry_extra_data_instance)
+		
+		var attribute_value = user_data.extra_data[key]
+		
+		if typeof(attribute_value) == TYPE_FLOAT:
+			var value_as_int = int(attribute_value)
+			var can_be_int = attribute_value - value_as_int == 0
+			
+			if can_be_int:
+				user_attribute_instance.value = str(value_as_int)
+			else:
+				user_attribute_instance.value = str(attribute_value)
+			
+		else:
+			user_attribute_instance.value = str(attribute_value)
+		
+		attributes.add_child(user_attribute_instance)
 
 func _on_logout_button_button_down() -> void:
 	GlobalSignals.logout.emit()
 
 func build_bug_log() -> void:
 	var popup_list := PopupDisplayServer.popup_list
+	empty_log_label.show()
 	
 	if popup_list.is_empty():
 		return
+	
+	empty_log_label.hide()
+	popup_log_scroll.show()
 	
 	for entry in popup_log.get_children():
 		popup_log.remove_child(entry)
@@ -62,5 +85,5 @@ func on_popup_log_button_pressed() -> void:
 	build_bug_log()
 	overlay.show()
 
-func on_popup_log_exit_button_pressed() -> void:
+func on_back_button_pressed() -> void:
 	overlay.hide()

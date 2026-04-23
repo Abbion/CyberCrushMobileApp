@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://cag4bqdhpycwf"]
+
+[ext_resource type="Script" uid="uid://r013vakbifl7" path="res://scripts/id_page_entry_script.gd" id="1_uk5nv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uk5nv"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="attribute_entry" type="PanelContainer" unique_id=324066819]
+custom_minimum_size = Vector2(0, 39)
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.057000004
+offset_bottom = -0.040000916
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_uk5nv")
+script = ExtResource("1_uk5nv")
+
+[node name="attribute_margin" type="MarginContainer" parent="." unique_id=1526107560]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="h_box_container" type="HBoxContainer" parent="attribute_margin" unique_id=1690022966]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="key_bg" type="ColorRect" parent="attribute_margin/h_box_container" unique_id=1176789729]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="key" type="Label" parent="attribute_margin/h_box_container/key_bg" unique_id=1773502611]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = " Default key"
+vertical_alignment = 1
+text_overrun_behavior = 2
+
+[node name="value_bg" type="ColorRect" parent="attribute_margin/h_box_container" unique_id=1017727301]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="value" type="Label" parent="attribute_margin/h_box_container/value_bg" unique_id=926651213]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 20
+text = "Default value "
+horizontal_alignment = 2
+vertical_alignment = 1
+text_overrun_behavior = 2

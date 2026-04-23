@@ -1,51 +1,57 @@
-[gd_scene load_steps=2 format=3 uid="uid://dki03uh4xyao2"]
+[gd_scene format=3 uid="uid://dki03uh4xyao2"]
 
+[ext_resource type="StyleBox" uid="uid://d15v4jy70ncp3" path="res://themes/box_styles/panel_container_light_outline.tres" id="1_0ctki"]
 [ext_resource type="Script" uid="uid://btqt1memr8e8r" path="res://scripts/chat_entry_script.gd" id="1_pe7r3"]
 
-[node name="chat_entry" type="PanelContainer"]
-custom_minimum_size = Vector2(20, 20)
-anchors_preset = 15
+[node name="chat_entry" type="PanelContainer" unique_id=1642912047]
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -672.0
+offset_bottom = 60.0
 grow_horizontal = 2
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("1_0ctki")
 script = ExtResource("1_pe7r3")
 
-[node name="margin_container" type="MarginContainer" parent="."]
+[node name="margin_container" type="MarginContainer" parent="." unique_id=528491085]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="data_container" type="VBoxContainer" parent="margin_container"]
+[node name="data_container" type="VBoxContainer" parent="margin_container" unique_id=571573411]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="chat_title_label" type="Label" parent="margin_container/data_container"]
+[node name="chat_title_label" type="Label" parent="margin_container/data_container" unique_id=1849764289]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.6156863, 1)
+theme_override_font_sizes/font_size = 24
 text = "Username"
+text_overrun_behavior = 3
 
-[node name="meta_data_container" type="HBoxContainer" parent="margin_container/data_container"]
+[node name="meta_data_container" type="HBoxContainer" parent="margin_container/data_container" unique_id=55042255]
 layout_mode = 2
 
-[node name="last_message_label" type="Label" parent="margin_container/data_container/meta_data_container"]
+[node name="last_message_label" type="Label" parent="margin_container/data_container/meta_data_container" unique_id=1958790511]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 22
 text = "Last_message"
 clip_text = true
 text_overrun_behavior = 3
 max_lines_visible = 1
 
-[node name="last_timestamp_label" type="Label" parent="margin_container/data_container/meta_data_container"]
+[node name="last_timestamp_label" type="Label" parent="margin_container/data_container/meta_data_container" unique_id=2010321087]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 20
 text = "12:12:12:12"
 
-[node name="chat_interactor" type="Button" parent="."]
+[node name="action" type="Button" parent="." unique_id=1490924014]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+mouse_filter = 1
 
-[connection signal="pressed" from="chat_interactor" to="." method="on_chat_interactor_pressed"]
+[connection signal="pressed" from="action" to="." method="on_action_pressed"]

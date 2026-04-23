@@ -2,9 +2,27 @@
 
 [ext_resource type="PackedScene" uid="uid://ciim22jn3qi4d" path="res://scenes/custom_controlls/news_article_entry.tscn" id="1_b7gsk"]
 [ext_resource type="Script" uid="uid://n8fown1plprm" path="res://scripts/news_panel_script.gd" id="1_p00wx"]
-[ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="3_lwmmg"]
+[ext_resource type="Texture2D" uid="uid://cb4vkbxdek8ds" path="res://assets/icons/top_decoration.svg" id="3_hyf1r"]
 [ext_resource type="PackedScene" uid="uid://gn8f4wkuvip1" path="res://scenes/custom_controlls/long_text_input.tscn" id="3_ot28r"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="5_83qtp"]
+[ext_resource type="PackedScene" uid="uid://l8i843cccn0j" path="res://scenes/custom_controlls/short_text_input.tscn" id="5_upc5t"]
+[ext_resource type="StyleBox" uid="uid://cbqnuw56ksc3p" path="res://themes/box_styles/panel_conteiner_base_fill.tres" id="5_y701t"]
+[ext_resource type="Theme" uid="uid://deo0fpvdfl3f3" path="res://themes/dark_high_contrast.tres" id="8_c5omm"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="9_y701t"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="11_upc5t"]
+[ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="12_clu08"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_y701t"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_c5omm"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
 
 [node name="news_panel" type="Control" unique_id=2069991095]
 layout_mode = 3
@@ -16,71 +34,199 @@ grow_vertical = 2
 script = ExtResource("1_p00wx")
 news_article_entry = ExtResource("1_b7gsk")
 
-[node name="news_container" type="VBoxContainer" parent="." unique_id=1147342946]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=396957260]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="main_margin" type="MarginContainer" parent="." unique_id=2123229926]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="news_container" type="VBoxContainer" parent="main_margin" unique_id=1147342946]
+layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="post_box_margin" type="MarginContainer" parent="news_container" unique_id=1845093057]
+[node name="top_decoration" type="TextureRect" parent="main_margin/news_container" unique_id=563894614]
+texture_repeat = 2
+layout_mode = 2
+texture = ExtResource("3_hyf1r")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="decoration_separator" type="HSeparator" parent="main_margin/news_container" unique_id=537467368]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxLine_y701t")
+
+[node name="post_background" type="PanelContainer" parent="main_margin/news_container" unique_id=1093134259]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_y701t")
+
+[node name="inner_margin" type="MarginContainer" parent="main_margin/news_container/post_background" unique_id=911949541]
 layout_mode = 2
 theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 20
 
-[node name="post_box" type="VBoxContainer" parent="news_container/post_box_margin" unique_id=1804500149]
+[node name="post_box" type="VBoxContainer" parent="main_margin/news_container/post_background/inner_margin" unique_id=1804500149]
 layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="title_label" type="Label" parent="news_container/post_box_margin/post_box" unique_id=487421865]
+[node name="title_label" type="Label" parent="main_margin/news_container/post_background/inner_margin/post_box" unique_id=487421865]
 layout_mode = 2
-text = "TITLE_KEY"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "ADD_POST"
 
-[node name="title_input" parent="news_container/post_box_margin/post_box" unique_id=1538401117 instance=ExtResource("3_lwmmg")]
+[node name="title_input" parent="main_margin/news_container/post_background/inner_margin/post_box" unique_id=1544118219 instance=ExtResource("5_upc5t")]
 layout_mode = 2
-
-[node name="content_label" type="Label" parent="news_container/post_box_margin/post_box" unique_id=1388728542]
-layout_mode = 2
-text = "CONTENT_KEY"
-
-[node name="content_input" parent="news_container/post_box_margin/post_box" unique_id=140967762 instance=ExtResource("3_ot28r")]
-layout_mode = 2
-size_flags_vertical = 3
-max_visible_lines = 5
-max_character_limit = 255
-over_character_limit_labal_color = Color(1, 0, 0, 1)
+max_character_limit = 32
+over_character_limit_labal_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
 under_character_limit_labal_color = Color(1, 1, 1, 1)
 
-[node name="post_actions" type="HBoxContainer" parent="news_container/post_box_margin/post_box" unique_id=1227876112]
-layout_mode = 2
+[node name="input" parent="main_margin/news_container/post_background/inner_margin/post_box/title_input" index="0" unique_id=252770579]
+placeholder_text = "TITLE_KEY"
 
-[node name="publish button" type="Button" parent="news_container/post_box_margin/post_box/post_actions" unique_id=1337031330]
+[node name="content_input" parent="main_margin/news_container/post_background/inner_margin/post_box" unique_id=140967762 instance=ExtResource("3_ot28r")]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_vertical = 3
+placeholder_text = "CONTENT_KEY"
+character_limit_anchor = 1
+max_visible_lines = 5
+max_character_limit = 255
+under_character_limit_color = Color(1, 1, 1, 1)
+over_character_limit_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
+
+[node name="separator" type="Panel" parent="main_margin/news_container/post_background/inner_margin/post_box" unique_id=1875504056]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="post_actions" type="HBoxContainer" parent="main_margin/news_container/post_background/inner_margin/post_box" unique_id=1227876112]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="clear_button" type="Button" parent="main_margin/news_container/post_background/inner_margin/post_box/post_actions" unique_id=2021417696]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("8_c5omm")
+text = "CLEAR_KEY"
+script = ExtResource("9_y701t")
+
+[node name="publish_button" type="Button" parent="main_margin/news_container/post_background/inner_margin/post_box/post_actions" unique_id=1337031330]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("8_c5omm")
 text = "POST_KEY"
+script = ExtResource("9_y701t")
 
-[node name="HSeparator" type="HSeparator" parent="news_container" unique_id=1895360378]
+[node name="feed_separator" type="HSeparator" parent="main_margin/news_container" unique_id=1895360378]
 layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxLine_c5omm")
 
-[node name="spinner_container" type="CenterContainer" parent="news_container" unique_id=787452688]
+[node name="spinner_container" type="CenterContainer" parent="main_margin/news_container" unique_id=787452688]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="spinner" parent="news_container/spinner_container" unique_id=680079468 instance=ExtResource("5_83qtp")]
+[node name="spinner" parent="main_margin/news_container/spinner_container" unique_id=680079468 instance=ExtResource("5_83qtp")]
 layout_mode = 2
-spinner_scale = 0.5
 
-[node name="scroll_feed" type="ScrollContainer" parent="news_container" unique_id=1987400073]
+[node name="scroll_feed" type="ScrollContainer" parent="main_margin/news_container" unique_id=1987400073]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
-[node name="feed" type="VBoxContainer" parent="news_container/scroll_feed" unique_id=1926292555]
+[node name="feed" type="VBoxContainer" parent="main_margin/news_container/scroll_feed" unique_id=1926292555]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="pressed" from="news_container/post_box_margin/post_box/post_actions/publish button" to="." method="on_publish_button_pressed"]
+[node name="overlay_margin" type="MarginContainer" parent="." unique_id=1437623462]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="ColorRect" parent="overlay_margin" unique_id=966814836]
+layout_mode = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="overlay_center" type="CenterContainer" parent="overlay_margin" unique_id=1057221557]
+layout_mode = 2
+
+[node name="delete_post_window" type="PanelContainer" parent="overlay_margin/overlay_center" unique_id=588974414]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("11_upc5t")
+
+[node name="delete_post_margin" type="MarginContainer" parent="overlay_margin/overlay_center/delete_post_window" unique_id=1146201550]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="delete_post_content" type="VBoxContainer" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin" unique_id=1661615086]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="title_label" type="Label" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content" unique_id=568588303]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "DELETE_POST_INFO"
+horizontal_alignment = 1
+
+[node name="post_title_label" type="Label" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content" unique_id=515332522]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+
+[node name="delete_post_actions" type="HBoxContainer" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content" unique_id=126457667]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 16
+
+[node name="delete_post_cancel" type="Button" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content/delete_post_actions" unique_id=570299682]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme = ExtResource("12_clu08")
+text = "CANCEL_KEY"
+
+[node name="delete_post_confirm" type="Button" parent="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content/delete_post_actions" unique_id=1572787703]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme = ExtResource("12_clu08")
+text = "CONFIRM_KEY"
+
+[connection signal="tree_entered" from="." to="." method="on_tree_entered"]
+[connection signal="tree_exited" from="." to="." method="on_tree_exited"]
+[connection signal="pressed" from="main_margin/news_container/post_background/inner_margin/post_box/post_actions/clear_button" to="." method="on_clear_button_pressed"]
+[connection signal="pressed" from="main_margin/news_container/post_background/inner_margin/post_box/post_actions/publish_button" to="." method="on_publish_button_pressed"]
+[connection signal="pressed" from="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content/delete_post_actions/delete_post_cancel" to="." method="on_delete_post_cancel_pressed"]
+[connection signal="pressed" from="overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content/delete_post_actions/delete_post_confirm" to="." method="on_delete_post_confirm_pressed"]
+
+[editable path="main_margin/news_container/post_background/inner_margin/post_box/title_input"]

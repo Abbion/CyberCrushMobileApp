@@ -3,92 +3,95 @@
 [ext_resource type="PackedScene" uid="uid://bq7q3goaxwsfu" path="res://scenes/custom_controlls/find_control.tscn" id="1_6cxfc"]
 [ext_resource type="Script" uid="uid://dnhrersqcwcso" path="res://scripts/new_transaction_script.gd" id="1_svxld"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_mi8gf"]
+[ext_resource type="StyleBox" uid="uid://cf8ctumn6khrl" path="res://themes/box_styles/panel_container_light_fill.tres" id="2_q7w7a"]
+[ext_resource type="Theme" uid="uid://bsnl3lopwxg71" path="res://themes/dark_buttons.tres" id="4_onfic"]
+[ext_resource type="Theme" uid="uid://dif3xd56470bd" path="res://themes/accent_dark_buttons.tres" id="5_f2ci6"]
 
-[node name="new_transaction" type="Control" unique_id=1155618817]
-layout_mode = 3
-anchors_preset = 0
+[node name="new_transaction" type="MarginContainer" unique_id=1961354464]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 script = ExtResource("1_svxld")
 
-[node name="background" type="ColorRect" parent="." unique_id=1535434141]
-custom_minimum_size = Vector2(300, 400)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.59689, 0.806022, 0.980177, 1)
+[node name="background" type="Panel" parent="." unique_id=116189284]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_q7w7a")
 
-[node name="transaction_elements" type="VBoxContainer" parent="background" unique_id=93040307]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.1
-anchor_right = 0.9
-anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
+[node name="margin" type="MarginContainer" parent="." unique_id=1521883690]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="transaction_elements" type="VBoxContainer" parent="margin" unique_id=93040307]
+layout_mode = 2
+theme_override_constants/separation = 24
 metadata/_edit_use_anchors_ = true
 
-[node name="info_label" type="Label" parent="background/transaction_elements" unique_id=1152322179]
+[node name="top_info_v_box" type="VBoxContainer" parent="margin/transaction_elements" unique_id=1356028466]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
+
+[node name="info_label" type="Label" parent="margin/transaction_elements/top_info_v_box" unique_id=1152322179]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
 text = "NEW_TRANSACTION_TITLE_KEY"
 horizontal_alignment = 1
 
-[node name="funds_label" type="Label" parent="background/transaction_elements" unique_id=1693938772]
+[node name="funds_label" type="Label" parent="margin/transaction_elements/top_info_v_box" unique_id=1693938772]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 22
 text = "AVAILABLE_FUNDS_KEY"
+horizontal_alignment = 1
 
-[node name="recipient_label" type="Label" parent="background/transaction_elements" unique_id=1967909392]
+[node name="recepiant_input" parent="margin/transaction_elements" unique_id=471177856 instance=ExtResource("1_6cxfc")]
 layout_mode = 2
-text = "RECIPIENT_KEY"
+max_suggestions = 4
+place_holder = "RECIPIENT_KEY"
 
-[node name="recepiant_input_placeholder" type="Panel" parent="background/transaction_elements" unique_id=531441212]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 30)
+[node name="title_input" parent="margin/transaction_elements" unique_id=423484167 instance=ExtResource("2_mi8gf")]
 layout_mode = 2
+theme = ExtResource("4_onfic")
+placeholder_text = "TITLE_KEY"
 
-[node name="title_label" type="Label" parent="background/transaction_elements" unique_id=384419394]
+[node name="amount_input" parent="margin/transaction_elements" unique_id=464806549 instance=ExtResource("2_mi8gf")]
 layout_mode = 2
-text = "TITLE_KEY"
-
-[node name="title_input" parent="background/transaction_elements" unique_id=423484167 instance=ExtResource("2_mi8gf")]
-layout_mode = 2
-
-[node name="amount_label" type="Label" parent="background/transaction_elements" unique_id=977856470]
-layout_mode = 2
-text = "TRANSACTION_AMOUNT_KEY"
-
-[node name="amount_input" parent="background/transaction_elements" unique_id=464806549 instance=ExtResource("2_mi8gf")]
-layout_mode = 2
+theme = ExtResource("4_onfic")
+placeholder_text = "TRANSACTION_AMOUNT_KEY"
 virtual_keyboard_type = 2
 vk_type_type = 2
 
-[node name="transaction_actions" type="HBoxContainer" parent="background/transaction_elements" unique_id=1456828500]
+[node name="action_margin" type="MarginContainer" parent="margin/transaction_elements" unique_id=1268761878]
 layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_right = 36
 
-[node name="cancel_action" type="Button" parent="background/transaction_elements/transaction_actions" unique_id=594035104]
+[node name="action_v_box" type="HBoxContainer" parent="margin/transaction_elements/action_margin" unique_id=1456828500]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="cancel_action" type="Button" parent="margin/transaction_elements/action_margin/action_v_box" unique_id=594035104]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_f2ci6")
 text = "CANCEL_KEY"
 
-[node name="transer_action" type="Button" parent="background/transaction_elements/transaction_actions" unique_id=353462259]
+[node name="transer_action" type="Button" parent="margin/transaction_elements/action_margin/action_v_box" unique_id=353462259]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_f2ci6")
 text = "SEND_KEY"
 
-[node name="recepiant_input" parent="background" unique_id=471177856 instance=ExtResource("1_6cxfc")]
-layout_mode = 1
-anchor_left = 0.1
-anchor_top = 0.355
-anchor_right = 0.9
-anchor_bottom = 0.44
-offset_bottom = 0.0
+[connection signal="visibility_changed" from="margin/transaction_elements/recepiant_input/v_box/layout_override/suggestion_margin" to="." method="on_suggestion_margin_visibility_changed"]
+[connection signal="pressed" from="margin/transaction_elements/action_margin/action_v_box/cancel_action" to="." method="on_cancel_action_pressed"]
+[connection signal="pressed" from="margin/transaction_elements/action_margin/action_v_box/transer_action" to="." method="on_transer_action_pressed"]
 
-[connection signal="pressed" from="background/transaction_elements/transaction_actions/cancel_action" to="." method="on_cancel_action_pressed"]
-[connection signal="pressed" from="background/transaction_elements/transaction_actions/transer_action" to="." method="on_transer_action_pressed"]
+[editable path="margin/transaction_elements/recepiant_input"]

@@ -17,6 +17,6 @@ func _ready() -> void:
 	last_message_label.text = last_message
 	var timestamp := GlobalTypes.DateTime.from_string(last_timestamp)
 	last_timestamp_label.text = timestamp.get_string()
-
-func on_chat_interactor_pressed() -> void:
+	
+func on_action_pressed() -> void:
 	chat_opened.emit(chat_id)

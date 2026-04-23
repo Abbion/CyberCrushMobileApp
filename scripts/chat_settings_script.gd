@@ -1,17 +1,19 @@
 #Refactor 1
-extends CenterContainer
+extends PanelContainer
 
 var chat_members: PackedStringArray
 var free_slots: int = 0
 
-@onready var selector_view: VBoxContainer = $background/selector_view
-@onready var add_user_view: Control = $background/add_user_view
-@onready var remove_user_view: VBoxContainer = $background/remove_user_view
+@onready var actions_layout: VBoxContainer = $layouts_margin/actions_layout
+@onready var add_user_layout: Control = $layouts_margin/add_user_layout
+@onready var remove_user_layout: VBoxContainer = $layouts_margin/remove_user_layout
+@onready var free_slots_label: Label = $layouts_margin/actions_layout/free_slots_label
+@onready var remove_user_list: VBoxContainer = $layouts_margin/remove_user_layout/user_list_outline/users_list_container/user_list
+@onready var add_user_input = $layouts_margin/add_user_layout/find_control
+@onready var new_user_suggestion_margin: MarginContainer = $layouts_margin/add_user_layout/find_control/v_box/layout_override/suggestion_margin
+@onready var add_user_actions: HBoxContainer = $layouts_margin/add_user_layout/add_user_actions
 
-@onready var free_slots_label: Label = $background/selector_view/free_slots_label
-@onready var remove_user_list: VBoxContainer = $background/remove_user_view/users_list_container/user_list
-@onready var add_user_input = $background/add_user_view/find_control
-
+var checkbox_theme: Theme = preload("res://themes/accent_dark_buttons.tres")
 var chat_id: int = -1;
 signal closed(settings: Node)
 
@@ -48,6 +50,8 @@ func update_member_remove_list() -> void:
 			continue
 		var member_checkbox := CheckBox.new()
 		member_checkbox.text = member
+		member_checkbox.theme = checkbox_theme
+		member_checkbox.mouse_filter = Control.MOUSE_FILTER_PASS
 		remove_user_list.add_child(member_checkbox)
 
 func clear_remove_user_list() -> void:
@@ -55,18 +59,21 @@ func clear_remove_user_list() -> void:
 		remove_user_list.remove_child(user)
 		user.queue_free()
 
-func go_to_selector_view() -> void:
-	selector_view.show()
-	add_user_view.hide()
-	remove_user_view.hide()
+func go_to_selector_layout() -> void:
+	actions_layout.show()
+	add_user_layout.hide()
+	remove_user_layout.hide()
 
-func go_to_add_user_view() -> void:
-	selector_view.hide()
-	add_user_view.show()
+func go_to_add_user_layout() -> void:
+	actions_layout.hide()
+	add_user_layout.show()
 
-func go_to_remove_user_view() -> void:
-	selector_view.hide()
-	remove_user_view.show()
+func go_to_remove_user_layout() -> void:
+	actions_layout.hide()
+	remove_user_layout.show()
+	
+	for member in remove_user_list.get_children():
+		member.button_pressed = false
 
 func close_chat_settings() -> void:
 	closed.emit(self)
@@ -112,3 +119,18 @@ func on_add_button_pressed() -> void:
 		update_free_slots_label()
 		update_member_remove_list()
 		add_user_input.clear()
+
+func on_suggestion_margin_visibility_changed() -> void:
+	if new_user_suggestion_margin.visible == true:
+		add_user_actions.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for actions in add_user_actions.get_children():
+			actions.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		add_user_actions.mouse_filter = Control.MOUSE_FILTER_PASS
+		for actions in add_user_actions.get_children():
+			actions.mouse_filter = Control.MOUSE_FILTER_STOP
+
+func on_gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if add_user_layout.visible == true and new_user_suggestion_margin.visible == true:
+			add_user_input.clear()

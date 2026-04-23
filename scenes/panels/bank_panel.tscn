@@ -6,6 +6,66 @@
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="2_mvofu"]
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="2_tn1ak"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="2_yxmd7"]
+[ext_resource type="StyleBox" uid="uid://cbqnuw56ksc3p" path="res://themes/box_styles/panel_conteiner_base_fill.tres" id="3_xhxt6"]
+[ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="4_tq0mc"]
+[ext_resource type="Texture2D" uid="uid://o0kco7rumhhp" path="res://assets/icons/bank_chip.svg" id="4_xhxt6"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="7_ddv88"]
+
+[sub_resource type="DPITexture" id="DPITexture_xhxt6"]
+_source = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width=\"256\"
+   height=\"32\"
+   viewBox=\"0 0 67.733332 8.4666666\"
+   version=\"1.1\"
+   id=\"svg1\"
+   inkscape:version=\"1.3.2 (091e20e, 2023-11-25, custom)\"
+   sodipodi:docname=\"bank_card_logo.svg\"
+   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"
+   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"
+   xmlns=\"http://www.w3.org/2000/svg\"
+   xmlns:svg=\"http://www.w3.org/2000/svg\">
+  <sodipodi:namedview
+     id=\"namedview1\"
+     pagecolor=\"#ffffff\"
+     bordercolor=\"#000000\"
+     borderopacity=\"0.25\"
+     inkscape:showpageshadow=\"2\"
+     inkscape:pageopacity=\"0.0\"
+     inkscape:pagecheckerboard=\"0\"
+     inkscape:deskcolor=\"#d1d1d1\"
+     inkscape:document-units=\"mm\"
+     inkscape:zoom=\"4.0970529\"
+     inkscape:cx=\"146.93489\"
+     inkscape:cy=\"5.4917524\"
+     inkscape:window-width=\"1920\"
+     inkscape:window-height=\"1057\"
+     inkscape:window-x=\"-8\"
+     inkscape:window-y=\"-8\"
+     inkscape:window-maximized=\"1\"
+     inkscape:current-layer=\"layer1\" />
+  <defs
+     id=\"defs1\" />
+  <g
+     inkscape:label=\"Warstwa 1\"
+     inkscape:groupmode=\"layer\"
+     id=\"layer1\">
+    <path
+       d=\"M 8.021702,1.8424906 H 1.1298454 v 2.7319071 c 0,1.6608754 1.0322262,2.7008627 2.7163849,2.7008627 H 8.021702 V 5.9869179 H 3.8695136 c -0.8071544,0 -1.1874483,-0.2871607 -1.3504314,-0.8149155 h 5.36292 V 3.9535097 H 2.4492323 V 3.123072 H 8.021702 Z m 7.520504,4.1444273 H 10.078392 V 4.5743977 c 0,-0.9701375 0.473427,-1.4513257 1.420281,-1.4513257 h 4.043533 V 1.8424906 H 11.47539 c -1.7307255,0 -2.7163852,1.008943 -2.7163852,2.7086238 v 2.724146 H 15.542206 Z M 23.241215,1.8424906 H 21.921828 V 3.9535097 H 17.707551 V 1.8424906 h -1.319387 v 5.4327698 h 1.319387 V 5.1797635 h 4.214277 v 2.0954969 h 1.319387 z m 6.853051,2.7086238 c 0,1.1253595 -0.357011,1.4358035 -1.420281,1.4358035 H 25.522978 V 4.5743977 c 0,-1.1175984 0.333727,-1.4513257 1.420281,-1.4513257 h 3.151007 z m -3.17429,-2.7086238 c -1.715203,0 -2.716385,1.0477485 -2.716385,2.7086238 v 2.724146 h 4.501438 c 1.722964,0 2.708624,-1.0089429 2.708624,-2.7008627 V 1.8424906 Z m 9.996285,1.2728203 h 4.066816 c 0.294922,0 0.442383,0.1319387 0.442383,0.3958161 0,0.3182051 -0.147461,0.4734271 -0.442383,0.4734271 H 37.847593 V 5.140958 h 3.135484 c 0.294922,0 0.442383,0.155222 0.442383,0.4579049 0,0.2793996 -0.147461,0.4190994 -0.442383,0.4190994 h -4.066816 z m -1.319387,4.1599495 h 5.735452 c 0.993421,0 1.490132,-0.4579048 1.490132,-1.3814757 0,-0.8149155 -0.341489,-1.2650593 -0.939093,-1.3892369 0.613126,-0.1086554 0.939093,-0.5355159 0.939093,-1.2883426 0,-0.9158097 -0.496711,-1.3737146 -1.490132,-1.3737146 H 35.596874 Z M 49.489242,3.976793 h -4.338455 c 0.108655,-0.5044715 0.364772,-0.853721 1.948036,-0.853721 h 2.390419 z M 50.81639,1.8424906 h -4.361738 c -1.722965,0 -2.708624,1.008943 -2.708624,2.7086238 v 2.724146 h 1.319387 v -2.103258 h 4.423827 v 2.103258 h 1.327148 z m 8.37422,0 h -1.288343 v 3.189812 c 0,0.077611 0.0078,0.1940275 0.02328,0.3570106 L 57.684957,5.1331969 C 56.326764,3.6585879 54.712455,2.4012898 52.973969,1.8424906 H 51.833087 V 7.2752604 H 53.12143 V 3.6275435 c 0,-0.054328 -0.0078,-0.1862664 -0.02328,-0.3802939 0.131938,0.046567 0.256116,0.1008943 0.35701,0.1319387 1.41252,0.5355159 2.848324,1.862664 4.338455,3.8960721 h 1.396998 z m 2.343853,3.3295118 h 2.902651 c 0.946854,0 1.420281,0.4811882 1.420281,1.4435646 v 0.6596934 h 1.327149 v -0.628649 c 0,-1.4823701 -0.752827,-2.3904188 -2.025648,-2.638774 L 67.099171,1.8424906 H 65.446057 L 63.598915,3.9535097 H 61.534463 V 1.8424906 h -1.319387 v 5.4327698 h 1.319387 z\"
+       id=\"text1\"
+       style=\"font-size:7.7611px;line-height:0px;font-family:Xirod;-inkscape-font-specification:Xirod;fill:#ff3cb4;stroke-width:0.264583;stroke-linecap:round\"
+       aria-label=\"echo bank\" />
+    <path
+       d=\"M 7.6335562,1.477177 H 0.74169958 v 2.7319072 c 0,1.6608753 1.03222632,2.7008627 2.71638492,2.7008627 H 7.6335562 V 5.6216043 H 3.4813678 c -0.8071544,0 -1.1874483,-0.2871606 -1.3504314,-0.8149154 h 5.36292 V 3.5881962 H 2.0610865 V 2.7577585 H 7.6335562 Z M 15.15406,5.6216043 H 9.690246 V 4.2090842 c 0,-0.9701375 0.473427,-1.4513257 1.420281,-1.4513257 H 15.15406 V 1.477177 h -4.066816 c -1.7307253,0 -2.716385,1.008943 -2.716385,2.7086239 v 2.724146 H 15.15406 Z M 22.853069,1.477177 H 21.533682 V 3.5881962 H 17.319405 V 1.477177 h -1.319387 v 5.4327699 h 1.319387 V 4.81445 h 4.214277 v 2.0954969 h 1.319387 z m 6.853051,2.7086239 c 0,1.1253595 -0.357011,1.4358034 -1.420281,1.4358034 H 25.134832 V 4.2090842 c 0,-1.1175984 0.333728,-1.4513257 1.420282,-1.4513257 H 29.70612 Z M 26.53183,1.477177 c -1.715203,0 -2.716385,1.0477485 -2.716385,2.7086239 v 2.724146 h 4.501438 c 1.722964,0 2.708624,-1.008943 2.708624,-2.7008627 V 1.477177 Z m 9.996285,1.2728204 h 4.066816 c 0.294922,0 0.442383,0.1319387 0.442383,0.3958161 0,0.3182051 -0.147461,0.4734271 -0.442383,0.4734271 h -3.135484 v 1.1564039 h 3.135484 c 0.294922,0 0.442383,0.155222 0.442383,0.4579049 0,0.2793996 -0.147461,0.4190993 -0.442383,0.4190993 h -4.066816 z m -1.319387,4.1599495 h 5.735453 c 0.99342,0 1.490131,-0.4579049 1.490131,-1.3814757 0,-0.8149155 -0.341489,-1.2650593 -0.939093,-1.3892369 0.613127,-0.1086554 0.939093,-0.5355159 0.939093,-1.2883426 0,-0.9158098 -0.496711,-1.3737147 -1.490131,-1.3737147 H 35.208728 Z M 49.101096,3.6114795 h -4.338455 c 0.108655,-0.5044715 0.364772,-0.853721 1.948036,-0.853721 h 2.390419 z M 50.428244,1.477177 h -4.361738 c -1.722964,0 -2.708624,1.008943 -2.708624,2.7086239 v 2.724146 h 1.319387 v -2.103258 h 4.423827 v 2.103258 h 1.327148 z m 8.37422,0 h -1.288342 v 3.1898121 c 0,0.077611 0.0078,0.1940275 0.02328,0.3570106 L 57.296811,4.7678834 C 55.938618,3.2932744 54.32431,2.0359762 52.585823,1.477177 h -1.140881 v 5.4327699 h 1.288342 V 3.26223 c 0,-0.054328 -0.0078,-0.1862664 -0.02328,-0.3802939 0.131939,0.046567 0.256116,0.1008943 0.35701,0.1319387 1.412521,0.5355159 2.848324,1.862664 4.338455,3.8960721 h 1.396998 z m 2.343853,3.3295119 h 2.902651 c 0.946855,0 1.420282,0.4811882 1.420282,1.4435645 v 0.6596935 h 1.327148 V 6.2812978 c 0,-1.48237 -0.752827,-2.3904187 -2.025647,-2.6387739 L 66.711026,1.477177 H 65.057911 L 63.21077,3.5881962 H 61.146317 V 1.477177 H 59.82693 v 5.4327699 h 1.319387 z\"
+       id=\"text2\"
+       style=\"font-size:7.7611px;line-height:0px;font-family:Xirod;-inkscape-font-specification:Xirod;fill:none;stroke:#ff59bf;stroke-width:0.264583;stroke-linecap:round\"
+       aria-label=\"echo bank\" />
+  </g>
+</svg>
+"
+base_scale = 1.25
 
 [node name="bank_panel" type="Control" unique_id=946086903]
 layout_mode = 3
@@ -17,75 +77,145 @@ grow_vertical = 2
 script = ExtResource("1_0pdnh")
 transaction_entry = ExtResource("2_25ivn")
 
-[node name="bank_container" type="VBoxContainer" parent="." unique_id=7416500]
+[node name="background" type="ColorRect" parent="." unique_id=141282220]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="main_margin" type="MarginContainer" parent="." unique_id=1150857721]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+
+[node name="bank_container" type="VBoxContainer" parent="main_margin" unique_id=7416500]
+layout_mode = 2
+theme_override_constants/separation = 16
 metadata/_edit_use_anchors_ = true
 
-[node name="card" type="ColorRect" parent="bank_container" unique_id=454129110]
-custom_minimum_size = Vector2(0, 150)
+[node name="card_panel" type="Panel" parent="main_margin/bank_container" unique_id=1417612316]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-color = Color(1, 0, 1, 0.117647)
+theme_override_styles/panel = ExtResource("3_xhxt6")
 
-[node name="funds_label" type="Label" parent="bank_container/card" unique_id=1269848168]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "AVAILABLE_FUNDS_KEY"
+[node name="card_margin" type="MarginContainer" parent="main_margin/bank_container/card_panel" unique_id=2022001063]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
 
-[node name="bank_actions" type="HBoxContainer" parent="bank_container" unique_id=881205920]
+[node name="card_v_box" type="VBoxContainer" parent="main_margin/bank_container/card_panel/card_margin" unique_id=265629592]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="top_data_h_box" type="HBoxContainer" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=1398764409]
+layout_mode = 2
+
+[node name="v_box" type="VBoxContainer" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box" unique_id=498468086]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="username_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box/v_box" unique_id=1619653918]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "username"
+
+[node name="funds_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box/v_box" unique_id=614232439]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="chip" type="TextureRect" parent="main_margin/bank_container/card_panel/card_margin/card_v_box/top_data_h_box" unique_id=1836109565]
+layout_mode = 2
+texture = ExtResource("4_xhxt6")
+expand_mode = 2
+
+[node name="bank_logo" type="TextureRect" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=363018433]
+layout_mode = 2
+texture = SubResource("DPITexture_xhxt6")
+stretch_mode = 2
+
+[node name="card_code_label" type="Label" parent="main_margin/bank_container/card_panel/card_margin/card_v_box" unique_id=2080284021]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "************0000"
+
+[node name="bank_actions" type="HBoxContainer" parent="main_margin/bank_container" unique_id=881205920]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="refresh" type="Button" parent="bank_container/bank_actions" unique_id=589940827]
+[node name="refresh" type="Button" parent="main_margin/bank_container/bank_actions" unique_id=589940827]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_tq0mc")
 text = "REFRESH_KEY"
+script = ExtResource("7_ddv88")
 
-[node name="new_transaction" type="Button" parent="bank_container/bank_actions" unique_id=413259750]
+[node name="new_transaction" type="Button" parent="main_margin/bank_container/bank_actions" unique_id=413259750]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_tq0mc")
 text = "NEW_TRANSACTION_KEY"
+script = ExtResource("7_ddv88")
 
-[node name="spinner_container" type="CenterContainer" parent="bank_container" unique_id=1720853199]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="spinner" parent="bank_container/spinner_container" unique_id=1273655581 instance=ExtResource("2_yxmd7")]
-layout_mode = 2
-spinner_scale = 0.5
-
-[node name="transactions_scroll" type="ScrollContainer" parent="bank_container" unique_id=743366698]
+[node name="spinner_container" type="CenterContainer" parent="main_margin/bank_container" unique_id=1720853199]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="transactions_list" type="VBoxContainer" parent="bank_container/transactions_scroll" unique_id=2019065933]
+[node name="spinner" parent="main_margin/bank_container/spinner_container" unique_id=1273655581 instance=ExtResource("2_yxmd7")]
+layout_mode = 2
+
+[node name="transactions_scroll" type="ScrollContainer" parent="main_margin/bank_container" unique_id=743366698]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="transactions_list" type="VBoxContainer" parent="main_margin/bank_container/transactions_scroll" unique_id=2019065933]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="empty_transactions" type="CenterContainer" parent="bank_container" unique_id=1777671124]
+[node name="empty_transactions" type="CenterContainer" parent="main_margin/bank_container" unique_id=1777671124]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="empty_transaction_label" type="Label" parent="bank_container/empty_transactions" unique_id=1969643433]
+[node name="empty_transaction_label" type="Label" parent="main_margin/bank_container/empty_transactions" unique_id=1969643433]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "EMPTY_TRANSACTION_HISTORY_KEY"
 
 [node name="overlay_margin" parent="." unique_id=139073899 instance=ExtResource("2_mvofu")]
 visible = false
 layout_mode = 1
 
-[node name="overlay_background" type="TextureRect" parent="overlay_margin" unique_id=532044160]
+[node name="background_debug" type="TextureRect" parent="overlay_margin" unique_id=532044160]
+visible = false
 modulate = Color(1, 1, 1, 0.647059)
 layout_mode = 2
 texture = ExtResource("2_tn1ak")
 expand_mode = 4
+
+[node name="background" type="ColorRect" parent="overlay_margin" unique_id=1253966699]
+layout_mode = 2
+color = Color(0, 0, 0, 0.78431374)
 
 [node name="center_container" type="CenterContainer" parent="overlay_margin" unique_id=1235825893]
 clip_contents = true
@@ -94,7 +224,7 @@ layout_mode = 2
 [node name="new_transaction" parent="overlay_margin/center_container" unique_id=1802104165 instance=ExtResource("2_8ud3o")]
 layout_mode = 2
 
-[connection signal="pressed" from="bank_container/bank_actions/refresh" to="." method="on_refresh_button_pressed"]
-[connection signal="pressed" from="bank_container/bank_actions/new_transaction" to="." method="on_new_transaction_pressed"]
+[connection signal="pressed" from="main_margin/bank_container/bank_actions/refresh" to="." method="on_refresh_button_pressed"]
+[connection signal="pressed" from="main_margin/bank_container/bank_actions/new_transaction" to="." method="on_new_transaction_pressed"]
 [connection signal="transaction_canceled" from="overlay_margin/center_container/new_transaction" to="." method="on_new_transaction_transaction_canceled"]
 [connection signal="transaction_completed" from="overlay_margin/center_container/new_transaction" to="." method="on_new_transaction_transaction_completed"]

@@ -3,15 +3,25 @@ extends Control
 
 @export var news_article_entry: PackedScene
 
-@onready var feed: VBoxContainer = $news_container/scroll_feed/feed
-@onready var title_input: LineEdit = $news_container/post_box_margin/post_box/title_input
-@onready var content_input: TextEdit = $news_container/post_box_margin/post_box/content_input
-@onready var publish_button: Button = $"news_container/post_box_margin/post_box/post_actions/publish button"
+@onready var decoration_separator: HSeparator = $main_margin/news_container/decoration_separator
+@onready var post_background: PanelContainer = $main_margin/news_container/post_background
+@onready var title_input: VBoxContainer = $main_margin/news_container/post_background/inner_margin/post_box/title_input
+@onready var content_input: TextEdit = $main_margin/news_container/post_background/inner_margin/post_box/content_input
+@onready var clear_buttton: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/clear_button
+@onready var publish_button: Button = $main_margin/news_container/post_background/inner_margin/post_box/post_actions/publish_button
+@onready var scroll_feed: ScrollContainer = $main_margin/news_container/scroll_feed
+@onready var feed: VBoxContainer = $main_margin/news_container/scroll_feed/feed
+@onready var spinner_container: CenterContainer = $main_margin/news_container/spinner_container
+@onready var delete_post_title_label: Label = $overlay_margin/overlay_center/delete_post_window/delete_post_margin/delete_post_content/post_title_label
+@onready var delete_post_overlay: MarginContainer = $overlay_margin
 
-@onready var scroll_feed: ScrollContainer = $news_container/scroll_feed
-@onready var spinner_container: CenterContainer = $news_container/spinner_container
+var _post_id_selected_for_deletion: int = -1
 
 func _ready() -> void:
+	if AppSessionState.can_publish_posts():
+		decoration_separator.show()
+		post_background.show()
+	
 	refresh_news_feed()
 
 func refresh_news_feed():
@@ -20,12 +30,14 @@ func refresh_news_feed():
 	
 	var articles := await ServerRequest.news_feed()
 	for article in articles:
+		var id = article["id"]
 		var author = article["author"]
 		var date = article["timestamp"]
 		var title = article["title"]
 		var content = article["content"]
 		
 		var article_entry = news_article_entry.instantiate()
+		article_entry.post_id = id
 		article_entry.author = author
 		article_entry.date = GlobalTypes.DateTime.from_string(date).get_string()
 		article_entry.title = title
@@ -36,7 +48,10 @@ func refresh_news_feed():
 	scroll_feed.show()
 
 func send_article():
-	var title := title_input.text
+	if !AppSessionState.can_publish_posts():
+		return
+
+	var title: String = title_input.get_cleaned_text()
 	if title.length() < 3:
 		PopupDisplayServer.push_warning(tr("POST_TITLE_TOO_SHORT"))
 		return
@@ -52,9 +67,13 @@ func send_article():
 		PopupDisplayServer.push_warning(tr("POST_CONTENT_TOO_LONG"))
 		return
 	
-	await ServerRequest.post_news_article(title, content)
+	var post_id := await ServerRequest.post_news_article(title, content)
+	
+	if post_id < 0:
+		return
 	
 	var article_entry = news_article_entry.instantiate()
+	article_entry.post_id = post_id
 	article_entry.author = AppSessionState.get_username()
 	article_entry.date = GlobalTypes.DateTime.now().get_string()
 	article_entry.title = title
@@ -63,10 +82,43 @@ func send_article():
 	feed.add_child(article_entry)
 	feed.move_child(article_entry, 0)
 	
-	title_input.clear()
-	content_input.clear()
+	title_input.clear_text_box()
+	content_input.clear_text_box()
 
 func on_publish_button_pressed() -> void:
 	publish_button.disabled = true
+	clear_buttton.disabled = true
 	send_article()
 	publish_button.disabled = false
+	clear_buttton.disabled = false
+
+func on_clear_button_pressed() -> void:
+	title_input.clear_text_box()
+	content_input.clear_text_box()
+
+func on_tree_entered() -> void:
+	GlobalSignals.delete_post.connect(delete_post)
+
+func on_tree_exited() -> void:
+	GlobalSignals.delete_post.disconnect(delete_post)
+
+func delete_post(id: int, title: String) -> void:
+	_post_id_selected_for_deletion = id
+	delete_post_title_label.text = title
+	delete_post_overlay.show()
+
+func on_delete_post_cancel_pressed() -> void:
+	delete_post_overlay.hide()
+	_post_id_selected_for_deletion = -1
+	
+func on_delete_post_confirm_pressed() -> void:
+	var status = await ServerRequest.delete_news_article(_post_id_selected_for_deletion)
+	
+	if status == true:
+		for article in feed.get_children():
+			if article.post_id == _post_id_selected_for_deletion:
+				feed.remove_child(article)
+				article.queue_free()
+	
+	delete_post_overlay.hide()
+	_post_id_selected_for_deletion = -1

@@ -12,13 +12,14 @@ var locketd_message_input_height: int = 0
 var chunk_counter: int = 0
 var scroll_to_new_chunk: bool = false
 
-@onready var message_scroll_log: ScrollContainer = $board_margin/board/scroll_message_log
-@onready var message_log: VBoxContainer  = $board_margin/board/scroll_message_log/message_log
-@onready var title_label: Label = $board_margin/board/top_panel/top_bar_container/title_margin/title
-@onready var message_input: TextEdit = $board_margin/board/message_panel/message_input
-@onready var chat_settings_button: Button = $board_margin/board/top_panel/top_bar_container/chat_settings_button
+@onready var message_scroll_log: ScrollContainer = $board_margin/board/message_log_margin/message_log_content/scroll_message_log
+@onready var message_log: VBoxContainer = $board_margin/board/message_log_margin/message_log_content/scroll_message_log/message_log
+@onready var old_message_spinner_container: PanelContainer = $board_margin/board/message_log_margin/message_log_content/spinner_container
+@onready var title_label: Label = $board_margin/board/top_panel/top_bar_container/title
+@onready var message_input: TextEdit = $board_margin/board/message_input_margin/message_input_panel/message_input
+@onready var chat_settings_margin: MarginContainer = $board_margin/board/top_panel/top_bar_container/chat_settings_margin
 @onready var settings_overlay: MarginContainer = $settings_overlay
-@onready var chat_settings = $settings_overlay/chat_settings
+@onready var chat_settings = $settings_overlay/CenterContainer/chat_settings
 @onready var spinner_container = $board_margin/spinner_container
 
 @export var message_entry: PackedScene
@@ -194,6 +195,8 @@ var lock_requesting_chat_history = false
 func load_older_messages() -> void:
 	if lock_requesting_chat_history == true:
 		return
+		
+	old_message_spinner_container.show()
 	
 	lock_requesting_chat_history = true
 	
@@ -208,6 +211,7 @@ func load_older_messages() -> void:
 	scroll_to_new_chunk = true
 	
 	lock_requesting_chat_history = false
+	old_message_spinner_container.hide()
 
 func buld_chat_chunk(messages: Array) -> void:
 	var chunk := VBoxContainer.new()
@@ -234,7 +238,7 @@ func update_meta_data(metadata: Dictionary) -> void:
 		var group_chat_metadata = metadata["Group"]
 		chat_admin = group_chat_metadata["admin_username"]
 		if username == chat_admin:
-			chat_settings_button.show()
+			chat_settings_margin.show()
 		
 		title_label.text = group_chat_metadata["title"]
 	else:
@@ -261,18 +265,21 @@ func disconnect_from_chat() -> void:
 	socket_state = GlobalTypes.REALTIME_CHAT_SOCKET_STATE.CLOSED
 	chat_id = -1
 	message_queue.clear()
-	chat_settings_button.hide()
+	chat_settings_margin.hide()
 	title_label.text = "loading..."
 
 func on_back_button_pressed() -> void:
 	close_chat()
 
 func on_message_send_button_pressed() -> void:
+	if message_input.is_text_over_character_limit():
+		PopupDisplayServer.push_error(tr("MESSAGE_OVER_TEXT_CHARACTER_LIMIT"))
+		return
+	
 	var message_to_send = message_input.get_cleaned_text()
-	message_to_send = message_to_send.strip_edges()
 	
 	if message_to_send.is_empty():
-		message_input.text = ""
+		message_input.clear_text_box()
 		return
 	
 	var first_chunk := get_first_chunk()
@@ -286,7 +293,7 @@ func on_message_send_button_pressed() -> void:
 	var message_entry_object = create_message_entry(-1, message_to_send, username, date_time)
 	first_chunk.add_child(message_entry_object)
 	message_queue.push_back(message_to_send)
-	message_input.text = ""
+	message_input.clear_text_box()
 	
 	anchor_message_log = true
 	message_input.grab_focus()
@@ -309,6 +316,11 @@ func create_message_entry(index: int, message: String, sender: String, dateTime:
 	message_entry_object.in_chat_index = index
 	message_entry_object.size_flags_horizontal = size_flag
 	message_entry_object.container_width = container_width
+	message_entry_object.min_chat_box_size = 120
+	message_entry_object.max_chat_box_size = 300
+	
+	#Make message transparent -> AnimationPlayer in the message entry will make it appear
+	message_entry_object.modulate.a = 0
 	return message_entry_object
 
 func scroll_to_bottom() -> void:
@@ -329,8 +341,9 @@ func on_settings_panel_closed(_settings: Node) -> void:
 	settings_overlay.hide()
 
 func close_chat() -> void:
-	disconnect_from_chat();
-	clear_chat();
+	disconnect_from_chat()
+	scroll_to_bottom()
+	clear_chat()
 	GlobalSignals.close_chat_board.emit()
 	spinner_container.show()
 

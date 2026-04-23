@@ -3,10 +3,43 @@
 [ext_resource type="Script" uid="uid://eq00ajhbkh3u" path="res://scripts/chat_message_board_script.gd" id="1_c16fi"]
 [ext_resource type="PackedScene" uid="uid://bhthbs3apue7x" path="res://scenes/custom_controlls/chat_settings.tscn" id="2_ifct0"]
 [ext_resource type="PackedScene" uid="uid://5damwlt2tv6e" path="res://scenes/custom_controlls/chat_message_entry.tscn" id="3_g7fpo"]
+[ext_resource type="StyleBox" uid="uid://bbq057yajk8vn" path="res://themes/box_styles/transparent.tres" id="4_2f82o"]
 [ext_resource type="PackedScene" uid="uid://gn8f4wkuvip1" path="res://scenes/custom_controlls/long_text_input.tscn" id="4_3756x"]
 [ext_resource type="PackedScene" uid="uid://bv2ucan1l6s11" path="res://scenes/custom_controlls/vk_overlay.tscn" id="4_tnq2v"]
 [ext_resource type="PackedScene" uid="uid://b4wkvulppy6fa" path="res://scenes/custom_controlls/spinner.tscn" id="5_2xdun"]
 [ext_resource type="Texture2D" uid="uid://byv5fyf0isjvj" path="res://assets/overlay_alignment_test.png" id="5_3756x"]
+[ext_resource type="Texture2D" uid="uid://cy2cqj85yq1e0" path="res://assets/icons/return_arrow_icon.svg" id="5_wdnpj"]
+[ext_resource type="Texture2D" uid="uid://d2waln04ww17p" path="res://assets/icons/menu_icon.svg" id="6_wdnpj"]
+[ext_resource type="Theme" uid="uid://bng7qy8csyvan" path="res://themes/transparent.tres" id="7_tqane"]
+[ext_resource type="Theme" uid="uid://cnvlwfx516fas" path="res://themes/light_buttons.tres" id="9_36jjd"]
+[ext_resource type="Texture2D" uid="uid://culx4mghub1n8" path="res://assets/icons/send_message.svg" id="10_5lv74"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="11_ahqx6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2xdun"]
+bg_color = Color(1, 0, 0.6156863, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahqx6"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxt3j"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lv74"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
 
 [node name="chat_message_board" type="Control" unique_id=1538068447]
 layout_mode = 3
@@ -25,71 +58,139 @@ layout_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="top_panel" type="Panel" parent="board_margin/board" unique_id=1093053456]
-custom_minimum_size = Vector2(0, 40)
+[node name="top_panel" type="PanelContainer" parent="board_margin/board" unique_id=272710386]
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2xdun")
 
 [node name="top_bar_container" type="HBoxContainer" parent="board_margin/board/top_panel" unique_id=1606989481]
-layout_mode = 0
-offset_right = 405.0
-offset_bottom = 40.0
+layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="back_button" type="Button" parent="board_margin/board/top_panel/top_bar_container" unique_id=146307277]
-custom_minimum_size = Vector2(40, 0)
+[node name="back_button_margin" type="MarginContainer" parent="board_margin/board/top_panel/top_bar_container" unique_id=390543476]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="back_button" type="Button" parent="board_margin/board/top_panel/top_bar_container/back_button_margin" unique_id=146307277]
+custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "<"
+theme_override_styles/normal = ExtResource("4_2f82o")
+theme_override_styles/pressed = ExtResource("4_2f82o")
+theme_override_styles/hover = ExtResource("4_2f82o")
+theme_override_styles/disabled = ExtResource("4_2f82o")
+theme_override_styles/focus = ExtResource("4_2f82o")
+icon = ExtResource("5_wdnpj")
+icon_alignment = 1
+expand_icon = true
 
-[node name="title_margin" type="MarginContainer" parent="board_margin/board/top_panel/top_bar_container" unique_id=483143518]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-
-[node name="title" type="Label" parent="board_margin/board/top_panel/top_bar_container/title_margin" unique_id=2111845822]
+[node name="title" type="Label" parent="board_margin/board/top_panel/top_bar_container" unique_id=2111845822]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 26
 text = "LOADING_DOT_KEY"
 vertical_alignment = 1
+text_overrun_behavior = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="chat_settings_button" type="Button" parent="board_margin/board/top_panel/top_bar_container" unique_id=94723760]
+[node name="chat_settings_margin" type="MarginContainer" parent="board_margin/board/top_panel/top_bar_container" unique_id=119268681]
 visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="chat_settings_button" type="Button" parent="board_margin/board/top_panel/top_bar_container/chat_settings_margin" unique_id=94723760]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "⚙️"
+theme_override_styles/normal = ExtResource("4_2f82o")
+theme_override_styles/pressed = ExtResource("4_2f82o")
+theme_override_styles/hover = ExtResource("4_2f82o")
+theme_override_styles/disabled = ExtResource("4_2f82o")
+theme_override_styles/focus = ExtResource("4_2f82o")
+icon = ExtResource("6_wdnpj")
+icon_alignment = 1
+expand_icon = true
 
-[node name="scroll_message_log" type="ScrollContainer" parent="board_margin/board" unique_id=65225126]
+[node name="message_log_margin" type="MarginContainer" parent="board_margin/board" unique_id=227651507]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="message_log_content" type="VBoxContainer" parent="board_margin/board/message_log_margin" unique_id=476956467]
+layout_mode = 2
+
+[node name="spinner_container" type="PanelContainer" parent="board_margin/board/message_log_margin/message_log_content" unique_id=537380790]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_2f82o")
+
+[node name="spinner" parent="board_margin/board/message_log_margin/message_log_content/spinner_container" unique_id=1447493239 instance=ExtResource("5_2xdun")]
+layout_mode = 2
+size_flags_horizontal = 4
+spinner_size = 30.0
+
+[node name="scroll_message_log" type="ScrollContainer" parent="board_margin/board/message_log_margin/message_log_content" unique_id=65225126]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("7_tqane")
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="message_log" type="VBoxContainer" parent="board_margin/board/scroll_message_log" unique_id=1769459601]
+[node name="message_log" type="VBoxContainer" parent="board_margin/board/message_log_margin/message_log_content/scroll_message_log" unique_id=1769459601]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="message_panel" type="HBoxContainer" parent="board_margin/board" unique_id=486948453]
+[node name="message_input_margin" type="MarginContainer" parent="board_margin/board" unique_id=1860533418]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="message_input_panel" type="HBoxContainer" parent="board_margin/board/message_input_margin" unique_id=486948453]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="message_input" parent="board_margin/board/message_input_margin/message_input_panel" unique_id=2090216064 instance=ExtResource("4_3756x")]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-
-[node name="message_input" parent="board_margin/board/message_panel" unique_id=2090216064 instance=ExtResource("4_3756x")]
-layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_ahqx6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_yxt3j")
+placeholder_text = "WRITE_YOUR_MESSAGE"
+character_limit_type = 1
 max_visible_lines = 5
 max_character_limit = 512
-over_character_limit_labal_color = Color(0.626931, 0, 0.214729, 1)
-under_character_limit_labal_color = Color(1, 1, 1, 1)
+under_character_limit_color = Color(1, 0, 0.6156863, 1)
+over_character_limit_color = Color(0.91764706, 0.11764706, 0.33333334, 1)
 
-[node name="message_send_button" type="Button" parent="board_margin/board/message_panel" unique_id=1303142549]
+[node name="message_send_button" type="Button" parent="board_margin/board/message_input_margin/message_input_panel" unique_id=1303142549]
 editor_description = "vk"
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = ">"
+theme = ExtResource("9_36jjd")
+theme_override_constants/icon_max_width = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_5lv74")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5lv74")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5lv74")
+icon = ExtResource("10_5lv74")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("11_ahqx6")
 metadata/skip_vk_check = true
 
 [node name="spinner_container" type="CenterContainer" parent="board_margin" unique_id=810455083]
@@ -97,22 +198,29 @@ layout_mode = 2
 
 [node name="spinner" parent="board_margin/spinner_container" unique_id=873386178 instance=ExtResource("5_2xdun")]
 layout_mode = 2
-spinner_scale = 0.5
 
 [node name="settings_overlay" parent="." unique_id=1401378170 instance=ExtResource("4_tnq2v")]
 visible = false
 layout_mode = 1
 
-[node name="background" type="TextureRect" parent="settings_overlay" unique_id=2013636821]
+[node name="background_debug" type="TextureRect" parent="settings_overlay" unique_id=2013636821]
+visible = false
 layout_mode = 2
 texture = ExtResource("5_3756x")
 expand_mode = 4
 
-[node name="chat_settings" parent="settings_overlay" unique_id=562130222 instance=ExtResource("2_ifct0")]
+[node name="background" type="ColorRect" parent="settings_overlay" unique_id=942308239]
+layout_mode = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="CenterContainer" type="CenterContainer" parent="settings_overlay" unique_id=1071453691]
+layout_mode = 2
+
+[node name="chat_settings" parent="settings_overlay/CenterContainer" unique_id=562130222 instance=ExtResource("2_ifct0")]
 layout_mode = 2
 
 [connection signal="tree_exiting" from="." to="." method="on_tree_exiting"]
-[connection signal="pressed" from="board_margin/board/top_panel/top_bar_container/back_button" to="." method="on_back_button_pressed"]
-[connection signal="pressed" from="board_margin/board/top_panel/top_bar_container/chat_settings_button" to="." method="on_chat_settings_button_pressed"]
-[connection signal="pressed" from="board_margin/board/message_panel/message_send_button" to="." method="on_message_send_button_pressed"]
-[connection signal="closed" from="settings_overlay/chat_settings" to="." method="on_settings_panel_closed"]
+[connection signal="pressed" from="board_margin/board/top_panel/top_bar_container/back_button_margin/back_button" to="." method="on_back_button_pressed"]
+[connection signal="pressed" from="board_margin/board/top_panel/top_bar_container/chat_settings_margin/chat_settings_button" to="." method="on_chat_settings_button_pressed"]
+[connection signal="pressed" from="board_margin/board/message_input_margin/message_input_panel/message_send_button" to="." method="on_message_send_button_pressed"]
+[connection signal="closed" from="settings_overlay/CenterContainer/chat_settings" to="." method="on_settings_panel_closed"]

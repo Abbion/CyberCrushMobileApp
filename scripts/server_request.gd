@@ -16,7 +16,7 @@ enum GroupChatUpdateAction {
 const use_ssl = true
 const use_ports = false
 
-const web_ip = "kijankainabox.pl"
+const web_ip = "cybercrushlarpepone.online"
 const dev_ip = "127.0.0.1"
 const local_ip = "192.168.50.162"
 const current_ip = web_ip
@@ -26,7 +26,7 @@ var RESPONSE_STATE_ERROR: String = tr("SERVER_RESPONSE_ERROR")
 var JSON_PARSE_ERROR: String = tr("INCORRECT_DATA_FORMAT")
 var RESPONSE_STATUS_ERROR: String = tr("DATA_ACCESS_ERROR")
 
-func app_language_changed(language: GlobalTypes.LANGUAGE):
+func app_language_changed(_language: GlobalTypes.LANGUAGE):
 	REQUEST_STATE_ERROR = tr("SERVER_NOT_FOUND")
 	RESPONSE_STATE_ERROR = tr("SERVER_RESPONSE_ERROR")
 	JSON_PARSE_ERROR = tr("INCORRECT_DATA_FORMAT")
@@ -125,6 +125,14 @@ var post_news_article_url = build_url(ProtocoloType.HTTP, "post_news_article", 3
 #const post_news_article_url = "http://%s:3004/post_news_article" % current_ip
 var post_news_article_request: HTTPRequest
 
+var delete_news_article_url = build_url(ProtocoloType.HTTP, "delete_news_article", 3004, "news")
+#const post_news_article_url = "http://%s:3004/delete_news_article" % current_ip
+var delete_news_article_request: HTTPRequest
+
+var game_state_url = build_url(ProtocoloType.HTTP, "game_state", 3005, "game_state")
+#const post_news_article_url = "http://%s:3005/game_state" % current_ip
+var game_state_request: HTTPRequest
+
 func _ready() -> void:
 	GlobalSignals.app_language_changed.connect(app_language_changed)
 	
@@ -172,6 +180,12 @@ func _ready() -> void:
 	
 	post_news_article_request = HTTPRequest.new()
 	add_child(post_news_article_request)
+	
+	delete_news_article_request = HTTPRequest.new()
+	add_child(delete_news_article_request)
+	
+	game_state_request = HTTPRequest.new()
+	add_child(game_state_request)
 
 func login(username: String, password: String) -> String:
 	login_request.cancel_request()
@@ -323,9 +337,11 @@ func user_data() -> GlobalTypes.UserData:
 		PopupDisplayServer.push_error(error_message, verbose)
 		return null
 	
-	var user_data = GlobalTypes.UserData.new()
-	user_data.username = response_data["username"]
-	user_data.personal_number = response_data["personal_number"]
+	var user_data_instance = GlobalTypes.UserData.new()
+	user_data_instance.username = response_data["username"]
+	user_data_instance.personal_number = response_data["personal_number"]
+	user_data_instance.can_publish_posts = response_data["can_publish_posts"]
+	user_data_instance.cyber_defence_level = response_data["cyber_defence_level"]
 	
 	var json_extra_data = JSON.new()
 	if json_extra_data.parse(response_data["extra_data"]) != OK:
@@ -333,8 +349,8 @@ func user_data() -> GlobalTypes.UserData:
 		var verbose = "Getting user data failed. Json cannot parse extra data"
 		PopupDisplayServer.push_error(error_message, verbose)
 	
-	user_data.extra_data = json_extra_data.data
-	return user_data
+	user_data_instance.extra_data = json_extra_data.data
+	return user_data_instance
 
 func all_usernames(exclude_user: bool) -> PackedStringArray:
 	get_all_usernames_request.cancel_request()
@@ -436,11 +452,11 @@ func user_chats() -> Dictionary:
 		PopupDisplayServer.push_error(error_message, verbose)
 		return Dictionary()
 	
-	var user_chats: Dictionary = Dictionary()
-	user_chats.set("direct", response_data["direct_chats"])
-	user_chats.set("group", response_data["group_chats"])
+	var user_chats_dir: Dictionary = Dictionary()
+	user_chats_dir.set("direct", response_data["direct_chats"])
+	user_chats_dir.set("group", response_data["group_chats"])
 	
-	return user_chats
+	return user_chats_dir
 
 func chat_metadata(chat_id: int) -> Dictionary:
 	get_chat_metadata_request.cancel_request()
@@ -502,6 +518,7 @@ func chat_history(chat_id: int, start_from_index: int = -1) -> Array:
 	#=Request=============================================================
 	
 	var payload = {}
+	@warning_ignore("incompatible_ternary")
 	var history_last_index: Variant = null if start_from_index < 0 else start_from_index
 	
 	payload = {
@@ -621,7 +638,7 @@ func create_direct_chat(partner_username: String) -> int:
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
 		"partner_username" : partner_username,
-		"creation_message" : AppSessionState.get_username() + (" %" % tr("START_CHAT_MESSAGE"))
+		"creation_message" : AppSessionState.get_username() + (" %s" % tr("START_CHAT_MESSAGE"))
 	}
 
 	var request_state = create_direct_chat_request.request(create_direct_chat_url,
@@ -683,7 +700,7 @@ func create_group_chat(title: String) -> int:
 	var payload = {
 		"token" : AppSessionState.get_server_token(),
 		"title" : title,
-		"creation_message" : AppSessionState.get_username() + " stworzył czat"
+		"creation_message" : AppSessionState.get_username() + (" %s" % tr("START_CHAT_MESSAGE"))
 	}
 
 	var request_state = create_group_chat_request.request(create_group_chat_url,
@@ -929,7 +946,7 @@ func news_feed() -> Array:
 	
 	return response_data["articles"]
 
-func post_news_article(title: String, content: String) -> bool:
+func post_news_article(title: String, content: String) -> int:
 	post_news_article_request.cancel_request()
 	var POST_ARTICLE_ERROR = tr("FAILED_TO_POST_NEWS")
 	#=Request=============================================================
@@ -948,7 +965,7 @@ func post_news_article(title: String, content: String) -> bool:
 		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, REQUEST_STATE_ERROR]
 		var verbose = "Posting news article failed. HTTP request state: %s" % request_state
 		PopupDisplayServer.push_error(error_message, verbose)
-		return false
+		return -1
 	
 	var response = await post_news_article_request.request_completed
 	#=Response============================================================
@@ -961,7 +978,7 @@ func post_news_article(title: String, content: String) -> bool:
 		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, RESPONSE_STATE_ERROR]
 		var verbose = "Posting news article failed. HTTP response state: %s code: %s" % [response_state, response_code]
 		PopupDisplayServer.push_error(error_message, verbose)
-		return false
+		return -1
 	#=Parse===============================================================
 	var response_text = body.get_string_from_utf8()
 	var json_response = JSON.new()
@@ -969,14 +986,111 @@ func post_news_article(title: String, content: String) -> bool:
 	if json_response.parse(response_text) != OK:
 		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, JSON_PARSE_ERROR]
 		PopupDisplayServer.push_error(error_message)
+		return -1
+	
+	var response_data = json_response.data
+	var response_status = response_data["response_status"]
+	
+	if response_status["success"] == false:
+		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, RESPONSE_STATUS_ERROR]
+		var verbose = response_data["status_message"]
+		PopupDisplayServer.push_error(error_message, verbose)
+		return -1
+	
+	return response_data["post_id"]
+
+func delete_news_article(id: int) -> bool:
+	post_news_article_request.cancel_request()
+	var DELETE_ARTICLE_ERROR = tr("FAILED_TO_DELETE_ARTICLE")
+	#=Request=============================================================
+	var payload = {
+		"token" : AppSessionState.get_server_token(),
+		"post_id" : id
+	}
+	
+	var request_state = delete_news_article_request.request(delete_news_article_url,
+				GlobalConstants.JSON_HTTP_HEADER,
+				HTTPClient.METHOD_POST,
+				JSON.stringify(payload))
+	
+	if request_state != OK:
+		var error_message = "%s. %s" % [DELETE_ARTICLE_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Deleting news article failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
+		return false
+	
+	var response = await delete_news_article_request.request_completed
+	#=Response============================================================
+	var response_state: int = response[0]
+	var response_code: int = response[1]
+	var _headers: PackedStringArray = response[2]
+	var body: PackedByteArray = response[3]
+	
+	if response_state != HTTPRequest.RESULT_SUCCESS:
+		var error_message = "%s. %s" % [DELETE_ARTICLE_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Deleting news article failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
+		return false
+	#=Parse===============================================================
+	var response_text = body.get_string_from_utf8()
+	var json_response = JSON.new()
+	
+	if json_response.parse(response_text) != OK:
+		var error_message = "%s. %s" % [DELETE_ARTICLE_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
 		return false
 	
 	var response_data = json_response.data
 	
 	if response_data["success"] == false:
-		var error_message = "%s. %s" % [POST_ARTICLE_ERROR, RESPONSE_STATUS_ERROR]
+		var error_message = "%s. %s" % [DELETE_ARTICLE_ERROR, RESPONSE_STATUS_ERROR]
 		var verbose = response_data["status_message"]
 		PopupDisplayServer.push_error(error_message, verbose)
 		return false
 	
 	return true
+
+func game_state() -> GlobalTypes.ServerGameState:
+	game_state_request.cancel_request()
+	var SERVER_GAME_STATE_ERROR = tr("FAILED_TO_OBTAIN_GAME_STATE")
+	var server_game_state := GlobalTypes.ServerGameState.new()
+	
+	#=Request=============================================================
+	var request_state = game_state_request.request(game_state_url,
+			GlobalConstants.JSON_HTTP_HEADER,
+			HTTPClient.METHOD_GET)
+	
+	if request_state != OK:
+		var error_message = "%s. %s" % [SERVER_GAME_STATE_ERROR, REQUEST_STATE_ERROR]
+		var verbose = "Obtaining game state failed. HTTP request state: %s" % request_state
+		PopupDisplayServer.push_error(error_message, verbose)
+		return server_game_state
+	
+	var response = await game_state_request.request_completed
+	#=Response============================================================
+	
+	var response_state: int = response[0]
+	var response_code: int = response[1]
+	var _headers: PackedStringArray = response[2]
+	var body: PackedByteArray = response[3]
+	
+	if response_state != HTTPRequest.RESULT_SUCCESS:
+		var error_message = "%s. %s" % [SERVER_GAME_STATE_ERROR, RESPONSE_STATE_ERROR]
+		var verbose = "Obtaining game state failed. HTTP response state: %s code: %s" % [response_state, response_code]
+		PopupDisplayServer.push_error(error_message, verbose)
+		return server_game_state
+	#=Parse===============================================================
+	
+	var response_text = body.get_string_from_utf8()
+	var json_response = JSON.new()
+	
+	if json_response.parse(response_text) != OK:
+		var error_message = "%s. %s" % [SERVER_GAME_STATE_ERROR, JSON_PARSE_ERROR]
+		PopupDisplayServer.push_error(error_message)
+		return server_game_state
+	
+	var response_data = json_response.data
+	server_game_state.is_online = response_data["is_game_online"]
+	server_game_state.info_panel_text = response_data["info_panel_text"]
+	
+	return server_game_state

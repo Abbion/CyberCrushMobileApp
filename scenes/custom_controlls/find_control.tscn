@@ -1,30 +1,54 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq7q3goaxwsfu"]
+[gd_scene format=3 uid="uid://bq7q3goaxwsfu"]
 
 [ext_resource type="Script" uid="uid://crmthpkwxbr6b" path="res://scripts/find_control.gd" id="1_ikplo"]
 [ext_resource type="PackedScene" uid="uid://cpd4dwiw60q8b" path="res://scenes/custom_controlls/line_text_input.tscn" id="2_4dsp5"]
+[ext_resource type="Theme" uid="uid://bsnl3lopwxg71" path="res://themes/dark_buttons.tres" id="3_6v44d"]
 
-[node name="find_control" type="Control"]
-layout_mode = 3
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6v44d"]
+color = Color(1, 1, 1, 1)
+grow_begin = -8.0
+grow_end = -8.0
+thickness = 2
+
+[node name="find_control" type="MarginContainer" unique_id=856673065]
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 0.046
-offset_bottom = -0.120003
+offset_bottom = 26.0
 script = ExtResource("1_ikplo")
 
-[node name="input_field" parent="." instance=ExtResource("2_4dsp5")]
-layout_mode = 1
-grow_horizontal = 1
-grow_vertical = 1
+[node name="v_box" type="VBoxContainer" parent="." unique_id=281564498]
+layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="suggestion_list" type="ItemList" parent="."]
+[node name="input_field" parent="v_box" unique_id=909550578 instance=ExtResource("2_4dsp5")]
+layout_mode = 2
+theme = ExtResource("3_6v44d")
+
+[node name="layout_override" type="Control" parent="v_box" unique_id=1034728428]
+layout_mode = 2
+
+[node name="suggestion_margin" type="MarginContainer" parent="v_box/layout_override" unique_id=1957259072]
 visible = false
+z_index = 999
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 33.0
-offset_bottom = 66.0
 grow_horizontal = 2
+
+[node name="suggestion_v_box" type="VBoxContainer" parent="v_box/layout_override/suggestion_margin" unique_id=979767179]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="separator" type="HSeparator" parent="v_box/layout_override/suggestion_margin/suggestion_v_box" unique_id=889875837]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_6v44d")
+
+[node name="suggestion_list" type="ItemList" parent="v_box/layout_override/suggestion_margin/suggestion_v_box" unique_id=102303480]
+layout_mode = 2
+theme = ExtResource("3_6v44d")
 allow_search = false
 auto_height = true
 
-[connection signal="text_changed" from="input_field" to="." method="on_text_changed"]
-[connection signal="item_selected" from="suggestion_list" to="." method="on_suggestion_list_item_selected"]
+[connection signal="text_changed" from="v_box/input_field" to="." method="on_text_changed"]
+[connection signal="item_selected" from="v_box/layout_override/suggestion_margin/suggestion_v_box/suggestion_list" to="." method="on_suggestion_list_item_selected"]

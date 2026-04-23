@@ -1,9 +1,11 @@
 #Refactor 1
 extends Node
 
-signal new_chat_created(chat_id: int)
-signal close_chat_board()
-signal consume_popup(popup_info: PopupDisplayServer.PopupInfo)
-signal popup_closed()
-signal logout()
-signal app_language_changed(language: GlobalTypes.LANGUAGE)
+@warning_ignore("unused_signal") signal new_chat_created(chat_id: int)
+@warning_ignore("unused_signal") signal close_chat_board()
+@warning_ignore("unused_signal") signal consume_popup(popup_info: PopupDisplayServer.PopupInfo)
+@warning_ignore("unused_signal") signal popup_closed()
+@warning_ignore("unused_signal") signal logout()
+@warning_ignore("unused_signal") signal app_language_changed(language: GlobalTypes.LANGUAGE)
+@warning_ignore("unused_signal") signal cyber_defence_pack_changed(pack: int)
+@warning_ignore("unused_signal") signal delete_post(id: int, title: String)

@@ -1,49 +1,103 @@
 [gd_scene format=3 uid="uid://ciim22jn3qi4d"]
 
 [ext_resource type="Script" uid="uid://6myg17qx0kd2" path="res://scripts/news_article_entry_script.gd" id="1_m7ei6"]
+[ext_resource type="StyleBox" uid="uid://d15v4jy70ncp3" path="res://themes/box_styles/panel_container_light_outline.tres" id="2_b2d6s"]
+[ext_resource type="Theme" uid="uid://dptlwfce3xt1l" path="res://themes/accent_light_buttons.tres" id="3_4ec80"]
+[ext_resource type="Texture2D" uid="uid://d0wmvuo347ml7" path="res://assets/icons/trash_can.svg" id="4_7pp04"]
+[ext_resource type="Script" uid="uid://cn3jyaietbxp0" path="res://scripts/mobile_button_fix.gd" id="5_hvn44"]
 
-[node name="news_article_entry" type="PanelContainer" unique_id=1283656355]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7ei6"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 0, 0.6156863, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="news_article_entry" type="MarginContainer" unique_id=1788646133]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource("1_m7ei6")
 
 [node name="article_margin" type="MarginContainer" parent="." unique_id=1912667634]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
+mouse_filter = 2
+theme_override_constants/margin_top = 12
 
-[node name="article" type="VBoxContainer" parent="article_margin" unique_id=1849202621]
+[node name="outline" type="PanelContainer" parent="article_margin" unique_id=2110709906]
 layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("2_b2d6s")
 
-[node name="publish_data" type="HBoxContainer" parent="article_margin/article" unique_id=469486725]
+[node name="inner_margin" type="MarginContainer" parent="article_margin" unique_id=355492715]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 12
 
-[node name="author_label" type="Label" parent="article_margin/article/publish_data" unique_id=755066656]
+[node name="article" type="VBoxContainer" parent="article_margin/inner_margin" unique_id=1849202621]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
-text = "Author null"
+mouse_filter = 2
 
-[node name="date_label" type="Label" parent="article_margin/article/publish_data" unique_id=781497122]
+[node name="publish_data" type="HBoxContainer" parent="article_margin/inner_margin/article" unique_id=469486725]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="date_label" type="Label" parent="article_margin/inner_margin/article/publish_data" unique_id=781497122]
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0, 0.6156863, 1)
+theme_override_font_sizes/font_size = 18
 text = "Date null"
 
-[node name="title_label" type="Label" parent="article_margin/article" unique_id=343856240]
+[node name="title_label" type="Label" parent="article_margin/inner_margin/article" unique_id=343856240]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0, 0.6156863, 1)
+theme_override_font_sizes/font_size = 24
 text = "Title null"
+autowrap_mode = 3
 
-[node name="content_label" type="Label" parent="article_margin/article" unique_id=371311764]
-custom_minimum_size = Vector2(200, 0)
+[node name="content_label" type="Label" parent="article_margin/inner_margin/article" unique_id=371311764]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 22
 text = "Content null"
 autowrap_mode = 3
+
+[node name="autor_label_anchor" type="Control" parent="." unique_id=907899755]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="article_data" type="HBoxContainer" parent="autor_label_anchor" unique_id=1675158294]
+layout_mode = 0
+offset_right = 86.0
+offset_bottom = 27.0
+theme_override_constants/separation = 8
+
+[node name="author_label" type="Label" parent="autor_label_anchor/article_data" unique_id=755066656]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_m7ei6")
+text = "Author null"
+
+[node name="delete_post" type="Button" parent="autor_label_anchor/article_data" unique_id=727526953]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme = ExtResource("3_4ec80")
+theme_override_constants/icon_max_width = 18
+icon = ExtResource("4_7pp04")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_hvn44")
